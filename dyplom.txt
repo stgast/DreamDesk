@@ -1,0 +1,20 @@
+Cel pracy:
+
+Celem pracy jest stworzenie interaktywnej aplikacji internetowej umożliwiającej użytkownikowi zaprojektowanie swojego stanowiska komputerowego poprzez wybór i wizualne rozmieszczenie urządzeń peryferyjnych, takich jak mysz, klawiatura, słuchawki i podkładka.
+Aplikacja ma zapewniać intuicyjny, estetyczny i przyjazny dla użytkownika interfejs, a także wykorzystywać moduł sztucznej inteligencji do sugerowania odpowiednich urządzeń na podstawie preferencji użytkownika.
+
+Zakres projektu:
+
+Opracowanie interfejsu użytkownika umożliwiającego:
+
+wybór urządzeń z katalogu,
+
+filtrowanie wyników (marka, typ, cena, kolorystyka),
+
+wizualne rozmieszczenie elementów na wirtualnym biurku (widok z góry i pod kątem).
+
+Implementacja bazy danych przechowującej informacje o urządzeniach i preferencjach użytkowników.
+
+Stworzenie modułu rekomendacyjnego (AI), który analizuje dane użytkownika (np. typ chwytu myszy, preferencje słuchawek, rozmiar biurka) i proponuje dopasowane urządzenia.
+
+Możliwość zapisu oraz eksportu własnej konfiguracji stanowiska.

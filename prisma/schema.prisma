@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Device {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // mouse, keyboard, headphones, mousepad
+  brand       String
+  price       Float
+  color       String
+  imageUrl    String?
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model UserPreference {
+  id            String   @id @default(cuid())
+  mouseGrip     String?  // palm, claw, fingertip
+  headphoneType String?  // over-ear, on-ear, in-ear
+  deskSize      String?  // small, medium, large
+  budget        String?  // low, medium, high
+  createdAt     DateTime @default(now())
+}
+
+model SetupConfiguration {
+  id          String   @id @default(cuid())
+  name        String
+  deviceIds   String   // JSON array of device IDs
+  layout      String?  // JSON: positions on virtual desk
+  preferences String?  // JSON: linked UserPreference
+  createdAt   DateTime @default(now())
+}
