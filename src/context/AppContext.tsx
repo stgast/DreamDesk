@@ -26,44 +26,42 @@ const STORAGE_THEME = "desk-setup-theme";
 const STORAGE_SIDEBAR = "desk-setup-sidebar";
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [sidebarCollapsed, setSidebarCollapsedState] = useState(() => {
-    if (typeof window === "undefined") return true;
-    const v = localStorage.getItem(STORAGE_SIDEBAR);
-    return v !== "false";
-  });
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "dark";
-    return (localStorage.getItem(STORAGE_THEME) as Theme) || "dark";
-  });
+  const [sidebarCollapsed, setSidebarCollapsedState] = useState(false);
+  const [theme, setThemeState] = useState<Theme>("dark");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const savedSidebar = localStorage.getItem(STORAGE_SIDEBAR);
+    if (savedSidebar === "true") setSidebarCollapsedState(true);
+    const savedTheme = localStorage.getItem(STORAGE_THEME) as Theme;
+    if (savedTheme) setThemeState(savedTheme);
+    setMounted(true);
+  }, []);
 
   const setSidebarCollapsed = useCallback((v: boolean) => {
     setSidebarCollapsedState(v);
-    if (typeof window !== "undefined") localStorage.setItem(STORAGE_SIDEBAR, String(v));
+    localStorage.setItem(STORAGE_SIDEBAR, String(v));
   }, []);
 
   const toggleSidebar = useCallback(() => {
     setSidebarCollapsedState((prev) => {
       const next = !prev;
-      if (typeof window !== "undefined") localStorage.setItem(STORAGE_SIDEBAR, String(next));
+      localStorage.setItem(STORAGE_SIDEBAR, String(next));
       return next;
     });
   }, []);
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_THEME, t);
-      document.documentElement.classList.toggle("light", t === "light");
-    }
+    localStorage.setItem(STORAGE_THEME, t);
+    document.documentElement.classList.toggle("light", t === "light");
   }, []);
 
   const toggleTheme = useCallback(() => {
     setThemeState((prev) => {
       const next = prev === "dark" ? "light" : "dark";
-      if (typeof window !== "undefined") {
-        localStorage.setItem(STORAGE_THEME, next);
-        document.documentElement.classList.toggle("light", next === "light");
-      }
+      localStorage.setItem(STORAGE_THEME, next);
+      document.documentElement.classList.toggle("light", next === "light");
       return next;
     });
   }, []);

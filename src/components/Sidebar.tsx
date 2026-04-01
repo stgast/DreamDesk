@@ -2,71 +2,77 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Package, KeyRound, User } from "lucide-react";
+import { Home, Package, Wrench, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
-import { useState, useRef, useEffect } from "react";
+import { useApp } from "@/context/AppContext";
 
 const nav = [
   { href: "/", label: "Главная", icon: Home },
   { href: "/catalog", label: "Каталог", icon: Package },
-  { href: "/build", label: "Конфигурация", icon: KeyRound },
+  { href: "/build", label: "Конфигуратор", icon: Wrench },
   { href: "/profile", label: "Профиль", icon: User },
 ];
 
-const HOVER_EXPAND_DELAY_MS = 0;
-
 export function Sidebar() {
   const pathname = usePathname();
-  const [expanded, setExpanded] = useState(false);
-  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const clearTimer = () => {
-    if (hoverTimerRef.current) {
-      clearTimeout(hoverTimerRef.current);
-      hoverTimerRef.current = null;
-    }
-  };
-
-  const handleMouseEnter = () => {
-    clearTimer();
-    hoverTimerRef.current = setTimeout(() => setExpanded(true), HOVER_EXPAND_DELAY_MS);
-  };
-
-  const handleMouseLeave = () => {
-    clearTimer();
-    setExpanded(false);
-  };
-
-  useEffect(() => clearTimer, []);
+  const { sidebarCollapsed, toggleSidebar } = useApp();
 
   return (
     <aside
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       className={clsx(
-        "fixed left-0 top-0 bottom-0 z-30 border-r border-dark-border bg-dark-surface flex flex-col items-center transition-all duration-300 ease-out rounded-r-2xl",
-        expanded ? "w-52" : "w-[72px]"
+        "sticky top-0 h-screen flex flex-col border-r border-dark-border bg-dark-surface transition-all duration-300 ease-out shrink-0 z-30",
+        sidebarCollapsed ? "w-16" : "w-56"
       )}
     >
-      <nav className="flex-1 flex flex-col items-center justify-center gap-1 py-4 w-full">
-        {nav.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={clsx(
-              "flex items-center justify-center gap-3 rounded-xl text-sm font-medium transition py-2.5 w-full",
-              expanded ? "px-4 w-[calc(100%-16px)] mx-2" : "px-0 w-12",
-              pathname === href || (href !== "/" && pathname.startsWith(href))
-                ? "bg-accent/20 text-accent border border-accent/30"
-                : "text-gray-400 hover:text-white hover:bg-dark-hover"
-            )}
-            title={!expanded ? label : undefined}
-          >
-            <Icon className="w-5 h-5 shrink-0" />
-            {expanded && <span>{label}</span>}
-          </Link>
-        ))}
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-4 h-14 border-b border-dark-border">
+        <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shrink-0">
+          <span className="text-white font-bold text-sm font-heading">D</span>
+        </div>
+        {!sidebarCollapsed && (
+          <span className="font-heading font-bold text-white text-lg tracking-tight">
+            DreamDesk
+          </span>
+        )}
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 flex flex-col gap-1 p-2 mt-2">
+        {nav.map(({ href, label, icon: Icon }) => {
+          const active =
+            pathname === href || (href !== "/" && pathname.startsWith(href));
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={clsx(
+                "flex items-center gap-3 rounded-lg text-sm font-medium transition-all duration-200 h-10",
+                sidebarCollapsed ? "justify-center px-0" : "px-3",
+                active
+                  ? "bg-accent/15 text-accent"
+                  : "text-gray-400 hover:text-white hover:bg-dark-hover"
+              )}
+              title={sidebarCollapsed ? label : undefined}
+            >
+              <Icon className="w-5 h-5 shrink-0" />
+              {!sidebarCollapsed && <span>{label}</span>}
+            </Link>
+          );
+        })}
       </nav>
+
+      {/* Collapse toggle */}
+      <button
+        type="button"
+        onClick={toggleSidebar}
+        className="flex items-center justify-center h-10 border-t border-dark-border text-gray-500 hover:text-white transition"
+      >
+        {sidebarCollapsed ? (
+          <ChevronRight className="w-4 h-4" />
+        ) : (
+          <ChevronLeft className="w-4 h-4" />
+        )}
+      </button>
     </aside>
   );
 }

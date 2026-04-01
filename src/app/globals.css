@@ -2,43 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
+
 :root {
-  --bg: #0f0f0f;
-  --surface: #1a1a1a;
-  --card: #242424;
-  --border: #2d2d2d;
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --card: #1e1e1e;
+  --border: #2a2a2a;
   --text: #f5f5f5;
-  --text-muted: #a3a3a3;
-  --accent: #6366f1;
+  --text-muted: #999999;
+  --accent: #2196F3;
+  --lime: #8BC34A;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Rounded scrollbar */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Rubik", system-ui, sans-serif;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--surface);
-  border-radius: 4px;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
+  background: #333;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #424242;
+  background: #555;
 }
 
-/* Звёздное небо — быстрее, движение в разные стороны */
+/* Category colors */
+.cat-mouse { color: #64B5F6; }
+.cat-keyboard { color: #CE93D8; }
+.cat-headphones { color: #FFB74D; }
+.cat-mousepad { color: #4DB6AC; }
+
+.cat-mouse-bg { background: rgba(100, 181, 246, 0.1); border-color: rgba(100, 181, 246, 0.3); }
+.cat-keyboard-bg { background: rgba(206, 147, 216, 0.1); border-color: rgba(206, 147, 216, 0.3); }
+.cat-headphones-bg { background: rgba(255, 183, 77, 0.1); border-color: rgba(255, 183, 77, 0.3); }
+.cat-mousepad-bg { background: rgba(77, 182, 172, 0.1); border-color: rgba(77, 182, 172, 0.3); }
+
+/* Skeleton pulse */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 50%, #1e1e1e 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Starfield background for hero */
 .starfield {
-  background: radial-gradient(ellipse at 50% 50%, #0f0f1a 0%, #050508 100%);
+  background: radial-gradient(ellipse at 50% 50%, #0a0a1a 0%, #050508 100%);
 }
 .starfield::before,
 .starfield::after {
@@ -46,115 +80,66 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 40px 70px, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1.5px 1.5px at 130px 80px, rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.45), transparent),
-    radial-gradient(1.5px 1.5px at 200px 50px, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 250px 90px, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 300px 140px, rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 350px 60px, rgba(255,255,255,0.45), transparent);
+    radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 130px 80px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 250px 90px, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1.5px 1.5px at 300px 140px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 350px 60px, rgba(255,255,255,0.4), transparent);
   background-size: 400px 200px;
-  animation: stars-drift 35s linear infinite;
-  opacity: 0.9;
+  animation: stars-drift 50s linear infinite;
+  opacity: 0.8;
 }
 .starfield::after {
   background-size: 350px 180px;
-  animation: stars-drift-alt 40s linear infinite reverse;
-  opacity: 0.7;
+  animation: stars-drift-alt 60s linear infinite reverse;
+  opacity: 0.5;
 }
 @keyframes stars-drift {
   0% { transform: translate(0, 0); }
-  25% { transform: translate(30px, -80px); }
-  50% { transform: translate(-20px, -160px); }
-  75% { transform: translate(40px, -240px); }
   100% { transform: translate(0, -320px); }
 }
 @keyframes stars-drift-alt {
   0% { transform: translate(0, 0); }
-  33% { transform: translate(-50px, 60px); }
-  66% { transform: translate(40px, 120px); }
   100% { transform: translate(-30px, 180px); }
 }
 
+/* Light theme overrides */
+html.light body {
+  background: #f4f4f5;
+  color: #18181b;
+}
+html.light .bg-dark-bg { background: #f4f4f5 !important; }
+html.light .bg-dark-surface { background: #e8e8ec !important; }
+html.light .bg-dark-card { background: #dcdce0 !important; }
+html.light .border-dark-border { border-color: #c0c0c4 !important; }
+html.light .bg-dark-hover:hover { background: #d4d4d8 !important; }
+html.light .text-white { color: #18181b !important; }
+html.light .text-gray-400 { color: #52525b !important; }
+html.light .text-gray-500 { color: #71717a !important; }
+html.light input, html.light select, html.light textarea {
+  background: #e8e8ec !important;
+  color: #18181b !important;
+  border-color: #c0c0c4 !important;
+}
+html.light .bg-accent.text-white,
+html.light .bg-accent .text-white {
+  color: #ffffff !important;
+}
+html.light aside {
+  background: #e8e8ec !important;
+}
+html.light header {
+  background: rgba(244, 244, 245, 0.9) !important;
+}
 html.light .starfield {
   background: radial-gradient(ellipse at 50% 50%, #e8eaf0 0%, #c5cae0 100%);
 }
 html.light .starfield::before,
 html.light .starfield::after {
   background-image:
-    radial-gradient(1.5px 1.5px at 20px 30px, rgba(0,0,0,0.2), transparent),
-    radial-gradient(1.5px 1.5px at 40px 70px, rgba(0,0,0,0.15), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(0,0,0,0.25), transparent),
-    radial-gradient(1.5px 1.5px at 130px 80px, rgba(0,0,0,0.18), transparent),
-    radial-gradient(1px 1px at 160px 120px, rgba(0,0,0,0.22), transparent),
-    radial-gradient(1.5px 1.5px at 200px 50px, rgba(0,0,0,0.15), transparent),
-    radial-gradient(1px 1px at 250px 90px, rgba(0,0,0,0.2), transparent),
-    radial-gradient(1.5px 1.5px at 300px 140px, rgba(0,0,0,0.18), transparent),
-    radial-gradient(1px 1px at 350px 60px, rgba(0,0,0,0.22), transparent);
-}
-
-/* Светлая тема — глобально */
-html.light body {
-  background: #f4f4f5;
-  color: #18181b;
-}
-html.light .bg-dark-bg { background: #f4f4f5 !important; }
-html.light .bg-dark-surface { background: #e4e4e7 !important; }
-html.light .bg-dark-card { background: #d4d4d8 !important; }
-html.light .border-dark-border { border-color: #a1a1aa !important; }
-html.light .bg-dark-hover:hover { background: #d4d4d8 !important; }
-/* Specific rule for sidebar button hover in light theme - make it dark */
-html.light aside .hover\:bg-dark-hover:hover { background: #1a1a1a !important; }
-html.light .text-white { color: #18181b !important; }
-/* Keep button text white in light theme for specific buttons */
-html.light .bg-accent.text-white,
-html.light .bg-accent .text-white {
-    color: #ffffff !important;
-}
-html.light .text-gray-400 { color: #52525b !important; }
-html.light .text-gray-500 { color: #71717a !important; }
-html.light .text-gray-300 { color: #3f3f46 !important; }
-html.light .placeholder-gray-500::placeholder { color: #71717a !important; }
-html.light input, html.light select, html.light textarea {
-  background: #e4e4e7 !important;
-  color: #18181b !important;
-  border-color: #a1a1aa !important;
-}
-html.light .rounded-2xl.border.border-dark-border {
-  background: #e4e4e7 !important;
-}
-html.light .rounded-3xl.bg-dark-surface {
-    background: #e4e4e7 !important;
-}
-/* Override for main page section to keep dark background with stars in light theme */
-html.light .rounded-3xl.bg-dark-surface\/90:not(.bg-white) {
-    background: #1a1a1a !important;
-}
-html.light aside.bg-dark-surface {
-  background: #e4e4e7 !important;
-}
-html.light header.bg-dark-bg\/90 {
-  background: #f4f4f5 !important;
-}
-html.light .app-content.bg-dark-bg {
-  background: #f4f4f5 !important;
-}
-html.light .bg-dark-surface.border {
-  background: #e4e4e7 !important;
-}
-/* Улучшенная видимость рамок слотов в светлой теме */
-html.light .border-2.border-dashed {
-  border-width: 2px !important;
- border-color: #71717a !important;
-}
-html.light .hover\:border-accent\/60:hover {
-  border-color: #4f46e5 !important;
-}
-html.light .border-accent\/50 {
-  border-color: #6366f1 !important;
-}
-html.light .border-white\/20 {
-  border-color: #d4d4d8 !important;
+    radial-gradient(1.5px 1.5px at 20px 30px, rgba(0,0,0,0.15), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(0,0,0,0.2), transparent),
+    radial-gradient(1.5px 1.5px at 130px 80px, rgba(0,0,0,0.12), transparent),
+    radial-gradient(1px 1px at 250px 90px, rgba(0,0,0,0.15), transparent);
 }
