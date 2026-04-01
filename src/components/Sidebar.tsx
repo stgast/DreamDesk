@@ -1,15 +1,19 @@
+// ============================================
+// DreamDesk — Боковое меню (Sidebar)
+// ============================================
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Package, Wrench, User, ChevronLeft, ChevronRight } from "lucide-react";
+import { Home, Wrench, Package, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
 import { useApp } from "@/context/AppContext";
 
 const nav = [
   { href: "/", label: "Главная", icon: Home },
-  { href: "/catalog", label: "Каталог", icon: Package },
   { href: "/build", label: "Конфигуратор", icon: Wrench },
+  { href: "/catalog", label: "Каталог", icon: Package },
   { href: "/profile", label: "Профиль", icon: User },
 ];
 
@@ -24,7 +28,7 @@ export function Sidebar() {
         sidebarCollapsed ? "w-16" : "w-56"
       )}
     >
-      {/* Logo */}
+      {/* Логотип */}
       <div className="flex items-center gap-3 px-4 h-14 border-b border-dark-border">
         <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shrink-0">
           <span className="text-white font-bold text-sm font-heading">D</span>
@@ -36,7 +40,7 @@ export function Sidebar() {
         )}
       </div>
 
-      {/* Navigation */}
+      {/* Навигация */}
       <nav className="flex-1 flex flex-col gap-1 p-2 mt-2">
         {nav.map(({ href, label, icon: Icon }) => {
           const active =
@@ -61,7 +65,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Collapse toggle */}
+      {/* Кнопка сворачивания */}
       <button
         type="button"
         onClick={toggleSidebar}

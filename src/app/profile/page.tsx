@@ -1,15 +1,37 @@
+// ============================================
+// DreamDesk — Страница профиля (/profile)
+// Сохранённые сборки (localStorage)
+// ============================================
+
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  Trash2,
-  ExternalLink,
-  Wrench,
-  Calendar,
-  Package,
-} from "lucide-react";
-import { getSavedConfigs, deleteConfig, type SavedConfig } from "@/lib/storage";
+import { Trash2, ExternalLink, Wrench, Calendar, Package } from "lucide-react";
+
+interface SavedConfig {
+  id: string;
+  name: string;
+  items: Array<{ name: string; category: string; price: number }>;
+  totalPrice: number;
+  savedAt: string;
+}
+
+const STORAGE_KEY = "dreamdesk-saved-configs";
+
+function getSavedConfigs(): SavedConfig[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function deleteConfig(id: string) {
+  const configs = getSavedConfigs().filter((c) => c.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(configs));
+}
 
 export default function ProfilePage() {
   const [configs, setConfigs] = useState<SavedConfig[]>([]);
@@ -70,11 +92,14 @@ export default function ProfilePage() {
                   <div className="flex items-center gap-3 mt-1">
                     <span className="flex items-center gap-1 text-xs text-gray-500">
                       <Package className="w-3 h-3" />
-                      {c.deviceIds.length} устройств
+                      {c.items.length} устройств
                     </span>
                     <span className="flex items-center gap-1 text-xs text-gray-500">
                       <Calendar className="w-3 h-3" />
                       {new Date(c.savedAt).toLocaleDateString("ru-RU")}
+                    </span>
+                    <span className="text-xs font-semibold text-lime">
+                      {c.totalPrice.toLocaleString("ru-RU")} ₽
                     </span>
                   </div>
                 </div>

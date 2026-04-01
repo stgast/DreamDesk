@@ -1,38 +1,53 @@
+// ============================================
+// DreamDesk — Prisma Schema
+// ============================================
+// База данных: PostgreSQL (продакшен) / SQLite (разработка)
+//
+// Для PostgreSQL в .env:
+//   DATABASE_URL="postgresql://user:password@localhost:5432/dreamdesk?schema=public"
+//
+// Для SQLite (по умолчанию для разработки):
+//   DATABASE_URL="file:./dev.db"
+// ============================================
+
 generator client {
   provider = "prisma-client-js"
 }
 
+// Переключите provider на "postgresql" при деплое на сервер с PostgreSQL
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
-model Device {
-  id          String   @id @default(cuid())
-  name        String
-  type        String   // mouse, keyboard, headphones, mousepad
-  brand       String
-  price       Float
-  color       String
-  imageUrl    String?
-  description String?
-  createdAt   DateTime @default(now())
+// Категория товаров (Мониторы, Клавиатуры, Мыши и т.д.)
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique  // "Мониторы", "Клавиатуры" и т.д.
+  slug     String    @unique  // "monitors", "keyboards" — для фильтрации
+  icon     String?            // Название иконки из lucide-react
+  order    Int       @default(0)  // Порядок отображения в UI
+
+  products Product[]
+
+  createdAt DateTime @default(now())
 }
 
-model UserPreference {
-  id            String   @id @default(cuid())
-  mouseGrip     String?  // palm, claw, fingertip
-  headphoneType String?  // over-ear, on-ear, in-ear
-  deskSize      String?  // small, medium, large
-  budget        String?  // low, medium, high
-  createdAt     DateTime @default(now())
-}
+// Товар (конкретная периферия)
+model Product {
+  id             String   @id @default(cuid())
+  name           String              // "LG 27UL850-W"
+  description    String?             // Краткое описание
+  price          Float               // Цена в рублях
+  imageUrl       String?             // URL изображения
+  connectionType String              // "USB", "XLR", "Wireless", "HDMI", "USB-C" и т.д.
+  features       String   @default("[]") // JSON-массив характеристик: ["4K", "HDR", "IPS"]
+  weight         Float?              // Вес в граммах (для проверки совместимости)
 
-model SetupConfiguration {
-  id          String   @id @default(cuid())
-  name        String
-  deviceIds   String   // JSON array of device IDs
-  layout      String?  // JSON: positions on virtual desk
-  preferences String?  // JSON: linked UserPreference
-  createdAt   DateTime @default(now())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([categoryId])
 }

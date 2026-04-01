@@ -1,3 +1,7 @@
+// ============================================
+// DreamDesk — Верхняя панель (Header)
+// ============================================
+
 "use client";
 
 import Link from "next/link";
@@ -7,8 +11,8 @@ import { useApp } from "@/context/AppContext";
 
 const PAGE_TITLES: Record<string, string> = {
   "/": "Главная",
-  "/catalog": "Каталог периферии",
   "/build": "Конфигуратор",
+  "/catalog": "Каталог периферии",
   "/profile": "Профиль",
 };
 
