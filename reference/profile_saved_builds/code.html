@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#003210",
+                    "surface-container-highest": "#34343a",
+                    "surface-variant": "#34343a",
+                    "tertiary-fixed": "#ffdfa0",
+                    "on-tertiary-container": "#372700",
+                    "on-error": "#690005",
+                    "inverse-on-surface": "#2f3035",
+                    "on-primary": "#002e69",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-high": "#292a2f",
+                    "secondary-fixed": "#89fa9b",
+                    "surface-bright": "#38393e",
+                    "secondary-container": "#30a550",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "outline": "#8c909f",
+                    "inverse-primary": "#005ac1",
+                    "secondary": "#6ddd81",
+                    "on-surface-variant": "#c2c6d5",
+                    "on-primary-fixed": "#001a41",
+                    "surface": "#121318",
+                    "on-secondary-fixed-variant": "#005320",
+                    "on-tertiary-fixed": "#261a00",
+                    "primary-fixed-dim": "#adc6ff",
+                    "secondary-fixed-dim": "#6ddd81",
+                    "on-background": "#e3e2e9",
+                    "on-secondary": "#003914",
+                    "surface-container-low": "#1a1b20",
+                    "tertiary-container": "#b88900",
+                    "on-primary-fixed-variant": "#004494",
+                    "inverse-surface": "#e3e2e9",
+                    "on-secondary-fixed": "#002108",
+                    "on-surface": "#e3e2e9",
+                    "tertiary-fixed-dim": "#fbbc05",
+                    "error": "#ffb4ab",
+                    "on-tertiary": "#402d00",
+                    "on-primary-container": "#00285c",
+                    "error-container": "#93000a",
+                    "surface-container": "#1e1f24",
+                    "primary": "#adc6ff",
+                    "outline-variant": "#424753",
+                    "surface-container-lowest": "#0d0e13",
+                    "background": "#121318",
+                    "primary-container": "#4d8efe",
+                    "surface-tint": "#adc6ff",
+                    "tertiary": "#fbbc05",
+                    "surface-dim": "#121318"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #121318; color: #e3e2e9; }
+        .headline-font { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-[#121318]/70 backdrop-blur-xl shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-black tracking-tighter text-white uppercase headline-font">ArchitectOS</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white transition-colors duration-300 font-label text-sm tracking-wide" href="#">Configurator</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white transition-colors duration-300 font-label text-sm tracking-wide" href="#">Catalog</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white transition-colors duration-300 font-label text-sm tracking-wide" href="#">Compare</a>
+<a class="text-[#adc6ff] border-b-2 border-[#adc6ff] pb-1 font-label text-sm tracking-wide" href="#">Profile</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="scale-95 transition-transform duration-200 active:scale-90 text-on-surface-variant hover:text-white">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a tech-savvy professional male with short hair and glasses, minimalist studio lighting, high-end editorial feel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj-igUN_UpB4o6BsdfsOO8x36BKreVSYDWTnyaYS72jQcuN7QwsbjNMTscFhRx2P6JYhVqwSuAH6QiSHxn1kC0dGzsKMMJrsK-4nszzKNuyoA164SvkwGLbqZ50trSUdlP7nsM9DgTLaf16gIMWBc3kWOmz38CC_XixkRQEgq4fRLW8m1polVDSLcRaGRXWsss7sr1540Yqd2G9OktwRrOwDAGjxue8ZxTuWlu4j8521tWYbPo2c2WQAvFDsLioQKG6qnlzlEeGbM"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-[1920px] mx-auto">
+<!-- Hero Section: User Profile -->
+<section class="relative mb-24">
+<div class="flex flex-col md:flex-row items-end gap-10">
+<div class="relative">
+<div class="w-48 h-48 md:w-56 md:h-56 rounded-xl overflow-hidden shadow-2xl bg-surface-container">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Portrait of a modern digital architect, soft cinematic lighting, dark textured background, professional profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB74bQmjfFvJ-fScE4l_uoHNs3VR1dGiS-ha9o1PIaCB4oTFWOvu5V8PKvo2wUkLdXhGkwgc3Hm56wa2BYca0OLtK6ZxEqC1ZddgVhDuiB0r8FlijgW05Od1uk6DxIk95Z2yJS3DVEIxwcrT46BPbSnEogVlAlL1kUfZ8FN_4t0YVprmprP18EWuYI5gApsrn6ATRzvqJFjLfiSAoiz6De-48xL0s34VrNE8a-re3Fdx7MWb8qG5QB_P8tm3L2vGSaxhj8lGh2Hl1Y"/>
+</div>
+<div class="absolute -bottom-4 -right-4 bg-gradient-to-br from-[#adc6ff] to-[#4d8efe] p-3 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-surface text-xl" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="flex-1 space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-white/5">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant">Pro Architect</span>
+</div>
+<h1 class="text-6xl md:text-8xl font-black tracking-tighter text-white headline-font leading-tight">Alex<br/>Vanguard</h1>
+<div class="flex flex-wrap gap-8 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="calendar_today">calendar_today</span>
+<span class="text-sm font-medium">Joined Oct 2023</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="location_on">location_on</span>
+<span class="text-sm font-medium">San Francisco, CA</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="account_tree">account_tree</span>
+<span class="text-sm font-medium">12 Configurations</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Account Settings: Left Column -->
+<aside class="lg:col-span-4 space-y-8">
+<div class="bg-surface-container-low p-8 rounded-lg">
+<h3 class="text-xl font-bold text-white mb-8 headline-font uppercase tracking-widest">Account Settings</h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Email Address</label>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-full border border-white/5 group hover:border-primary/30 transition-colors">
+<span class="text-sm text-on-surface">alex.v@architect.io</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-sm" data-icon="edit">edit</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Security</label>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-full border border-white/5 group hover:border-primary/30 transition-colors">
+<span class="text-sm text-on-surface">Password: ••••••••••</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-sm" data-icon="lock_reset">lock_reset</span>
+</div>
+</div>
+<div class="pt-4 border-t border-white/5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-4 block">Linked Accounts</label>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 p-4 bg-surface-container-highest/30 rounded-lg">
+<div class="w-6 h-6 flex items-center justify-center bg-white rounded-full">
+<svg class="w-4 h-4" viewbox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+</div>
+<div class="flex-1">
+<div class="text-sm font-bold">Google Workspace</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Connected</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-surface-container-highest/10 rounded-lg border border-dashed border-white/10 group hover:border-primary/50 transition-colors cursor-pointer">
+<div class="w-6 h-6 flex items-center justify-center bg-white/10 rounded-full">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</div>
+<div class="flex-1">
+<div class="text-sm font-medium text-on-surface-variant">Add GitHub Account</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-[#1e1f24] to-[#121318] p-8 rounded-lg border border-white/5">
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h4 class="text-lg font-bold text-white headline-font">Lifetime Architect</h4>
+<p class="text-sm text-on-surface-variant">You have unlocked all premium catalog items and priority shipping for life.</p>
+<button class="w-full py-3 px-6 rounded-full bg-surface-container-high text-primary font-bold text-sm hover:bg-surface-bright transition-colors">Manage Subscription</button>
+</div>
+</div>
+</aside>
+<!-- Saved Builds Section: Right Column -->
+<section class="lg:col-span-8 space-y-12">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-black text-white headline-font tracking-tighter">Saved Workspace Builds</h2>
+<p class="text-on-surface-variant mt-2">Manage and iterate on your configured architectural setups.</p>
+</div>
+<button class="flex items-center gap-2 bg-gradient-to-br from-[#adc6ff] to-[#4d8efe] text-on-primary font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined text-lg" data-icon="add_circle">add_circle</span>
+<span>New Build</span>
+</button>
+</div>
+<!-- Bento Grid for Saved Builds -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Build Card 1 -->
+<div class="group relative bg-surface-container rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:bg-surface-container-high border border-transparent hover:border-white/5">
+<div class="h-48 overflow-hidden">
+<img alt="Mechanical Keyboard Build" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="High-end custom mechanical keyboard with translucent keycaps, neon purple backlighting, on a dark carbon fiber desk mat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmH314CUWcZitwsWnp-jlW8biaQ9LmkETv2hIRk6QxkZTfoO8AnovE5GzbYnBRnN4KHtJJa9owaJUScNEC4jYKMyUQpayvXuObxZsTHg1KFVPn35MOAHSJKvQFyABeQIIsvh3yT-l1GC8tzIno7odgZ4tGkagbIBwPwHb6pZn5kqRlQM6qy40QIz4Qrugb2lyzpZZKYb8LdsKO-Hd2PaXaemzznlYdwdNJ57L-ubhBE8D9ljNCzYaL1un181SvSJ2GzAQOSOEzqss"/>
+<div class="absolute top-4 right-4 bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-white uppercase tracking-widest border border-white/10">Active Build</div>
+</div>
+<div class="p-8 flex-1 flex flex-col justify-between space-y-6">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-bold text-white headline-font">Midnight Matrix</h3>
+<span class="text-primary font-bold">$1,249.00</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-0.5 rounded-sm bg-surface-container-highest text-on-surface-variant uppercase font-bold">Linear Switches</span>
+<span class="text-[10px] px-2 py-0.5 rounded-sm bg-surface-container-highest text-on-surface-variant uppercase font-bold">4K Monitor</span>
+<span class="text-[10px] px-2 py-0.5 rounded-sm bg-surface-container-highest text-on-surface-variant uppercase font-bold">DAC/Amp</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 py-3 rounded-full bg-surface-container-lowest text-white font-bold text-sm border border-white/5 hover:bg-surface-bright transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+                                    Edit Build
+                                </button>
+<button class="p-3 rounded-full bg-surface-container-lowest text-white border border-white/5 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Build Card 2 -->
+<div class="group relative bg-surface-container rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:bg-surface-container-high border border-transparent hover:border-white/5">
+<div class="h-48 overflow-hidden">
+<img alt="Minimalist Workstation" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Ultra-minimalist white workspace setup with a slim laptop, wooden desk, soft natural morning light through a window, clean aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn7_DiZi-NfkSnaT0mDibMWDdu5e8Qg-6FUzvk4QiMp2dPcuq3Ksct5gUZebJUQ8Q3K5jsKTTTLV-n23FlRSXSoTTnBQp8S0l8A78I6TnPByBoSCycdH6ThSgwmUr0FHFRyrLaWsgzqjDDvlOL_hYHEnRTMpcGHmRsAs26bcS-n_3g9sjfOt6hURBREAE3X7cnHWx6j8rW_VmFnqj7gCqdt1WGypwaEatGAUehcKH-dGekevRU24aYl8ynbrd8qmlxojekrN0wt2Y"/>
+</div>
+<div class="p-8 flex-1 flex flex-col justify-between space-y-6">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-bold text-white headline-font">The Ghost Deck</h3>
+<span class="text-primary font-bold">$840.50</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-0.5 rounded-sm bg-surface-container-highest text-on-surface-variant uppercase font-bold">Low Profile</span>
+<span class="text-[10px] px-2 py-0.5 rounded-sm bg-surface-container-highest text-on-surface-variant uppercase font-bold">Wireless</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 py-3 rounded-full bg-surface-container-lowest text-white font-bold text-sm border border-white/5 hover:bg-surface-bright transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+                                    Edit Build
+                                </button>
+<button class="p-3 rounded-full bg-surface-container-lowest text-white border border-white/5 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Build Card 3 (Wide Layout) -->
+<div class="md:col-span-2 group relative bg-surface-container rounded-lg overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:bg-surface-container-high border border-transparent hover:border-white/5">
+<div class="w-full md:w-1/2 h-64 md:h-auto overflow-hidden">
+<img alt="Studio Setup" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="High-end professional audio studio setup with large studio monitors, acoustic foam walls, warm amber ambient lighting, detailed focus on the sound console" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZX3LV5w1xaUbqrI1wBSfpJSSS91LFmdIEXbwcJyXDpSmK4GmdXMxgDZe3MtvDwPGjvuLAYQUFD1x3qvgvuvXsksuQs7IXbTFT6Jr6ZOFGlLu6x8O0WvL8XPoK33y8cfy14x1SkPnzy-WMuKXIC9OS92FOoAbMoQj5LutfomOEo9XxjteLeAXibL62DntWjItt2oKR31RaEXZagSKO9x_03VYWRVSRkI4vJR5bA9fxLurJ1IH-pK4QWwyLi1WN3sSAVFrYmLP_mNY"/>
+</div>
+<div class="w-full md:w-1/2 p-10 flex flex-col justify-between space-y-6">
+<div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-3xl font-black text-white headline-font tracking-tighter">Sonic Sanctum</h3>
+<span class="text-2xl font-black text-primary">$4,820.00</span>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-3 mb-6">A high-fidelity audio environment featuring top-tier DACs, planar magnetic headphones, and calibrated near-field monitors for precise sound engineering.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant uppercase font-black tracking-widest">Master Studio</span>
+<span class="text-[10px] px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant uppercase font-black tracking-widest">Audiophile Grade</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-4 rounded-full bg-gradient-to-br from-[#adc6ff] to-[#4d8efe] text-on-primary font-bold text-sm hover:shadow-xl transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+                                    Continue Configuring
+                                </button>
+<button class="px-6 rounded-full bg-surface-container-lowest text-white border border-white/5 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#121318] w-full py-12 px-12 mt-24 border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 max-w-[1920px] mx-auto">
+<div class="text-white font-bold headline-font uppercase tracking-tighter text-xl">ArchitectOS</div>
+<div class="flex flex-wrap justify-center gap-10">
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-xs font-medium uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-xs font-medium uppercase tracking-widest" href="#">Terms of Service</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-xs font-medium uppercase tracking-widest" href="#">Shipping</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-xs font-medium uppercase tracking-widest" href="#">Contact</a>
+</div>
+<div class="text-[#9ea3af] font-label text-[10px] uppercase tracking-widest">
+                © 2024 Digital Architect Peripherals.
+            </div>
+</div>
+</footer>
+</body></html>

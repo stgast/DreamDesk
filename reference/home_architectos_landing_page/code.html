@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ArchitectOS | The Future of Custom Peripherals</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#292a2f",
+                      "tertiary": "#fbbc05",
+                      "primary-fixed": "#d8e2ff",
+                      "on-surface-variant": "#c2c6d5",
+                      "on-primary": "#002e69",
+                      "surface-container-highest": "#34343a",
+                      "secondary": "#6ddd81",
+                      "on-secondary": "#003914",
+                      "outline-variant": "#424753",
+                      "on-background": "#e3e2e9",
+                      "surface-dim": "#121318",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#1a1b20",
+                      "secondary-fixed-dim": "#6ddd81",
+                      "on-error-container": "#ffdad6",
+                      "inverse-surface": "#e3e2e9",
+                      "tertiary-fixed-dim": "#fbbc05",
+                      "on-primary-container": "#00285c",
+                      "surface-tint": "#adc6ff",
+                      "surface-container": "#1e1f24",
+                      "inverse-on-surface": "#2f3035",
+                      "surface": "#121318",
+                      "on-error": "#690005",
+                      "on-secondary-fixed-variant": "#005320",
+                      "on-secondary-container": "#003210",
+                      "primary": "#adc6ff",
+                      "error-container": "#93000a",
+                      "surface-bright": "#38393e",
+                      "background": "#121318",
+                      "surface-container-lowest": "#0d0e13",
+                      "on-surface": "#e3e2e9",
+                      "inverse-primary": "#005ac1",
+                      "on-primary-fixed-variant": "#004494",
+                      "on-secondary-fixed": "#002108",
+                      "on-primary-fixed": "#001a41",
+                      "on-tertiary-container": "#372700",
+                      "secondary-container": "#30a550",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "on-tertiary-fixed": "#261a00",
+                      "tertiary-container": "#b88900",
+                      "secondary-fixed": "#89fa9b",
+                      "primary-fixed-dim": "#adc6ff",
+                      "tertiary-fixed": "#ffdfa0",
+                      "primary-container": "#4d8efe",
+                      "outline": "#8c909f",
+                      "surface-variant": "#34343a",
+                      "on-tertiary": "#402d00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #121318;
+            color: #e3e2e9;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-[#121318]/70 backdrop-blur-xl shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-black tracking-tighter text-white uppercase font-headline">
+                ArchitectOS
+            </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-[#adc6ff] border-b-2 border-[#adc6ff] pb-1 font-label text-sm tracking-wide transition-colors duration-300" href="#">Configurator</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white font-label text-sm tracking-wide transition-colors duration-300" href="#">Catalog</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white font-label text-sm tracking-wide transition-colors duration-300" href="#">Compare</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white font-label text-sm tracking-wide transition-colors duration-300" href="#">Profile</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="scale-95 transition-transform duration-200 active:scale-90 text-[#adc6ff]">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Stylized 3D avatar of a tech-savvy user with glasses and sleek headphones in a minimalist artistic style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpsiPhbPul_ANa_6cachBSc2SALevtLvib7d38zOYB9twQ41c1t1bVm9iH7RM9plRd31VYGnNcH0HwsbvzNSfD4j2uVFq_V-ARD0yln9IfkCLSACWYAMdNeT1m8HQprLmJjbaOHHkYNAqTKwO3tRX_a3F1ZtpWg0tjRTJIEgDdj6Bfrjt0WJzxuGyaaNuwt1BcvPY60hDPRMvvaZtJUJSPIH7QwHCO96aO0mFyEH3PGS7Y-O823MwHBmMFxXbV76AAi00f89N6UsQ"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center px-12 overflow-hidden">
+<div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="z-10">
+<span class="inline-block py-1 px-4 rounded-full bg-primary-container/20 text-primary font-label text-xs tracking-widest uppercase mb-6">Redefining Ergonomics</span>
+<h1 class="text-6xl md:text-8xl font-black font-headline tracking-tighter text-white mb-8 leading-none">
+                        DESIGN YOUR <span class="text-transparent bg-clip-text bg-gradient-to-br from-primary to-primary-container">OS</span>
+</h1>
+<p class="text-on-surface-variant text-xl max-w-lg mb-12 leading-relaxed">
+                        The ultimate peripheral configurator. Professional hardware, architected by you. Precise, weightless, and flawlessly integrated.
+                    </p>
+<div class="flex flex-wrap gap-6">
+<button class="px-8 py-4 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold transition-transform hover:scale-105 active:scale-95">
+                            Start Building
+                        </button>
+<button class="px-8 py-4 rounded-full bg-surface-container-high text-white font-medium border border-outline-variant/15 hover:bg-surface-container-highest transition-colors">
+                            Watch Concept
+                        </button>
+</div>
+</div>
+<div class="relative lg:h-[800px] flex items-center justify-center">
+<!-- Decorative Background Glow -->
+<div class="absolute inset-0 bg-primary/20 blur-[120px] rounded-full scale-75"></div>
+<!-- 3D Peripheral Visual -->
+<div class="relative z-10 w-full h-full flex items-center justify-center">
+<img alt="3D floating mechanical keyboard" class="w-full h-auto object-contain drop-shadow-[0px_48px_96px_rgba(0,0,0,0.5)] transform rotate-[-12deg]" data-alt="High-end mechanical keyboard with glowing translucent keycaps floating in mid-air against a dark, minimalist background with soft blue atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ9BZ9hHei8m3HpWvrYhducC3PbV07Yas8tRPtmHnMFxZFrcYLkfMZE-vA8Hxj417uuDuUMDUHfU9NDK433ssZltu-83GHXCzsd7ufONSLZlh97rI32JuUR3nsvJCsEkBSt26Nqj8GQmCsodQS7ReC_rvrVNzDXP2_GfxbAK4bXaB6zeoh28VqL0vz8ecbE60s71cNhAAWC_WxT9xwVVT9h6pVhiUvC-ZeTyZiHi133nzRo7jLbu8uDfM0Uugg1s0wwlUHAxAMi1Y"/>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-32 px-12 bg-surface-container-lowest">
+<div class="container mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+<div class="max-w-2xl">
+<h2 class="text-4xl md:text-6xl font-black font-headline tracking-tight text-white mb-6">HOW IT ARCHITECTS</h2>
+<p class="text-on-surface-variant text-lg">A seamless pipeline from imagination to your desk.</p>
+</div>
+<span class="text-primary font-mono text-sm tracking-widest">PROCESS_01-03</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Step 1 -->
+<div class="group p-8 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-500">
+<div class="w-16 h-16 rounded-2xl bg-primary-container/20 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">precision_manufacturing</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-4">The Configurator</h3>
+<p class="text-on-surface-variant leading-relaxed">Choose switches, keycaps, and shells. Real-time 3D feedback as you swap every component.</p>
+</div>
+<!-- Step 2 -->
+<div class="group p-8 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-500">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container/20 flex items-center justify-center text-secondary mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">verified</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-4">Compatibility Check</h3>
+<p class="text-on-surface-variant leading-relaxed">Our AI engine ensures every part you select is perfectly compatible and performance-optimized.</p>
+</div>
+<!-- Step 3 -->
+<div class="group p-8 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all duration-500">
+<div class="w-16 h-16 rounded-2xl bg-tertiary-container/20 flex items-center justify-center text-tertiary mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">compare_arrows</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-4">Compare Features</h3>
+<p class="text-on-surface-variant leading-relaxed">Instantly side-by-side multiple builds to find the perfect weight, latency, and aesthetic balance.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Categories (Bento Grid) -->
+<section class="py-32 px-12">
+<div class="container mx-auto">
+<div class="mb-16">
+<h2 class="text-4xl font-black font-headline tracking-tight text-white uppercase">The Catalog</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 min-h-[600px]">
+<!-- Keyboards -->
+<div class="md:col-span-2 md:row-span-2 relative rounded-lg overflow-hidden group">
+<img alt="Keyboards" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close-up of premium mechanical keyboard switches and high-quality PBT keycaps with soft focused background lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6WG9Lvpkvp18r8gnwBPNN7DDglYl9DRM-gdeCArFENbAeDiCArgMDn2WD4qYzvn7alJ0KL1xA5YqCo82_1EsEyi7b54vAqZcc31LgjIwAys5LzOVr9eE6RJGD1dPxlCboTaYiK5cq24qdjZATw50EaziDW7d2YZhhfZF72T62hwujeK9wwLmBDj2v0ptvMV2Uo4QFJGJFbv3QIS6lGkG0q92P2kzT3H4Qma797pwcjxvoCr9qXDmKSKk_K9afimu6Yb-NVXNtWcA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h3 class="text-3xl font-bold text-white mb-2">Keyboards</h3>
+<p class="text-on-surface-variant mb-6">60%, TKL, Full-size architectures.</p>
+<span class="material-symbols-outlined text-white">arrow_forward</span>
+</div>
+</div>
+<!-- Mice -->
+<div class="md:col-span-2 relative rounded-lg overflow-hidden group">
+<img alt="Mice" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Sleek wireless gaming mouse with carbon fiber texture and glowing LED accents on a dark surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuCOuoG5YGDyle_OVO24igUae_EEzVKBuDjIgk4gXOoV60HA-UC1eaO3kWuC2nyWsIumhHP1a45ocUSc_0OmfJh2R8CPpOauQ_OI7-RLILi8tVuoUblCJ1nSEYy4pnI6byowzaxU50i6gh7pB4uj9eCbKFNnCvvewmiFsDykuuXKIWWf5XByTK6mSNFoPvW3XFZ3DVVJNOPlGeN3xA2PRbNokAgDmzx40hFFh13l2o_xocJXoR9cez_2ktAnJKpN81yOZKBUNmSSA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h3 class="text-2xl font-bold text-white mb-1">Mice</h3>
+<span class="text-on-surface-variant">Precision optics &amp; weight kits.</span>
+</div>
+</div>
+<!-- Audio -->
+<div class="relative rounded-lg overflow-hidden group">
+<img alt="Audio" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Professional studio headphones on a minimalist stand with ambient moody lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKoXe3LLLmWqai27QeSMw9foFmJGBgViEhZ4dFpwtXPpVfAhB7rKewcBefsuDViJau7c4lIjbKuVw52kZ0PW6m8OKbSST64YnK-3H92f8AcBCEPkEzZfs07E1AVQLbIvO8lzJqUViEu26Ds3foMnOKVQyqkxa_i56zJ_HZwjheC25A3b9taJA9wW8hbasN7ZioJIR_j3fn9lIywFQBrj1wa0hhri7MtRWjXDcfNKDDEA_VYOonsZevDquxXe7zBJkJbOspp6KME7o"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="text-xl font-bold text-white">Audio</h4>
+</div>
+</div>
+<!-- Microphones -->
+<div class="relative rounded-lg overflow-hidden group">
+<img alt="Microphones" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Professional USB condenser microphone with pop filter in a dark podcasting studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANbpBs90cumT8Yt6wt_tFLupaLmzWIb5ifkFJmuKNyCexr0Avm-i0nWl-9EQj-eJs7ttj27FUSjYL6gN4iHBKuLKbfZ9OKrd6wjsVoyK7vUoDnZAaRrLDTnfBxGzdKnSWI4o0BbOiAt3OT--Sq3tkVIZS4liQXrZPNSng7zgyF0ACA-QzlubtFdLGSrfdzlsn0yCFirxrHLF4cn_LfcBJrN7lf_oKdp9EhK-iQ20kEcE8ZRvyVfgab8hY8n2zAxDRJaNcTtt-jOFs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="text-xl font-bold text-white">Mics</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why ArchitectOS -->
+<section class="py-32 px-12 bg-surface">
+<div class="container mx-auto bg-surface-container-low rounded-lg p-12 md:p-24 relative overflow-hidden">
+<!-- Background decoration -->
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[100px] -mr-48 -mt-48 rounded-full"></div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-24">
+<div>
+<h2 class="text-5xl font-black font-headline tracking-tight text-white mb-8">WHY ARCHITECTOS?</h2>
+<div class="space-y-12">
+<div class="flex gap-6">
+<div class="text-primary"><span class="material-symbols-outlined text-3xl">auto_fix_high</span></div>
+<div>
+<h4 class="text-xl font-bold text-white mb-2">Infinite Customization</h4>
+<p class="text-on-surface-variant">Every millimetre of your hardware can be tailored to your workflow and ergonomic needs.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="text-secondary"><span class="material-symbols-outlined text-3xl">speed</span></div>
+<div>
+<h4 class="text-xl font-bold text-white mb-2">Zero-Latency Guarantee</h4>
+<p class="text-on-surface-variant">We only source chips and sensors with the lowest measured response times on the market.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="text-tertiary"><span class="material-symbols-outlined text-3xl">earthquake</span></div>
+<div>
+<h4 class="text-xl font-bold text-white mb-2">Sustainability Mindset</h4>
+<p class="text-on-surface-variant">Modular designs mean you replace parts, not devices. Built to last a decade, not a season.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="aspect-square w-full glass-panel bg-white/5 border border-white/10 rounded-lg p-12 flex flex-col justify-center text-center">
+<h3 class="text-8xl font-black text-white mb-4">99%</h3>
+<p class="text-2xl text-primary font-headline uppercase tracking-widest mb-8">Accuracy Rate</p>
+<p class="text-on-surface-variant italic">"The ArchitectOS configurator predicted my ergonomic preferences before I even knew I had them."</p>
+<div class="mt-8 flex justify-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-32 px-12 text-center">
+<div class="container mx-auto">
+<h2 class="text-5xl md:text-7xl font-black font-headline tracking-tighter text-white mb-12">READY TO BUILD?</h2>
+<button class="px-12 py-6 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary text-xl font-bold transition-all hover:scale-110 active:scale-95 shadow-[0px_24px_48px_rgba(173,198,255,0.2)]">
+                    Enter the Configurator
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-12 mt-24 border-t border-white/5 bg-[#121318]">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 max-w-[1920px] mx-auto">
+<div class="text-white font-bold text-lg">ArchitectOS</div>
+<div class="flex gap-10">
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-sm font-label" href="#">Privacy Policy</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-sm font-label" href="#">Terms of Service</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-sm font-label" href="#">Shipping</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] transition-opacity opacity-80 hover:opacity-100 text-sm font-label" href="#">Contact</a>
+</div>
+<div class="text-[#9ea3af] text-sm font-label">
+                © 2024 Digital Architect Peripherals.
+            </div>
+</div>
+</footer>
+</body></html>

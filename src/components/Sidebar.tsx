@@ -41,7 +41,7 @@ export function Sidebar() {
       </div>
 
       {/* Навигация */}
-      <nav className="flex-1 flex flex-col gap-1 p-2 mt-2">
+      <nav className="flex-1 flex flex-col justify-center gap-2 p-2">
         {nav.map(({ href, label, icon: Icon }) => {
           const active =
             pathname === href || (href !== "/" && pathname.startsWith(href));
@@ -50,11 +50,11 @@ export function Sidebar() {
               key={href}
               href={href}
               className={clsx(
-                "flex items-center gap-3 rounded-lg text-sm font-medium transition-all duration-200 h-10",
-                sidebarCollapsed ? "justify-center px-0" : "px-3",
+                "group relative flex items-center gap-3 rounded-xl text-sm font-medium transition-all duration-300 h-11 pointer-events-auto",
+                sidebarCollapsed ? "justify-center px-0" : "px-4",
                 active
-                  ? "bg-accent/15 text-accent"
-                  : "text-gray-400 hover:text-white hover:bg-dark-hover"
+                  ? "bg-accent/10 text-accent border border-accent/20 shadow-[0_0_15px_var(--glow-color)]"
+                  : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10"
               )}
               title={sidebarCollapsed ? label : undefined}
             >

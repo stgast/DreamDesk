@@ -86,7 +86,7 @@ export function AIChat() {
           {
             id: `ai-${Date.now()}`,
             role: "assistant",
-            content: data.message,
+            content: data.message || data.content,
           },
         ]);
       }

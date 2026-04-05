@@ -11,7 +11,6 @@ import type { Product, Category } from "@/types";
 import { useSetup } from "@/context/SetupContext";
 import { ProductCard } from "./ProductCard";
 import { SetupPanel } from "./SetupPanel";
-import { AIChat } from "./AIChat";
 import { CategoryTabs } from "./CategoryTabs";
 
 interface ConfiguratorProps {
@@ -22,7 +21,6 @@ interface ConfiguratorProps {
 export function Configurator({ products, categories }: ConfiguratorProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [chatOpen, setChatOpen] = useState(false);
   const { addItem } = useSetup();
 
   // Фильтрация товаров по категории и поиску
@@ -104,29 +102,7 @@ export function Configurator({ products, categories }: ConfiguratorProps) {
 
       {/* ─── ПРАВАЯ КОЛОНКА: Сборка + AI ─── */}
       <div className="w-[420px] shrink-0 flex flex-col bg-dark-surface">
-        {/* Панель текущей сборки */}
         <SetupPanel />
-
-        {/* Кнопка открытия AI-чата */}
-        <button
-          type="button"
-          onClick={() => setChatOpen((v) => !v)}
-          className={`mx-4 mb-3 flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition ${
-            chatOpen
-              ? "bg-accent text-white"
-              : "bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20"
-          }`}
-        >
-          <Sparkles className="w-4 h-4" />
-          {chatOpen ? "Скрыть AI-ассистента" : "Спросить AI-ассистента"}
-        </button>
-
-        {/* Окно чата с AI */}
-        {chatOpen && (
-          <div className="flex-1 min-h-0 border-t border-dark-border">
-            <AIChat />
-          </div>
-        )}
       </div>
     </div>
   );

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Catalog | ArchitectOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .headline {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#003210",
+                      "surface-container-highest": "#34343a",
+                      "surface-variant": "#34343a",
+                      "tertiary-fixed": "#ffdfa0",
+                      "on-tertiary-container": "#372700",
+                      "on-error": "#690005",
+                      "inverse-on-surface": "#2f3035",
+                      "on-primary": "#002e69",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-high": "#292a2f",
+                      "secondary-fixed": "#89fa9b",
+                      "surface-bright": "#38393e",
+                      "secondary-container": "#30a550",
+                      "primary-fixed": "#d8e2ff",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "outline": "#8c909f",
+                      "inverse-primary": "#005ac1",
+                      "secondary": "#6ddd81",
+                      "on-surface-variant": "#c2c6d5",
+                      "on-primary-fixed": "#001a41",
+                      "surface": "#121318",
+                      "on-secondary-fixed-variant": "#005320",
+                      "on-tertiary-fixed": "#261a00",
+                      "primary-fixed-dim": "#adc6ff",
+                      "secondary-fixed-dim": "#6ddd81",
+                      "on-background": "#e3e2e9",
+                      "on-secondary": "#003914",
+                      "surface-container-low": "#1a1b20",
+                      "tertiary-container": "#b88900",
+                      "on-primary-fixed-variant": "#004494",
+                      "inverse-surface": "#e3e2e9",
+                      "on-secondary-fixed": "#002108",
+                      "on-surface": "#e3e2e9",
+                      "tertiary-fixed-dim": "#fbbc05",
+                      "error": "#ffb4ab",
+                      "on-tertiary": "#402d00",
+                      "on-primary-container": "#00285c",
+                      "error-container": "#93000a",
+                      "surface-container": "#1e1f24",
+                      "primary": "#adc6ff",
+                      "outline-variant": "#424753",
+                      "surface-container-lowest": "#0d0e13",
+                      "background": "#121318",
+                      "primary-container": "#4d8efe",
+                      "surface-tint": "#adc6ff",
+                      "tertiary": "#fbbc05",
+                      "surface-dim": "#121318"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<nav class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-[#121318]/70 backdrop-blur-xl shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-black tracking-tighter text-white uppercase">ArchitectOS</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white transition-colors duration-300 text-sm tracking-wide" href="#">Configurator</a>
+<a class="text-[#adc6ff] border-b-2 border-[#adc6ff] pb-1 text-sm tracking-wide" href="#">Catalog</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white transition-colors duration-300 text-sm tracking-wide" href="#">Compare</a>
+<a class="text-on-surface-variant dark:text-[#9ea3af] hover:text-white transition-colors duration-300 text-sm tracking-wide" href="#">Profile</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group hidden sm:block">
+<input class="bg-surface-container-low border-none rounded-full py-2 px-6 w-64 text-sm focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Search components..." type="text"/>
+</div>
+<button class="scale-95 transition-transform duration-200 active:scale-90 text-[#adc6ff]">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/15">
+<img alt="User profile avatar" data-alt="close-up portrait of a professional male designer with a neutral background, soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoTWP0v1Dyr3tGYdhrbQmvk9iiQryFqz9D2F7cK4gc-RIk96ln1bqv_xCJjaMxRws4UpwWIFj_zZOxBUZJbuY4mP11Md0KK-3zIJ2ki-ENE17vBkogIL3NyNoYgWxW9OrdfH1zbGvlUNBeLTqeSlvGZHm9rBjb_GSQHyzqONNkpWjVaPdjpSJEfir-I2BQsw0x6Z45bhgQWVToK4w4qzoJvlmhoIFQHIm8xD4AE-czJtGbyk0nZE3lp-G_kyLPPFwoFlJu1td3TlA"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="flex min-h-screen pt-24 px-12 max-w-[1920px] mx-auto gap-12">
+<aside class="hidden lg:flex flex-col p-6 w-72 rounded-r-3xl h-[calc(100vh-120px)] mt-4 bg-[#1a1b20] sticky top-28 overflow-y-auto">
+<div class="mb-8">
+<h2 class="text-lg font-bold text-white">Catalog Filters</h2>
+<p class="text-xs text-[#9ea3af] mt-1">Refine by specs</p>
+</div>
+<div class="space-y-6 flex-1">
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-widest text-[#9ea3af] mb-4">Categories</h3>
+<div class="space-y-2">
+<button class="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-br from-[#adc6ff] to-[#4d8efe] text-[#121318] rounded-full transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="keyboard">keyboard</span>
+<span class="font-medium text-sm">Keyboards</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#9ea3af] hover:bg-[#292a2f] rounded-full transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="mouse">mouse</span>
+<span class="font-medium text-sm">Mice</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#9ea3af] hover:bg-[#292a2f] rounded-full transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="headphones">headphones</span>
+<span class="font-medium text-sm">Audio</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#9ea3af] hover:bg-[#292a2f] rounded-full transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="monitor">monitor</span>
+<span class="font-medium text-sm">Monitors</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#9ea3af] hover:bg-[#292a2f] rounded-full transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="dock">dock</span>
+<span class="font-medium text-sm">Accessories</span>
+</button>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-widest text-[#9ea3af] mb-4">Price Range</h3>
+<div class="px-2">
+<input class="w-full h-1.5 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+<div class="flex justify-between mt-2 text-[10px] text-[#9ea3af] font-mono">
+<span>$0</span>
+<span>$1,200</span>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-widest text-[#9ea3af] mb-4">Brand</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 rounded border border-outline-variant group-hover:border-primary transition-colors"></div>
+<span class="text-sm text-[#9ea3af] group-hover:text-white">Razer</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 rounded border border-outline-variant group-hover:border-primary transition-colors"></div>
+<span class="text-sm text-[#9ea3af] group-hover:text-white">Logitech G</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 rounded border border-outline-variant group-hover:border-primary transition-colors"></div>
+<span class="text-sm text-[#9ea3af] group-hover:text-white">SteelSeries</span>
+</label>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-white/5">
+<button class="w-full flex items-center justify-center gap-2 text-primary py-2 text-sm font-medium hover:bg-surface-container-high rounded-full transition-all">
+                    Reset Filters
+                </button>
+<div class="mt-4 flex items-center gap-3 px-4 py-3 text-[#9ea3af] hover:bg-[#292a2f] rounded-full transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
+<span class="font-medium text-sm">Support</span>
+</div>
+</div>
+</aside>
+<section class="flex-1 py-4">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<h1 class="text-5xl font-extrabold tracking-tighter text-white mb-2">Mechanical Keyboards</h1>
+<p class="text-on-surface-variant max-w-lg">Engineered for precision. Designed for architects. Discover our selection of low-profile and custom mechanical boards.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 rounded-full bg-surface-container-high text-on-surface text-sm font-medium border border-outline-variant/15 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
+                        Latest Arrivals
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+<div class="group bg-surface-container rounded-lg overflow-hidden transition-all duration-300 hover:bg-surface-container-high hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container-lowest">
+<img alt="Keyboard item" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="high-end white mechanical keyboard with RGB lighting on a minimalist dark desk setup, professional photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQg8r7aEr7rzEsTjX0i8ioKUR4a_XRvOP83vMo3IExheBEBJIc8P5VZebTDeOj6d7i8pB2YJ7a_3wnRFLig1-SFca6SXYsZhAstlvL4GENtr0r0rxTyMYqX4-JQP57Aieky1kV2kppCCpXvsPWk-tbYg-c3yfv_1Tub3_xjTJOHS08eQM-BCKETkBbboyOBNXBTKW4ZOfhct2tDgu3SWvTEDzwYmsO4ZBkSF8Z9KmjeimPBgV7rioIYFgYkh7REpQ3DLB4OTVb0ZU"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary text-on-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">New</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Architect</p>
+<h3 class="text-xl font-bold text-white">MK-01 Obsidian</h3>
+</div>
+<span class="text-xl font-bold text-white">$189</span>
+</div>
+<p class="text-sm text-[#9ea3af] line-clamp-2 mb-8">Silent linear switches with CNC-machined aluminum chassis and PBT keycaps.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full text-sm font-semibold transition-transform duration-200 active:scale-95">View Specs</button>
+<button class="flex-1 py-3 bg-surface-container-highest/50 text-white rounded-full text-sm font-semibold border border-outline-variant/15 transition-transform duration-200 active:scale-95">Compare</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface-container rounded-lg overflow-hidden transition-all duration-300 hover:bg-surface-container-high hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container-lowest">
+<img alt="Keyboard item" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="close up of a dark mechanical keyboard with subtle purple backlighting, cinematic top-down view, moody tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVkwlXGsWphu9sw8C89x6KaP9zZTfI9ZJpr_vXETlgLfKhjdP0ILNa_a_nRo2aWOpLB2DBb0UrpUGiVItDdHzwo1D8vovWJogc-kdlOxlnLhKxJWgG4JBKWK9t_Bq7dfNA_uIGKNLmX6cERTy8Aex_hbrI2YpNNnSTRbV8cRdyzeEQozZQoeQSNwfTli1aIit8fTXi0xzwo70ueOSHWEJNAjyp_Ecbp0jKINU3j2M-nNn4frHdqTA71xiGzlPqVRMTjkqsEg5i_II"/>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Architect</p>
+<h3 class="text-xl font-bold text-white">Phantom 75</h3>
+</div>
+<span class="text-xl font-bold text-white">$249</span>
+</div>
+<p class="text-sm text-[#9ea3af] line-clamp-2 mb-8">Gasket-mounted modular keyboard with interchangeable hot-swap sockets.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full text-sm font-semibold transition-transform duration-200 active:scale-95">View Specs</button>
+<button class="flex-1 py-3 bg-surface-container-highest/50 text-white rounded-full text-sm font-semibold border border-outline-variant/15 transition-transform duration-200 active:scale-95">Compare</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface-container rounded-lg overflow-hidden transition-all duration-300 hover:bg-surface-container-high hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container-lowest">
+<img alt="Keyboard item" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="retro-styled mechanical keyboard with beige keycaps on a clean white surface, soft shadows, airy workspace photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcCSvkkY2VFKsuZ3Ni7Exaz5IhIXGZ6SAhWFWoz9WZQrjuqtS0QS92oX62mVh4QhppP0bzBcJfg3t7poUk5biMs_2mF2Q9l0wleqKnGK4teL8cgRidY2LMuYC-FiXPCZHGWxizQGtWbhDAMljJd03-rOByilWKFpowrbGwzI-W5i8J7dFoLno3nXEwRMRtgdtFlmGllezXSIsXiNuJDnlqbvHOkzYdZLujxgShMwH1oC1FS4NnYvHRP0Aa5kDt-PdFB3NdXAz8Y4Q"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary text-on-tertiary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Classic</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Architect</p>
+<h3 class="text-xl font-bold text-white">Heritage 60</h3>
+</div>
+<span class="text-xl font-bold text-white">$145</span>
+</div>
+<p class="text-sm text-[#9ea3af] line-clamp-2 mb-8">Nostalgic 60% form factor with premium modern clicky switches and retro-styling.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full text-sm font-semibold transition-transform duration-200 active:scale-95">View Specs</button>
+<button class="flex-1 py-3 bg-surface-container-highest/50 text-white rounded-full text-sm font-semibold border border-outline-variant/15 transition-transform duration-200 active:scale-95">Compare</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface-container rounded-lg overflow-hidden transition-all duration-300 hover:bg-surface-container-high hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container-lowest">
+<img alt="Keyboard item" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="extreme macro shot of mechanical keyboard switches, translucent housing with metal springs visible, technical blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqgYIBDK8pqWeG5A8DZLip9WSCJlswMK-shMyWddRxkA48Zi7dbt-KlAARl1zDz4OaIakCAG9P5ZJM4eNoLUGGfQeOi8DeLlTO9xzEASKy53egpV6YnBy_WWk5mBPm1yEevcRpmFtXZZrgBPz9IF1R_NP0OZnh2VcpVWQlVXjP84AHMuV7HMDazv0NVLeHXW6gqJKuH_JQ_--ozL6pPyyTSdIMaeJZ0am0Jkey0OZbvri4s3gTlnB1e3Y_EvnwAEUuBQ5M7Jpxbpc"/>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Logitech G</p>
+<h3 class="text-xl font-bold text-white">Pro X TKL</h3>
+</div>
+<span class="text-xl font-bold text-white">$199</span>
+</div>
+<p class="text-sm text-[#9ea3af] line-clamp-2 mb-8">Tournament-proven performance with LIGHTSPEED wireless technology.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full text-sm font-semibold transition-transform duration-200 active:scale-95">View Specs</button>
+<button class="flex-1 py-3 bg-surface-container-highest/50 text-white rounded-full text-sm font-semibold border border-outline-variant/15 transition-transform duration-200 active:scale-95">Compare</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface-container rounded-lg overflow-hidden transition-all duration-300 hover:bg-surface-container-high hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container-lowest">
+<img alt="Keyboard item" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="professional sleek gaming keyboard with vibrant orange and teal lighting, high contrast shadows, hardware close-up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFT6ImJOo6BL2ERLXl5vTnEZ0X4CfCvs0KM6utJ-CONOOEdd5zUHewEhvovM2os26qvhxhQzCskzDbmPNcyeEAzuYpHXEjRt845q64J-GB_A_mFTiSQK_aBH-5dgh_ExTIA7CIlmPyXRhxiRdE3bHv4O7l-H46NeuU5mZegvP1Rgu54TRMYJiPFIGwP8XTQ12Dqb8JPLxB_SoanWOXk_QaiCm0FHyYRh5LpD7qAcChcwbn4OJf2Yab-GYSeVqI-bLWfor0IGogKds"/>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">SteelSeries</p>
+<h3 class="text-xl font-bold text-white">Apex Pro Mini</h3>
+</div>
+<span class="text-xl font-bold text-white">$239</span>
+</div>
+<p class="text-sm text-[#9ea3af] line-clamp-2 mb-8">World's fastest OmniPoint 2.0 adjustable hyper-magnetic switches.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full text-sm font-semibold transition-transform duration-200 active:scale-95">View Specs</button>
+<button class="flex-1 py-3 bg-surface-container-highest/50 text-white rounded-full text-sm font-semibold border border-outline-variant/15 transition-transform duration-200 active:scale-95">Compare</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface-container rounded-lg overflow-hidden transition-all duration-300 hover:bg-surface-container-high hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)]">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container-lowest">
+<div class="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-[#292a2f]">
+<span class="material-symbols-outlined text-5xl text-primary/30 mb-4" data-icon="auto_awesome">auto_awesome</span>
+<h4 class="text-white font-bold mb-2">Coming Soon</h4>
+<p class="text-xs text-[#9ea3af]">The Architect Stealth Edition. Sign up for early access.</p>
+<button class="mt-6 px-6 py-2 rounded-full border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">Notify Me</button>
+</div>
+</div>
+<div class="p-8 opacity-40">
+<div class="flex justify-between items-start mb-2">
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Architect</p>
+<h3 class="text-xl font-bold text-white">Stealth TKL</h3>
+</div>
+<span class="text-xl font-bold text-white">TBA</span>
+</div>
+<p class="text-sm text-[#9ea3af] line-clamp-2 mb-8">The most silent mechanical experience ever engineered.</p>
+<div class="flex gap-4">
+<div class="flex-1 h-11 bg-surface-container-highest/50 rounded-full"></div>
+<div class="flex-1 h-11 bg-surface-container-highest/50 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full py-12 px-12 mt-24 border-t border-white/5 bg-[#121318]">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 max-w-[1920px] mx-auto">
+<div class="flex flex-col gap-2">
+<span class="text-white font-bold">ArchitectOS</span>
+<p class="text-[#9ea3af] text-sm">© 2024 Digital Architect Peripherals.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-[#9ea3af] hover:text-[#adc6ff] text-sm transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] text-sm transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] text-sm transition-colors opacity-80 hover:opacity-100" href="#">Shipping</a>
+<a class="text-[#9ea3af] hover:text-[#adc6ff] text-sm transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-[#9ea3af] hover:text-white cursor-pointer" data-icon="language">language</span>
+<span class="material-symbols-outlined text-[#9ea3af] hover:text-white cursor-pointer" data-icon="terminal">terminal</span>
+</div>
+</div>
+</footer>
+<div class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-surface/60 backdrop-blur-[32px] rounded-full p-2 flex items-center gap-1 shadow-2xl border border-white/5">
+<button class="w-12 h-12 flex items-center justify-center rounded-full text-[#9ea3af] hover:bg-[#292a2f]">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-[#adc6ff] to-[#4d8efe] text-[#121318]">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full text-[#9ea3af] hover:bg-[#292a2f]">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full text-[#9ea3af] hover:bg-[#292a2f]">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</body></html>

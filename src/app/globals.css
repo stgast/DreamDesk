@@ -2,17 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap');
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #141414;
-  --card: #1e1e1e;
-  --border: #2a2a2a;
-  --text: #f5f5f5;
-  --text-muted: #999999;
-  --accent: #2196F3;
-  --lime: #8BC34A;
+  --bg: #121318;
+  --surface: #1a1b20;
+  --card: #1e1f24;
+  --border: #34343a;
+  --hover: #292a2f;
+  
+  --text: #e3e2e9;
+  --text-muted: #c2c6d5; /* on-surface-variant */
+  
+  --accent: #adc6ff; /* primary */
+  --accent-hover: #d8e2ff;
+  --accent-muted: rgba(173, 198, 255, 0.15);
+  
+  --glow-color: rgba(173, 198, 255, 0.2);
 }
 
 * {
@@ -20,16 +27,25 @@
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Rubik", system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.glass-panel {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 }
 
 /* Scrollbar */
@@ -41,11 +57,11 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--text-muted);
 }
 
 /* Category colors */
@@ -65,14 +81,15 @@ h1, h2, h3, h4, h5, h6 {
   100% { background-position: 200% 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 50%, #1e1e1e 75%);
+  background: linear-gradient(90deg, var(--card) 25%, var(--border) 50%, var(--card) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
-/* Starfield background for hero */
+/* Antigravity premium starfield with glassmorphism */
 .starfield {
-  background: radial-gradient(ellipse at 50% 50%, #0a0a1a 0%, #050508 100%);
+  background: radial-gradient(ellipse at 50% 50%, var(--surface) 0%, var(--bg) 100%);
+  overflow: hidden;
 }
 .starfield::before,
 .starfield::after {
@@ -80,21 +97,22 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 130px 80px, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 250px 90px, rgba(255,255,255,0.35), transparent),
-    radial-gradient(1.5px 1.5px at 300px 140px, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 350px 60px, rgba(255,255,255,0.4), transparent);
+    radial-gradient(1.5px 1.5px at 20px 30px, var(--text-muted), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--text-muted), transparent),
+    radial-gradient(1.5px 1.5px at 130px 80px, var(--text-muted), transparent),
+    radial-gradient(1px 1px at 250px 90px, var(--text-muted), transparent),
+    radial-gradient(1.5px 1.5px at 300px 140px, var(--text-muted), transparent),
+    radial-gradient(1px 1px at 350px 60px, var(--text-muted), transparent);
   background-size: 400px 200px;
   animation: stars-drift 50s linear infinite;
-  opacity: 0.8;
+  opacity: 0.15;
 }
 .starfield::after {
   background-size: 350px 180px;
   animation: stars-drift-alt 60s linear infinite reverse;
-  opacity: 0.5;
+  opacity: 0.1;
 }
+
 @keyframes stars-drift {
   0% { transform: translate(0, 0); }
   100% { transform: translate(0, -320px); }
@@ -102,44 +120,4 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes stars-drift-alt {
   0% { transform: translate(0, 0); }
   100% { transform: translate(-30px, 180px); }
-}
-
-/* Light theme overrides */
-html.light body {
-  background: #f4f4f5;
-  color: #18181b;
-}
-html.light .bg-dark-bg { background: #f4f4f5 !important; }
-html.light .bg-dark-surface { background: #e8e8ec !important; }
-html.light .bg-dark-card { background: #dcdce0 !important; }
-html.light .border-dark-border { border-color: #c0c0c4 !important; }
-html.light .bg-dark-hover:hover { background: #d4d4d8 !important; }
-html.light .text-white { color: #18181b !important; }
-html.light .text-gray-400 { color: #52525b !important; }
-html.light .text-gray-500 { color: #71717a !important; }
-html.light input, html.light select, html.light textarea {
-  background: #e8e8ec !important;
-  color: #18181b !important;
-  border-color: #c0c0c4 !important;
-}
-html.light .bg-accent.text-white,
-html.light .bg-accent .text-white {
-  color: #ffffff !important;
-}
-html.light aside {
-  background: #e8e8ec !important;
-}
-html.light header {
-  background: rgba(244, 244, 245, 0.9) !important;
-}
-html.light .starfield {
-  background: radial-gradient(ellipse at 50% 50%, #e8eaf0 0%, #c5cae0 100%);
-}
-html.light .starfield::before,
-html.light .starfield::after {
-  background-image:
-    radial-gradient(1.5px 1.5px at 20px 30px, rgba(0,0,0,0.15), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(0,0,0,0.2), transparent),
-    radial-gradient(1.5px 1.5px at 130px 80px, rgba(0,0,0,0.12), transparent),
-    radial-gradient(1px 1px at 250px 90px, rgba(0,0,0,0.15), transparent);
 }
