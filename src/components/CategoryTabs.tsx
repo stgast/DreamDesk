@@ -5,6 +5,8 @@
 "use client";
 
 import type { Category } from "@/types";
+import { useApp } from "@/context/AppContext";
+import { useTranslation } from "@/lib/i18n";
 import {
   Monitor,
   Grip,
@@ -36,6 +38,32 @@ interface CategoryTabsProps {
 }
 
 export function CategoryTabs({ categories, active, onChange }: CategoryTabsProps) {
+  const { language } = useApp();
+  const t = useTranslation(language);
+
+  const getCategoryLabel = (slug: string, fallback: string) => {
+    switch (slug) {
+      case "monitors":
+        return t("category_monitors");
+      case "arms":
+        return t("category_arms");
+      case "keyboards":
+        return t("category_keyboards");
+      case "mice":
+        return t("category_mice");
+      case "microphones":
+        return t("category_microphones");
+      case "boom-arms":
+        return t("category_boom_arms");
+      case "audio-interfaces":
+        return t("category_audio_interfaces");
+      case "headphones":
+        return t("category_headphones");
+      default:
+        return fallback;
+    }
+  };
+
   return (
     <div className="flex items-center gap-1 px-6 pb-3 overflow-x-auto">
       {/* Таб "Все" */}
@@ -49,7 +77,7 @@ export function CategoryTabs({ categories, active, onChange }: CategoryTabsProps
         }`}
       >
         <LayoutGrid className="w-3.5 h-3.5" />
-        Все
+        {t("all")}
       </button>
 
       {/* Табы по категориям */}
@@ -67,7 +95,7 @@ export function CategoryTabs({ categories, active, onChange }: CategoryTabsProps
             }`}
           >
             {Icon && <Icon className="w-3.5 h-3.5" />}
-            {cat.name}
+            {getCategoryLabel(cat.slug, cat.name)}
           </button>
         );
       })}

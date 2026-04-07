@@ -5,10 +5,10 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import { AppProvider } from "@/context/AppContext";
-import { SetupProvider } from "@/context/SetupContext";
+import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
 import { AIChatWidget } from "@/components/AIChatWidget";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "DreamDesk — Собери идеальное рабочее место",
@@ -24,17 +24,16 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body className="min-h-screen bg-dark-bg text-white antialiased">
-        <AppProvider>
-          <SetupProvider>
-            <div className="flex min-h-screen">
-              <div className="flex flex-1 flex-col min-w-0 min-h-screen relative">
-                <Header />
-                <main className="flex-1 overflow-auto">{children}</main>
-                <AIChatWidget />
-              </div>
+        <Providers>
+          <div className="flex min-h-screen">
+            <div className="flex flex-1 flex-col min-w-0 min-h-screen relative">
+              <Header />
+              <main className="flex-1 overflow-auto">{children}</main>
+              <Footer />
+              <AIChatWidget />
             </div>
-          </SetupProvider>
-        </AppProvider>
+          </div>
+        </Providers>
       </body>
     </html>
   );

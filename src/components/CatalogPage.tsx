@@ -12,6 +12,8 @@ import type { Product, Category } from "@/types";
 import { ProductCard } from "./ProductCard";
 import { CategoryTabs } from "./CategoryTabs";
 import { useSetup } from "@/context/SetupContext";
+import { useApp } from "@/context/AppContext";
+import { useTranslation } from "@/lib/i18n";
 
 interface CatalogPageProps {
   products: Product[];
@@ -19,6 +21,8 @@ interface CatalogPageProps {
 }
 
 export function CatalogPage({ products, categories }: CatalogPageProps) {
+  const { language } = useApp();
+  const t = useTranslation(language);
   const searchParams = useSearchParams();
   const categoryFromUrl = searchParams.get("category") ?? "";
 
@@ -60,7 +64,7 @@ export function CatalogPage({ products, categories }: CatalogPageProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
           <input
             type="search"
-            placeholder="Поиск по названию, бренду, характеристикам..."
+            placeholder={t("search_placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full rounded-lg border border-dark-border bg-dark-surface py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:border-accent focus:outline-none"
@@ -77,14 +81,14 @@ export function CatalogPage({ products, categories }: CatalogPageProps) {
 
       {/* Счётчик */}
       <div className="text-sm text-gray-500">
-        Найдено: {filteredProducts.length}
+        {t("found_count")} {filteredProducts.length}
       </div>
 
       {/* Сетка товаров */}
       {filteredProducts.length === 0 ? (
         <div className="rounded-xl bg-dark-card border border-dark-border p-12 text-center">
-          <p className="text-gray-400 mb-2">Ничего не найдено</p>
-          <p className="text-sm text-gray-600">Попробуйте изменить фильтры</p>
+          <p className="text-gray-400 mb-2">{t("nothing_found")}</p>
+          <p className="text-sm text-gray-600">{t("try_change_filters")}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

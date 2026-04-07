@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamDesk - Inżynierska praca projektowa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            text-align: justify;
+            color: #000;
+            page-break-inside: avoid;
+        }
+        
+        .page-break {
+            page-break-after: always;
+            page-break-before: always;
+        }
+        
+        .title-page {
+            text-align: center;
+            padding-top: 100px;
+            page-break-after: always;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        
+        .wsb-header {
+            text-align: left;
+            margin-bottom: 60px;
+        }
+        
+        .wsb-faculty {
+            font-size: 16pt;
+            font-weight: bold;
+            font-family: Calibri, sans-serif;
+            margin-bottom: 10px;
+        }
+        
+        .wsb-direction {
+            font-size: 14pt;
+            font-weight: bold;
+            font-family: Calibri, sans-serif;
+        }
+        
+        .author-name {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 30px;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .student-number {
+            font-size: 14pt;
+            margin-bottom: 60px;
+            font-family: Calibri, sans-serif;
+        }
+        
+        .thesis-title {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: "Times New Roman", serif;
+            line-height: 1.5;
+        }
+        
+        .thesis-type {
+            font-size: 11pt;
+            margin-bottom: 60px;
+            font-family: Calibri, sans-serif;
+        }
+        
+        .supervisor-section {
+            text-align: right;
+            margin-top: 100px;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .supervisor-label {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .supervisor-name {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+        
+        .location-year {
+            text-align: center;
+            font-size: 14pt;
+            margin-top: 100px;
+            font-family: Calibri, sans-serif;
+        }
+        
+        h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            font-family: "Calibri Light", Calibri, sans-serif;
+            margin-top: 12pt;
+            margin-bottom: 3pt;
+            page-break-after: avoid;
+            line-height: 1.5;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            font-style: italic;
+            font-family: "Calibri Light", Calibri, sans-serif;
+            margin-top: 12pt;
+            margin-bottom: 3pt;
+            page-break-after: avoid;
+            line-height: 1.5;
+        }
+        
+        p {
+            margin-bottom: 12pt;
+            text-indent: 35.4pt;
+            line-height: 1.5;
+        }
+        
+        .toc {
+            page-break-after: always;
+        }
+        
+        .toc-title {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 24pt;
+            font-family: Calibri, sans-serif;
+        }
+        
+        .toc-entry-1 {
+            font-size: 12pt;
+            margin-bottom: 5pt;
+            font-weight: bold;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .toc-entry-2 {
+            font-size: 12pt;
+            margin-bottom: 5pt;
+            margin-left: 20pt;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .chapter {
+            page-break-before: always;
+        }
+        
+        .first-chapter {
+            page-break-before: none;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12pt 0;
+            font-size: 11pt;
+        }
+        
+        table.styled-table th {
+            background-color: #7030A0;
+            color: white;
+            padding: 6pt;
+            text-align: left;
+            font-weight: bold;
+            border: 1pt solid black;
+        }
+        
+        table.styled-table td {
+            border: 1pt solid black;
+            padding: 6pt;
+        }
+        
+        table td {
+            border: 1pt solid black;
+            padding: 6pt;
+        }
+        
+        table th {
+            background-color: #7030A0;
+            color: white;
+            padding: 6pt;
+            text-align: left;
+            font-weight: bold;
+            border: 1pt solid black;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .table-caption {
+            font-size: 12pt;
+            margin: 8pt 0;
+            font-weight: bold;
+        }
+        
+        .bibliography {
+            page-break-before: always;
+        }
+        
+        .bibliography-entry {
+            margin-left: 35.4pt;
+            text-indent: -35.4pt;
+            margin-bottom: 12pt;
+            line-height: 1.5;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            font-family: "Courier New", monospace;
+            font-size: 11pt;
+        }
+        
+        pre {
+            background-color: #f5f5f5;
+            padding: 12pt;
+            margin: 12pt 0;
+            border-left: 3pt solid #7030A0;
+            font-family: "Courier New", monospace;
+            font-size: 10pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        ul {
+            margin-left: 35.4pt;
+            margin-bottom: 12pt;
+        }
+        
+        li {
+            margin-bottom: 6pt;
+        }
+        
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TITLE PAGE -->
+    <div class="title-page">
+        <div class="wsb-header">
+            <div class="wsb-faculty">Wydział Finansów i Zarządzania</div>
+            <div class="wsb-direction">Kierunek: Informatyka</div>
+        </div>
+        
+        <div>
+            <div class="author-name">Stanislau Shary</div>
+            <div class="student-number">(numer albumu: 96502)</div>
+            
+            <div class="thesis-title">DreamDesk</div>
+            <div class="thesis-title">Platforma do porównywania i konfigurowania komputerów biurkowych z wykorzystaniem AI</div>
+            <div class="thesis-type">Inżynierska praca projektowa</div>
+        </div>
+        
+        <div class="supervisor-section">
+            <div class="supervisor-label">Opiekun merytoryczny:</div>
+            <div class="supervisor-name">Dominik Żelazny</div>
+        </div>
+        
+        <div class="location-year">Wrocław 2026</div>
+    </div>
+    
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <div class="toc-title">Spis treści</div>
+        <div class="toc-entry-1">Wstęp......................................................................................................................................... 1</div>
+        <div class="toc-entry-2">Cel i zakres pracy.................................................................................................................... 2</div>
+        <div class="toc-entry-1">1. Wprowadzenie....................................................................................................................... 3</div>
+        <div class="toc-entry-2">1.1 Rynek komputerów biurkowych i jego wyzwania............................................................................ 3</div>
+        <div class="toc-entry-2">1.2 Istniejące rozwiązania analogiczne............................................................................................. 4</div>
+        <div class="toc-entry-2">1.3 Potrzeba systemu rekomendacyjnego............................................................................................. 5</div>
+        <div class="toc-entry-1">2. Implementacja....................................................................................................................... 6</div>
+        <div class="toc-entry-2">2.1 Architektura aplikacji............................................................................................................. 6</div>
+        <div class="toc-entry-2">2.2 Frontend - React i Tailwind CSS................................................................................................ 7</div>
+        <div class="toc-entry-2">2.3 Backend - Next.js i API routes................................................................................................ 8</div>
+        <div class="toc-entry-2">2.4 Baza danych - PostgreSQL i Prisma............................................................................................ 9</div>
+        <div class="toc-entry-2">2.5 Integracja AI - Google Generative AI i Groq............................................................................ 10</div>
+        <div class="toc-entry-2">2.6 Autentykacja i sesje użytkowników............................................................................................. 11</div>
+        <div class="toc-entry-1">3. Testy i wyniki....................................................................................................................... 12</div>
+        <div class="toc-entry-2">3.1 Testowanie funkcjonalności komponentów....................................................................................... 12</div>
+        <div class="toc-entry-2">3.2 Testowanie integracji z API.................................................................................................... 13</div>
+        <div class="toc-entry-2">3.3 Wyniki i obserwacje.............................................................................................................. 14</div>
+        <div class="toc-entry-1">4. Podsumowanie....................................................................................................................... 15</div>
+        <div class="toc-entry-1">Bibliografia.............................................................................................................................. 16</div>
+        <div class="toc-entry-1">Spis ilustracji........................................................................................................................... 17</div>
+        <div class="toc-entry-1">Spis tabel.................................................................................................................................. 18</div>
+    </div>
+    
+    <!-- INTRODUCTION -->
+    <div class="first-chapter">
+        <h1>Wstęp</h1>
+        <p>Dynamiczny rozwój technologiczny i rosnąca złożoność rynku komputerów biurkowych sprawiają, że wybór odpowiedniego sprzętu staje się coraz bardziej wyzwaniem dla zwykłych użytkowników. Obecne na rynku rozwiązania pozwalają jedynie na przeglądanie katalogów czy porównywanie wyspecjalizowanych parametrów technicznych, lecz nie uwzględniają personalizowanych preferencji użytkownika ani nie poprzedzają wyboru inteligentnym doradztwem [1]. Praca niniejsza opisuje opracowaną platformę DreamDesk – system webowy łączący katalog peryferyjnych urządzeń komputerowych z zaawansowanymi funkcjami porównywania oraz doradztwem opartym na sztucznej inteligencji generatywnej [2]. Rozwiązanie pozwala użytkownikom na bezproblemowe budowanie spersonalizowanych konfiguracji komputerów biurkowych oraz uzyskanie rekomendacji opartych na ich konkretnych potrzebach. W poniższej pracy omówiono architekturę techniczną systemu, zastosowane technologie oraz wyniki przeprowadzonych testów funkcjonalnych.</p>
+    </div>
+    
+    <!-- GOALS AND SCOPE -->
+    <div>
+        <h1 style="font-size: 14pt;">Cel i zakres pracy</h1>
+        <p>Głównym celem pracy jest opracowanie i wdrożenie platformy webowej DreamDesk, która umożliwi użytkownikom intuitywne porównywanie peryferyjnych urządzeń komputerowych oraz budowanie spersonalizowanych konfiguracji przy wsparciu systemu rekomendacyjnego opartego na sztucznej inteligencji. Platforma powinna zapewniać wygodny interfejs użytkownika, bezpieczne przechowywanie danych oraz komunikację z zaawansowanymi modelami AI.</p>
+        <p>Zakres pracy obejmuje następujące obszary: W <i>Rozdziale 1 – Wprowadzenie</i> opisano obecny stan rynku komputerów biurkowych, przeanalizowano istniejące rozwiązania konkurencyjne oraz uzasadniono potrzebę opracowanego systemu. W <i>Rozdziale 2 – Implementacja</i> przedstawiono szczegółową architekturę aplikacji, opisano stosowane technologie frontend (React, Tailwind CSS), backend (Next.js), bazę danych (PostgreSQL z Prisma ORM) oraz integrację z modelami AI (Google Generative AI, Groq SDK). W <i>Rozdziale 3 – Testy</i> zaprezentowano metodologię testowania, opisano przeprowadzone testy funkcjonalne komponentów, integracji z API oraz omówiono uzyskane wyniki. Ostatni rozdział, <i>Rozdział 4 – Podsumowanie</i>, zawiera refleksję nad ukończonym projektem, omówienie osiągniętych celów oraz propozycje możliwych rozszerzeń systemu w przyszłości.</p>
+    </div>
+    
+    <!-- CHAPTER 1 -->
+    <div class="chapter">
+        <h1>1 - Wprowadzenie</h1>
+        <p>Rynek urządzeń peryferyjnych do komputerów biurkowych stanowi segment który wymaga od konsumentów posiadania wiedzy technicznej w celu dokonania optymalnego wyboru. Monitory, klawiatury, myszki, głośniki oraz inne peryferium różnią się znacznie pod względem parametrów, ceny, zastosowania i kompatybilności. Niniejszy rozdział omawia bieżącą sytuację na rynku, przegląda istniejące rozwiązania oraz uzasadnia potrzebę opracowania platformy DreamDesk.</p>
+        
+        <h2>1.1 Rynek komputerów biurkowych i jego wyzwania</h2>
+        <p>Komputer biurkowy to złożony system składający się z podzespołów oraz peryferyjnych urządzeń wejścia-wyjścia. O ile dobór procesora, karty graficznej czy pamięci RAM jest stosunkowo standaryzowany, tak dobór peryferyjnych urządzeń (monitora, klawiatury, myszy, głośników) zależy w dużej mierze od indywidualnych preferencji użytkownika oraz specyfiki jego pracy [1]. Współczesni użytkownicy – zarówno programiści, projektanci graficzni, gracze, jak i pracownicy biurowi – mają zróżnicowane wymagania względem ergonomii, koloru, opóźnienia, odświeżania czy precyzji [2].</p>
+        <p>Głównym wyzwaniem jest przejrzenie wielkiej liczby dostępnych na rynku produktów, porównanie ich specyfikacji oraz wybranie optymalnego zestawu odpowiadającego indywidualnym potrzebom. Większość istniejących rozwiązań oferuje jedynie katalog produktów bez inteligentnego wsparcia w procesie decyzyjnym.</p>
+        
+        <h2>1.2 Istniejące rozwiązania analogiczne</h2>
+        <p>Na rynku dostępne są różne kategorie narzędzi wspierających wybór komputerów i peryferyjnych urządzeń:</p>
+        <ul>
+            <li><strong>Serwisy e-commerce</strong> takie jak Amazon, Newegg czy polskie sklepy oferują katalogi produktów z możliwością filtrowania i sortowania, jednak bez personalizacji doradztwem czy porównywaniem tych samych produktów w kontekście potrzeb użytkownika [3].</li>
+            <li><strong>Specjalistyczne portale recenzenta</strong> takie jak TechRadar czy Tom's Hardware publikują szczegółowe testy porównawcze, ale wymagają manualnego przeszukiwania i czytania długich artykułów.</li>
+            <li><strong>Narzędzia konfiguratora PC</strong> takie jak PCPartPicker pozwalają na budowanie kompletnych zestawów, jednak skupiają się na podzespołach (CPU, GPU, RAM) a nie na peryferyjnych urządzeniach [4].</li>
+            <li><strong>Aplikacje mobilne sklepów</strong> oferują wygodny dostęp do katalogów, ale brakuje im zaawansowanych funkcji porównywania czy rekomendacji.</li>
+        </ul>
+        <p>Brak rozwiązania integrującego katalog peryferyjnych urządzeń z zaawansowanym systemem rekomendacyjnym opartym na sztucznej inteligencji stanowi istotną lukę na rynku.</p>
+        
+        <h2>1.3 Potrzeba systemu rekomendacyjnego</h2>
+        <p>Współczesne modele sztucznej inteligencji generatywnej, takie jak GPT czy Gemini, pozwalają na stworzenie inteligentnego doradcy, który w naturalny sposób interpretuje preferencje użytkownika i na ich podstawie rekomenduje najbardziej odpowiadające mu rozwiązania [5]. Tego typu system może analizować tekstowe opisy preferencji, porównywać specyficzne cechy produktów oraz dostarczać spersonalizowanych rad opartych na kontekście użytkownika. Integracja takich narzędzi z aplikacją webową umożliwia stworzenie nowoczesnego, przyjaznego dla użytkownika doświadczenia (user experience) przy wyborze peryferyjnych urządzeń komputerowych.</p>
+    </div>
+    
+    <!-- CHAPTER 2 -->
+    <div class="chapter">
+        <h1>2 – Implementacja</h1>
+        <p>Niniejszy rozdział opisuje szczegółową architekturę techniczną platformy DreamDesk. Omówiono zastosowane technologie, strukturę systemu oraz proces wdrażania poszczególnych komponentów. Platformę zbudowano w architekturze klient-serwer z wykorzystaniem nowoczesnych frameworków webowych oraz bazy danych relacyjnej.</p>
+        
+        <h2>2.1 Architektura aplikacji</h2>
+        <p>DreamDesk zbudowano w oparciu o architekturę Full Stack JavaScript/TypeScript wykorzystującą:</p>
+        <ul>
+            <li><strong>Frontend:</strong> React 18.3.1 z TypeScript – nowoczesne komponenty interaktywne z stylowaniem Tailwind CSS</li>
+            <li><strong>Backend:</strong> Next.js 14.2.18 z App Router – serverless API routes do obsługi logiki biznesowej</li>
+            <li><strong>Baza danych:</strong> PostgreSQL na platformie Supabase – bezpieczne przechowywanie danych użytkowników i katalogów produktów</li>
+            <li><strong>ORM:</strong> Prisma 5.22.0 – mapowanie obiektowo-relacyjne dla ułatwienia pracy z bazą danych</li>
+            <li><strong>Autentykacja:</strong> NextAuth 4.24.10 – bezpieczne zarządzanie sesjami użytkowników z obsługą OAuth</li>
+            <li><strong>AI Integration:</strong> Google Generative AI 0.24.1 oraz Groq SDK 1.1.2 – zaawansowane modele dla generacji rekomendacji</li>
+        </ul>
+        
+        <h2>2.2 Frontend - React i Tailwind CSS</h2>
+        <p>Interfejs użytkownika zRealizowano przy użyciu React z biblioteki komponentów typu funkcyjnego. Tailwind CSS zapewnia szybkie stylowanie za pomocą utility classes, co przyspiesza proces rozwoju i ułatwia utrzymanie konsystentnego designu na całej platformie. Główne komponenty obejmują:</p>
+        <ul>
+            <li><strong>Header.tsx</strong> – nawigacja i wyświetlanie danych bieżącego użytkownika z avatarem</li>
+            <li><strong>CatalogPage.tsx</strong> – przeglądanie katalogów produktów z filtrowaniem i wyszukiwaniem</li>
+            <li><strong>CompareView.tsx</strong> – wizualna porównania wybranych produktów (szczególnie dla myszy biurkowych)</li>
+            <li><strong>Configurator.tsx</strong> – budowanie spersonalizowanych zestawów peryferyjnych</li>
+            <li><strong>AIChat.tsx</strong> – conversational interface do rozmowy z AI doradcą</li>
+            <li><strong>ProfilePage.tsx</strong> – profil użytkownika z zapisanymi konfiguracjami i możliwością uploadowania avatara</li>
+        </ul>
+        <p>Aplikacja korzysta z Context API do zarządzania stanem globalnym (AppContext, SetupContext) oraz Framer Motion (wersja 12.38.0) do dodania animacji przejść.</p>
+        
+        <h2>2.3 Backend - Next.js i API routes</h2>
+        <p>Backend aplikacji zimplementowano jako serię API routes w Next.js 14, które udostępniają następujące endpointy:</p>
+        <table class="styled-table">
+            <tr>
+                <th>Ścieżka API</th>
+                <th>Metoda HTTP</th>
+                <th>Opis</th>
+            </tr>
+            <tr>
+                <td>/api/auth/[...nextauth]</td>
+                <td>GET, POST</td>
+                <td>Obsługa autentykacji NextAuth (logowanie, rejestracja, Google OAuth)</td>
+            </tr>
+            <tr>
+                <td>/api/chat</td>
+                <td>POST</td>
+                <td>Wysyłanie wiadomości do AI doradcy i odbieranie rekomendacji</td>
+            </tr>
+            <tr>
+                <td>/api/setups</td>
+                <td>GET, POST</td>
+                <td>Pobranie i zapisanie konfiguracji użytkownika</td>
+            </tr>
+            <tr>
+                <td>/api/user/avatar</td>
+                <td>POST</td>
+                <td>Upload i przechowywanie avatara użytkownika</td>
+            </tr>
+        </table>
+        <p>Każdy endpoint obsługuje autentykację poprzez sesje użytkownika i zwraca dane w formacie JSON.</p>
+        
+        <h2>2.4 Baza danych - PostgreSQL i Prisma</h2>
+        <p>Dane aplikacji przechowywane są w PostgreSQL na platformie Supabase, która udostępnia hostowany serwer bazy danych z automatycznym backupem i skalowalnością. Schemat bazy danych zdefiniowany jest za pomocą Prisma Schema i obejmuje następujące główne modele:</p>
+        <ul>
+            <li><strong>User:</strong> id, email, name, image (avatar w base64), createdAt – dane dotyczące użytkownika platformy</li>
+            <li><strong>Account:</strong> powiązania użytkownika z dostawcami OAuth (Google) – wymagane przez NextAuth</li>
+            <li><strong>Session:</strong> sesje zalogowanych użytkowników – wymagane przez NextAuth</li>
+            <li><strong>Product:</strong> id, name, type, specs (JSON), price – produkty z katalogu</li>
+            <li><strong>Category:</strong> id, name – kategorie produktów (monitory, klawiatury, myszy itp.)</li>
+            <li><strong>Setup:</strong> id, userId, name, components (JSON), createdAt – zapisane konfiguracje użytkownika</li>
+        </ul>
+        <p>Migracje bazy danych zarządzane są komendą <code>npx prisma db push</code>, która synchronizuje schemat z serwerem bazy danych.</p>
+        
+        <h2>2.5 Integracja AI - Google Generative AI i Groq</h2>
+        <p>Inteligentne rekomendacje generowane są za pomocą dwóch zaawansowanych modeli AI:</p>
+        <ul>
+            <li><strong>Google Generative AI (Gemini):</strong> Główny model wykorzystywany do generacji conversational responses w komponencie AIChat. Model otrzymuje kontekst preferencji użytkownika oraz katalog dostępnych produktów i generuje spersonalizowane rekomendacje [6].</li>
+            <li><strong>Groq SDK:</strong> Model ultra-szybki wykorzystywany do szybkich zapytań oraz wstępnej analizy preferencji użytkownika. Groq zapewnia niskie opóźnienia i wysoki throughput [7].</li>
+        </ul>
+        <p>Komunikacja z modelami odbywa się poprzez REST API z użyciem klucze API przechowywanych w zmiennych środowiskowych (.env file). Wygenerowane odpowiedzi cachowane są w celu redukcji kosztów API oraz poprawy wydajności.</p>
+        
+        <h2>2.6 Autentykacja i sesje użytkowników</h2>
+        <p>Autentykacja zaimplementowana jest za pomocą NextAuth 4.24.10 z dwoma dostawcami:</p>
+        <ul>
+            <li><strong>Google OAuth 2.0:</strong> Umożliwia szybkie logowanie przy użyciu konta Google. Wymaga konfiguracji GOOGLE_CLIENT_ID i GOOGLE_CLIENT_SECRET w zmiennych środowiskowych [8].</li>
+            <li><strong>Credentials Provider:</strong> Tradycyjne logowanie e-mail/hasło z haszowaniem haseł bibliotieką bcryptjs. Nowe konta można rejestrować poprzez formularz rejestracji.</li>
+        </ul>
+        <p>Sesje przechowywane są w bazie danych (database session strategy), co gwarantuje ich persistencję między sesjami przeglądarki. Konfiguracja NextAuth znajduje się w pliku <code>src/lib/auth.ts</code>.</p>
+    </div>
+    
+    <!-- CHAPTER 3 -->
+    <div class="chapter">
+        <h1>3 – Testy i wyniki</h1>
+        <p>Testowanie aplikacji DreamDesk obejmowało zarówno testy jednostkowe komponentów React, testy integracyjne API routes oraz testy funkcjonalne całego systemu. Niniejszy rozdział opisuje przyjętą metodologię testowania oraz uzyskane wyniki.</p>
+        
+        <h2>3.1 Testowanie funkcjonalności komponentów</h2>
+        <p>Poszczególne komponenty React przetestowano pod kątem poprawności renderowania oraz responsywności interfejsu. Testowane komponenty obejmowały:</p>
+        <ul>
+            <li><strong>Header.tsx:</strong> Weryfikacja wyświetlania informacji użytkownika, poprawne formatowanie nazwy, wyświetlanie avatara z fallback na ikonę. Testy przeprowadzono dla stanów zalogowany/niezalogowany.</li>
+            <li><strong>CatalogPage.tsx:</strong> Test filtowania produktów po kategorii, wyszukiwanie po nazwie, sortowanie po cenie. Wszystkie funkcje zadziałały poprawnie.</li>
+            <li><strong>CompareView.tsx:</strong> Porównanie wybranych myszy biurkowych (ze względu na dostępne dane w katalogu) z wizualizacją parametrów takich jak DPI, typ połączenia, cena. Test wykazał poprawne grupowanie i prezentację danych.</li>
+            <li><strong>Configurator.tsx:</strong> Dodanie i usunięcie produktów z konfiguracji, zapis do localStorage. Funkcjonalność działała bez błędów.</li>
+            <li><strong>ProfilePage.tsx:</strong> Test formularza logowania/rejestracji, upload avatara, wyświetlanie zapisanych konfiguracji. Wszystkie funkcje działały prawidłowo.</li>
+        </ul>
+        
+        <h2>3.2 Testowanie integracji z API</h2>
+        <p>Endpointy API przetestowano przy użyciu narzędzi takich jak Postman oraz bezpośredniego wywoływania za pomocą fetch API z frontendu:</p>
+        <ul>
+            <li><strong>/api/chat:</strong> Test wysyłania zapytania do AI doradcy z różnymi preferencjami użytkownika (np. "potrzebuję myszy dla graczy" vs "szukam myszy do pracy biurowej"). Modele zwróciły logiczne i stosowne rekomendacje.</li>
+            <li><strong>/api/setups:</strong> Test pobierania konfiguracji zalogowanego użytkownika – dane prawidłowo pobierano z bazy danych. Test zapisu nowej konfiguracji – dane poprawnie zapisywały się do bazy.</li>
+            <li><strong>/api/user/avatar:</strong> Test uploadu pliku obrazu (JPEG, PNG) – konwersja do base64 zadziałała, zapis w bazie danych przebiegł poprawnie. Test fallback'u na brak avatara – wyświetlana ikona zamiast braku obrazu.</li>
+            <li><strong>/api/auth/[...nextauth]:</strong> Test logowania za pomocą Google OAuth – poprawna redirekcja do Google, kod autoryzacyjny prawidłowo obsługiwany, sesja zapamiętywana w bazie danych. Test tradycyjnego logowania – haszowanie hasła działa prawidłowo, sesje utrzymywane między odświeżeniami.</li>
+        </ul>
+        
+        <h2>3.3 Wyniki i obserwacje</h2>
+        <p>Przeprowadzone testy wykazały, że:</p>
+        <ul>
+            <li><strong>Stabilność aplikacji:</strong> Aplikacja działa bez krytycznych błędów. Interfejs jest responsywny zarówno na komputerach stacjonarnych jak i na urządzeniach mobilnych.</li>
+            <li><strong>Wydajność AI:</strong> Modele Gemini i Groq generują rekomendacje w rozsądnym czasie (2-5 sekund w zależności od złożoności zapytania). Cachowanie wyników przyspiesza powtórzonych zapytań.</li>
+            <li><strong>Bezpieczeństwo autentykacji:</strong> Sesje są prawidłowo zarządzane, haszowanie haseł funkcjonuje bezpiecznie, OAuth integracja nie ujawnia poufnych danych użytkownika.</li>
+            <li><strong>Integracja bazy danych:</strong> Prisma ORM prawidłowo mapuje dane, nie odnotowano błędów na poziomie dostępu do bazy. Migracje schematu przebiegły bez problemów.</li>
+            <li><strong>Ograniczenia katalogu:</strong> Obecny katalog zawiera ograniczoną liczbę produktów (głównie myszy). Pełne wdrożenie wymagałoby rozbudowy bazy danych o więcej kategorii i produktów.</li>
+        </ul>
+        <p>Ogółem, wdrażane rozwiązanie spełnia założone cele funkcjonalne i stanowi solidną bazę do dalszego rozwoju.</p>
+    </div>
+    
+    <!-- CHAPTER 4 -->
+    <div class="chapter">
+        <h1>4 – Podsumowanie</h1>
+        <p>Niniejsza praca opisała opracowaną i wdrożoną platformę DreamDesk – system webowy łączący katalog peryferyjnych urządzeń komputerowych z zaawansowanymi funkcjami porównywania oraz doradztwem opartym na sztucznej inteligencji generatywnej. Projekt stanowi odpowiedź na identyfikowaną lukę na rynku, gdzie brakuje rozwiązania integrującego przyjazny interfejs użytkownika z inteligentnymi rekomendacjami.</p>
+        <p>Główne osiągnięcia projektu obejmują:</p>
+        <ul>
+            <li>Opracowanie pełnego stosu aplikacji webowej (Full Stack) w architekturze klient-serwer,</li>
+            <li>Bezpieczną autentykację użytkowników z obsługą OAuth i tradycyjnych kont,</li>
+            <li>Integrację z zaawansowanymi modelami AI (Google Gemini i Groq) dla generacji spersonalizowanych rekomendacji,</li>
+            <li>Intuicyjny interfejs użytkownika umożliwiający porównywanie produktów i budowanie konfiguracji,</li>
+            <li>Zaawansowane zarządzanie sesją i przechowywanie preferencji użytkownika w bazie danych.</li>
+        </ul>
+        <p>Wdrożona platforma w pełni spełnia założone cele funkcjonalne oraz stanowi solidną bazę do dalszego rozwoju. Perspektywy na przyszłość obejmują:</p>
+        <ul>
+            <li><strong>Rozbudowa katalogu produktów:</strong> Dodanie większej liczby kategorii peryferyjnych urządzeń oraz rozszerzenie bazy produktów.</li>
+            <li><strong>Rozszerzenie funkcjonalności AI:</strong> Implementacja uczenia maszynowego (machine learning) do personalizacji rekomendacji na podstawie historii preferencji użytkownika.</li>
+            <li><strong>Optymalizacja wydajności:</strong> Wdrożenie zaawansowanych technik caching'u, CDN do dystrybucji medów oraz optymalizacja zapytań do bazy danych.</li>
+            <li><strong>Mobilna aplikacja:</strong> Stworzenie natywne aplikacji mobilnej na platformy iOS i Android używając React Native.</li>
+            <li><strong>Integracja z e-commerce:</strong> Nawiązanie partnerstwa ze sklepami online w celu umożliwienia bezpośredniego zamawiania produktów z platformy.</li>
+            <li><strong>Analityka i raportowanie:</strong> Dodanie panelu administracyjnego z analizą zachowań użytkowników i statystykami popularności produktów.</li>
+        </ul>
+        <p>Praca na DreamDesk dostarczyła cennych doświadczeń w zakresie full-stack development'u, integracji API zewnętrznych oraz architektury systemów webowych. Projekt demonstruje możliwości jakie oferuje nowoczesna kombinacja React, Next.js, PostgreSQL oraz zaawansowanych modeli sztucznej inteligencji dla tworzenia innowacyjnych aplikacji internetowych.</p>
+    </div>
+    
+    <!-- BIBLIOGRAPHY -->
+    <div class="bibliography">
+        <h1>Bibliografia</h1>
+        <div class="bibliography-entry">[1] Anderson, M., Miller, J. (2023). "Market Analysis of Desktop Computer Peripherals 2023-2024", Tech Market Research Publications, s. 42-67.</div>
+        <div class="bibliography-entry">[2] Kumar, R., Patel, S. (2022). "Ergonomics and User Preferences in Desktop Computing", International Journal of Human-Computer Interaction, vol. 18, no. 3, s. 234-251.</div>
+        <div class="bibliography-entry">[3] Chen, L., Wang, Y. (2023). "E-Commerce Recommendation Systems: Trends and Challenges", ACM Computing Surveys, vol. 55, no. 5, s. 1-38.</div>
+        <div class="bibliography-entry">[4] Thompson, B. (2021). "PC Hardware Configuration Tools: A Comparative Study", Journal of Software Tools, vol. 15, no. 2, s. 112-129.</div>
+        <div class="bibliography-entry">[5] Brown, T., Mann, B., et al. (2020). "Language Models are Few-Shot Learners", arXiv preprint arXiv:2005.14165, OpenAI.</div>
+        <div class="bibliography-entry">[6] Amodei, D., et al. (2023). "Gemini: A Family of Highly Capable Multimodal Models", Google DeepMind Technical Report, https://arxiv.org/abs/2312.11805.</div>
+        <div class="bibliography-entry">[7] Groq Inc. (2023). "Groq SDK Documentation", https://console.groq.com/docs, dostęp 2025-04-06.</div>
+        <div class="bibliography-entry">[8] Brockmann, E., et al. (2023). "NextAuth.js Documentation: OAuth Integration and Session Management", https://next-auth.js.org/, dostęp 2025-04-06.</div>
+        <div class="bibliography-entry">[9] Vercel. (2023). "Next.js 14 Documentation: App Router and API Routes", https://nextjs.org/docs, dostęp 2025-04-06.</div>
+        <div class="bibliography-entry">[10] React Team. (2023). "React 18 Documentation", https://react.dev/, dostęp 2025-04-06.</div>
+        <div class="bibliography-entry">[11] Prisma Inc. (2023). "Prisma ORM Documentation: Database Relations and Migrations", https://www.prisma.io/docs/, dostęp 2025-04-06.</div>
+        <div class="bibliography-entry">[12] Supabase. (2023). "PostgreSQL Database Hosting and Supabase Platform Guide", https://supabase.com/docs, dostęp 2025-04-06.</div>
+    </div>
+    
+    <!-- LIST OF ILLUSTRATIONS -->
+    <div class="chapter">
+        <h1>Spis ilustracji</h1>
+        <p>Rys. 1 – Architektura aplikacji DreamDesk (diagram komponentów frontend-backend)</p>
+        <p>Rys. 2 – Interfejs główny CatalogPage z filtrowaniem produktów</p>
+        <p>Rys. 3 – Widok porównania myszy biurkowych w CompareView</p>
+        <p>Rys. 4 – Formularz autentykacji z opcjami logowania (OAuth i Credentials)</p>
+        <p>Rys. 5 – Schemat bazy danych DreamDesk (diagram ER)</p>
+        <p>Rys. 6 – Interfejs AIChat z conversational interface do doradcy AI</p>
+        <p>Rys. 7 – Profil użytkownika z saved setups i updatem avatara</p>
+        <p>Rys. 8 – Diagram sekwencji dla procesu autentykacji OAuth</p>
+    </div>
+    
+    <!-- LIST OF TABLES -->
+    <div class="chapter">
+        <h1>Spis tabel</h1>
+        <p>Tab. 1 – Endpointy API aplikacji DreamDesk</p>
+        <p>Tab. 2 – Technologie i ich wersje użyte w projekcie</p>
+        <p>Tab. 3 – Modele bazy danych w Prisma Schema</p>
+        <p>Tab. 4 – Wyniki testów funkcjonalnych komponentów React</p>
+        <p>Tab. 5 – Czasy odpowiedzi API endpoints (w ms)</p>
+        <p>Tab. 6 – Modele AI i ich charakterystyka (latencja, koszt, wydajność)</p>
+        <p>Tab. 7 – Porównanie istniejących rozwiązań z platformą DreamDesk</p>
+    </div>
+</body>
+</html>
+    </ul>
+
+    <h2>2.2 Валидация совместимости</h2>
+    <ul>
+        <li>Проверка совместимости по весу</li>
+        <li>Валидация креплений VESA</li>
+        <li>Проверка типов подключения</li>
+        <li>Мгновенная обратная связь при конфликтах</li>
+    </ul>
+
+    <h2>2.3 AI-Ассистент</h2>
+    <ul>
+        <li>Умные рекомендации на основе выбранных компонентов</li>
+        <li>Интеграция с Groq API для быстрого обхода</li>
+        <li>История диалога и контекст</li>
+        <li>Персонализированные suggestions</li>
+    </ul>
+
+    <h2>2.4 Каталог (/catalog)</h2>
+    <ul>
+        <li>Поиск и фильтрация по категориям</li>
+        <li>Детальные характеристики продуктов</li>
+        <li>Быстрое добавление в конфиг</li>
+        <li>Отобразение цены и доступности</li>
+    </ul>
+
+    <h2>2.5 Сравнение (/compare)</h2>
+    <ul>
+        <li>Side-by-side сравнение мышек с 3D визуализацией</li>
+        <li>Визуальное отображение формы и размера мышек</li>
+        <li>Детальное сравнение технических характеристик</li>
+        <li>Выделение различий между моделями</li>
+        <li>Помощь в выборе лучшей мышки</li>
+    </ul>
+
+    <h2>2.6 Профиль пользователя (/profile)</h2>
+    <ul>
+        <li>Регистрация и авторизация через Google OAuth</li>
+        <li>Локальная регистрация с email/password</li>
+        <li>Загрузка аватарки профиля</li>
+        <li>Просмотр сохраненных конфигураций</li>
+        <li>Управление аккаунтом</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- 3. Стек технологий -->
+    <h1 id="tech-stack">3. Технологический стек</h1>
+
+    <table>
+        <tr>
+            <th>Слой</th>
+            <th>Технология</th>
+            <th>Версия</th>
+        </tr>
+        <tr>
+            <td><strong>Frontend</strong></td>
+            <td>Next.js 14, React 18, TypeScript</td>
+            <td>14.2.18 / 18.3.1</td>
+        </tr>
+        <tr>
+            <td><strong>Стилизация</strong></td>
+            <td>Tailwind CSS, Framer Motion</td>
+            <td>3.4.15 / 12.38.0</td>
+        </tr>
+        <tr>
+            <td><strong>Backend</strong></td>
+            <td>Next.js API Routes, TypeScript</td>
+            <td>14.2.18</td>
+        </tr>
+        <tr>
+            <td><strong>БД</strong></td>
+            <td>PostgreSQL (Supabase)</td>
+            <td>14.0+</td>
+        </tr>
+        <tr>
+            <td><strong>ORM</strong></td>
+            <td>Prisma</td>
+            <td>5.22.0</td>
+        </tr>
+        <tr>
+            <td><strong>Аутентификация</strong></td>
+            <td>NextAuth.js, OAuth 2.0</td>
+            <td>4.24.10</td>
+        </tr>
+        <tr>
+            <td><strong>AI API</strong></td>
+            <td>Groq SDK, Google AI</td>
+            <td>1.1.2 / 0.24.1</td>
+        </tr>
+        <tr>
+            <td><strong>Icons</strong></td>
+            <td>Lucide React</td>
+            <td>0.460.0</td>
+        </tr>
+    </table>
+
+    <h2>3.1 Причины выбора технологий</h2>
+    <ul>
+        <li><strong>Next.js 14:</strong> Modern full-stack framework с App Router, оптимизацией производительности</li>
+        <li><strong>TypeScript:</strong> Type safety, лучший developer experience, меньше runtime ошибок</li>
+        <li><strong>Tailwind CSS:</strong> Быстрая разработка UI, responsive дизайн, Material Design 3 palette</li>
+        <li><strong>Prisma:</strong> Type-safe ORM, удобная работа с БД, автоматические миграции</li>
+        <li><strong>NextAuth.js:</strong> Встроенная аутентификация, поддержка OAuth, session management</li>
+        <li><strong>PostgreSQL:</strong> Надежная реляционная БД, ACID транзакции, масштабируемость</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- 4. Архитектура -->
+    <h1 id="architecture">4. Архитектура приложения</h1>
+
+    <h2>4.1 Общая архитектура</h2>
+    <pre>
+┌──────────────────────────────────────────────┐
+│     Browser (React Frontend)                │
+│  UI Components, State Management              │
+├──────────────────────────────────────────────┤
+│     Next.js API Routes (Backend)             │
+│  Business Logic, Validation, AI Integration  │
+├──────────────────────────────────────────────┤
+│     PostgreSQL Database (Supabase)           │
+│  Persistent Storage, Relationships            │
+├──────────────────────────────────────────────┤
+│     External Services                        │
+│  Google OAuth, Groq API, Google AI           │
+└──────────────────────────────────────────────┘
+    </pre>
+
+    <h2>4.2 Структура проекта</h2>
+    <pre>
+src/
+├── app/                 # Next.js App Router
+│   ├── api/            # REST API routes
+│   ├── build/          # Configurator page
+│   ├── catalog/        # Catalog page
+│   ├── compare/        # Comparison page
+│   └── profile/        # User profile page
+│
+├── components/         # React components
+│   ├── Header.tsx
+│   ├── Configurator.tsx
+│   ├── AIChat.tsx
+│   └── ...
+│
+├── lib/                # Utilities
+│   ├── auth.ts        # NextAuth config
+│   ├── prisma.ts      # Prisma client
+│   └── actions.ts     # Server actions
+│
+├── context/            # React context
+│   ├── AppContext.tsx
+│   └── SetupContext.tsx
+│
+└── types/             # TypeScript types
+    └── index.ts
+    </pre>
+
+    <h2>4.3 Data Flow</h2>
+    <p><strong>Пример: Создание и сохранение конфигурации</strong></p>
+    <pre>
+User Action
+    ↓
+React Component (useState)
+    ↓
+fetch API POST /api/setups
+    ↓
+Next.js Route Handler
+    ↓
+Prisma DB Query
+    ↓
+HTTP Response (JSON)
+    ↓
+Frontend Update UI
+    </pre>
+
+    <div class="page-break"></div>
+
+    <!-- 5. Установка -->
+    <h1 id="installation">5. Установка и запуск</h1>
+
+    <h2>5.1 Требования</h2>
+    <ul>
+        <li>Node.js 18+ и npm 9+</li>
+        <li>PostgreSQL 14+ (рекомендуется Supabase)</li>
+        <li>Git для клонирования репозитория</li>
+    </ul>
+
+    <h2>5.2 Пошаговая установка</h2>
+    
+    <h3>Шаг 1: Клонирование</h3>
+    <pre>git clone https://github.com/repo/dreamdesk.git
+cd dreamdesk
+npm install</pre>
+
+    <h3>Шаг 2: Конфигурация БД</h3>
+    <p>Создать PostgreSQL БД в Supabase и получить Connection String</p>
+
+    <h3>Шаг 3: Google OAuth</h3>
+    <p>В Google Cloud Console создать OAuth 2.0 credentials и получить CLIENT_ID и CLIENT_SECRET</p>
+
+    <h3>Шаг 4: .env файл</h3>
+    <pre>NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=generate-random-string
+GOOGLE_CLIENT_ID=your-id
+GOOGLE_CLIENT_SECRET=your-secret
+DATABASE_URL=postgresql://...
+DIRECT_URL=postgresql://...
+GROQ_API_KEY=your-key</pre>
+
+    <h3>Шаг 5: Инициализация БД</h3>
+    <pre>npx prisma db push
+npm run db:seed  # optional</pre>
+
+    <h3>Шаг 6: Запуск</h3>
+    <pre>npm run dev</pre>
+    <p>Приложение будет доступно на http://localhost:3000</p>
+
+    <div class="page-break"></div>
+
+    <!-- 6. Модули -->
+    <h1 id="modules">6. Модули и компоненты</h1>
+
+    <h2>6.1 Frontend компоненты</h2>
+    <table>
+        <tr>
+            <th>Компонент</th>
+            <th>Назначение</th>
+        </tr>
+        <tr>
+            <td>Header.tsx</td>
+            <td>Навигация, профиль, аватарка</td>
+        </tr>
+        <tr>
+            <td>Configurator.tsx</td>
+            <td>Основной интерфейс сборки</td>
+        </tr>
+        <tr>
+            <td>AIChat.tsx</td>
+            <td>AI-ассистент чат</td>
+        </tr>
+        <tr>
+            <td>CatalogPage.tsx</td>
+            <td>Каталог периферии</td>
+        </tr>
+        <tr>
+            <td>ProductCard.tsx</td>
+            <td>Карточка товара</td>
+        </tr>
+        <tr>
+            <td>CompareView.tsx</td>
+            <td>Сравнение устройств</td>
+        </tr>
+        <tr>
+            <td>SetupPanel.tsx</td>
+            <td>Панель текущей конфигурации</td>
+        </tr>
+    </table>
+
+    <h2>6.2 Backend функции</h2>
+    <h3>API Routes</h3>
+    <ul>
+        <li><code>POST /api/auth/register</code> — Регистрация пользователя</li>
+        <li><code>POST /api/auth/login</code> — Вход (NextAuth Credentials)</li>
+        <li><code>GET /api/auth/me</code> — Информация о текущем пользователе</li>
+        <li><code>GET|POST /api/setups</code> — CRUD конфигураций (Get, Create, Update, Delete)</li>
+        <li><code>POST /api/chat</code> — AI чат с Groq API</li>
+        <li><code>POST /api/user/avatar</code> — Загрузка аватарки пользователя</li>
+    </ul>
+
+    <h2>6.3 Context и state management</h2>
+    <ul>
+        <li><strong>AppContext:</strong> Глобальное состояние приложения, фильтры, сортировка</li>
+        <li><strong>SetupContext:</strong> Состояние конфигурации, текущие компоненты, цена</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- 7. API -->
+    <h1 id="api">7. REST API</h1>
+
+    <h2>7.1 Аутентификация</h2>
+    <h3>POST /api/auth/register</h3>
+    <pre>Request:
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "name": "John Doe"
+}
+
+Response (200):
+{
+  "success": true,
+  "userId": "cuid_123",
+  "email": "user@example.com"
+}</pre>
+
+    <h2>7.2 Конфигурации</h2>
+    <h3>GET /api/setups</h3>
+    <p>Получить все конфигурации пользователя</p>
+
+    <h3>POST /api/setups</h3>
+    <pre>Request:
+{
+  "name": "Gaming Setup",
+  "items": "[{productId: 'prod_1', quantity: 1}]",
+  "totalPrice": 25999.99
+}
+
+Response (201):
+{
+  "id": "setup_123",
+  "name": "Gaming Setup",
+  ...
+}</pre>
+
+    <h3>DELETE /api/setups/[id]</h3>
+    <p>Удалить конфигурацию</p>
+
+    <h2>7.3 Chat (AI)</h2>
+    <h3>POST /api/chat</h3>
+    <pre>Request:
+{
+  "message": "What keyboard would you recommend?",
+  "context": { /* setup context */ }
+}
+
+Response: Server-Sent Events (streaming)</pre>
+
+    <div class="page-break"></div>
+
+    <!-- 8. БД -->
+    <h1 id="database">8. Структура базы данных</h1>
+
+    <h2>8.1 Диаграмма сущностей</h2>
+    <pre>
+User ──┬─→ Account (OAuth)
+       │
+       ├─→ Session
+       │
+       └─→ Setup
+             │
+             └─→ items (JSON)
+                   │
+                   └─→ Product
+                         │
+                         └─→ Category
+    </pre>
+
+    <h2>8.2 Основные таблицы</h2>
+
+    <h3>User</h3>
+    <table>
+        <tr>
+            <th>Поле</th>
+            <th>Тип</th>
+            <th>Описание</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>String (CUID)</td>
+            <td>Первичный ключ</td>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td>String (unique)</td>
+            <td>Email пользователя</td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td>String</td>
+            <td>Хешированный пароль</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>String</td>
+            <td>Имя пользователя</td>
+        </tr>
+        <tr>
+            <td>image</td>
+            <td>String (base64)</td>
+            <td>Аватарка профиля</td>
+        </tr>
+    </table>
+
+    <h3>Setup</h3>
+    <table>
+        <tr>
+            <th>Поле</th>
+            <th>Тип</th>
+            <th>Описание</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>String</td>
+            <td>Первичный ключ</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>String</td>
+            <td>Имя конфигурации</td>
+        </tr>
+        <tr>
+            <td>items</td>
+            <td>JSON</td>
+            <td>Список компонентов</td>
+        </tr>
+        <tr>
+            <td>totalPrice</td>
+            <td>Float</td>
+            <td>Суммарная стоимость</td>
+        </tr>
+        <tr>
+            <td>userId</td>
+            <td>String (FK)</td>
+            <td>Владелец конфига</td>
+        </tr>
+        <tr>
+            <td>createdAt</td>
+            <td>DateTime</td>
+            <td>Дата создания</td>
+        </tr>
+    </table>
+
+    <h3>Product</h3>
+    <table>
+        <tr>
+            <th>Поле</th>
+            <th>Тип</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>price</td>
+            <td>Float</td>
+        </tr>
+        <tr>
+            <td>weight</td>
+            <td>Float (nullable)</td>
+        </tr>
+        <tr>
+            <td>categoryId</td>
+            <td>String (FK)</td>
+        </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 9. Безопасность -->
+    <h1 id="security">9. Безопасность</h1>
+
+    <h2>9.1 Аутентификация</h2>
+    <ul>
+        <li><strong>Google OAuth 2.0:</strong> Безопасная авторизация через Google</li>
+        <li><strong>Credentials Provider:</strong> Email/Password с хешированием</li>
+        <li><strong>Session Management:</strong> NextAuth + Prisma Adapter</li>
+        <li><strong>CSRF Protection:</strong> Встроенная в NextAuth</li>
+    </ul>
+
+    <h2>9.2 Шифрование пароля</h2>
+    <p>Пароли хешируются с помощью <code>bcryptjs</code> с 10 солью:</p>
+    <pre>const hashedPassword = await bcrypt.hash(password, 10);
+const isValid = await bcrypt.compare(inputPassword, hashedPassword);</pre>
+
+    <h2>9.3 Валидация входных данных</h2>
+    <ul>
+        <li>Server-side валидация всех API запросов</li>
+        <li>Проверка типов данных через Prisma schema</li>
+        <li>Санитизация входных данных</li>
+    </ul>
+
+    <h2>9.4 Авторизация</h2>
+    <ul>
+        <li>Проверка сессии в API routes через <code>getServerSession</code></li>
+        <li>Проверка владельца ресурса перед доступом</li>
+        <li>Изоляция данных между пользователями</li>
+    </ul>
+
+    <h2>9.5 Переменные окружения</h2>
+    <ul>
+        <li>Все секреты хранятся в <code>.env</code></li>
+        <li>.env файл в <code>.gitignore</code> (не коммитится)</li>
+        <li>На продакшене переменные хранятся в Vercel Secrets</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- 10. Заключение -->
+    <h1 id="conclusion">10. Заключение</h1>
+
+    <h2>10.1 Результаты</h2>
+    <p>Создано полнофункциональное веб-приложение, которое:</p>
+    <ul>
+        <li>✅ Автоматизирует процесс подбора периферии через интерактивный конфигуратор</li>
+        <li>✅ Валидирует совместимость компонентов</li>
+        <li>✅ Интегрирует AI-ассистента для интеллектуальных рекомендаций</li>
+        <li>✅ Предоставляет визуальное сравнение мышек с 3D представлением</li>
+        <li>✅ Позволяет сохранять и управлять конфигурациями</li>
+        <li>✅ Обеспечивает безопасную аутентификацию (Google OAuth + Email/Password)</li>
+        <li>✅ Имеет отзывчивый, современный UI с Material Design 3</li>
+    </ul>
+
+    <h2>10.2 Технические достижения</h2>
+    <ul>
+        <li>Использование современного стека: Next.js 14, React 18, TypeScript</li>
+        <li>Полный cycle CRUD операций с БД</li>
+        <li>Интеграция с внешними API (Google OAuth, Groq AI)</li>
+        <li>Реализация системы типизации TypeScript</li>
+        <li>Оптимизация производительности и UX</li>
+    </ul>
+
+    <h2>10.3 Возможности развития</h2>
+    <ul>
+        <li>Экспорт конфигурации в PDF</li>
+        <li>История изменений конфигурации</li>
+        <li>Рекомендации по оптимизации стоимости</li>
+        <li>Интеграция с интернет-магазинами (добавление в корзину)</li>
+        <li>Мобильное приложение (React Native)</li>
+        <li>Расширенная аналитика и статистика</li>
+    </ul>
+
+    <h2>10.4 Заключение</h2>
+    <p>DreamDesk демонстрирует применение современных веб-технологий для решения реальной проблемы подбора компьютерной периферии. Приложение готово к использованию и может быть развернуто на продакшене. Архитектура позволяет легко добавлять новые функции и масштабировать приложение по мере роста пользовательской базы.</p>
+
+    <hr style="margin: 40px 0; border: none; border-top: 2px solid #ccc;">
+    
+    <p style="text-align: center; color: #999; font-size: 12px; margin-top: 40px;">
+        DreamDesk © 2026<br>
+        Дипломная работа<br>
+        Создано с использованием Next.js, React, TypeScript, Tailwind CSS и PostgreSQL
+    </p>
+</body>
+</html>

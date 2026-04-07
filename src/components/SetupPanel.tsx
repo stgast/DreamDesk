@@ -5,12 +5,96 @@
 
 "use client";
 
-import { Trash2, AlertTriangle, CheckCircle2, RotateCcw, ShoppingCart } from "lucide-react";
+import { Trash2, AlertTriangle, CheckCircle2, RotateCcw, ShoppingCart, Save } from "lucide-react";
 import { useSetup } from "@/context/SetupContext";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { saveConfigToStorage } from "@/lib/saved-configs";
+import { useSession } from "next-auth/react";
+import { useApp } from "@/context/AppContext";
+import { formatPrice } from "@/lib/currency";
+import { useTranslation } from "@/lib/i18n";
 
 export function SetupPanel() {
   const { items, removeItem, clearSetup, totalPrice } = useSetup();
+  const { data: session } = useSession();
+  const { currency, language } = useApp();
+  const t = useTranslation(language);
+  const [saveOpen, setSaveOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [saveName, setSaveName] = useState("Моя сборка");
+
+  const closeSaveModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setSaveOpen(false);
+      setIsClosing(false);
+    }, 200);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape" && saveOpen && !isClosing) {
+      closeSaveModal();
+    }
+  };
+
+  useEffect(() => {
+    if (saveOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [saveOpen, isClosing]);
+
+  const handleSaveToProfile = async () => {
+    const name = saveName.trim() || "Моя сборка";
+
+    if (session?.user) {
+      // Сохранить в базу
+      try {
+        const res = await fetch("/api/setups", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            items: items.map((i) => ({
+              name: i.product.name,
+              category: i.product.category?.name ?? "—",
+              price: i.product.price,
+            })),
+            totalPrice,
+          }),
+        });
+        if (res.ok) {
+          closeSaveModal();
+          setSaveName("Моя сборка");
+        }
+      } catch {
+        // fallback to localStorage
+        saveToLocal();
+      }
+    } else {
+      saveToLocal();
+    }
+
+    function saveToLocal() {
+      const id =
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `cfg-${Date.now()}`;
+      saveConfigToStorage({
+        id,
+        name,
+        items: items.map((i) => ({
+          name: i.product.name,
+          category: i.product.category?.name ?? "—",
+          price: i.product.price,
+        })),
+        totalPrice,
+        savedAt: new Date().toISOString(),
+      });
+      closeSaveModal();
+      setSaveName("Моя сборка");
+    }
+  };
 
   // Проверка совместимости — генерируем предупреждения
   const warnings = useMemo(() => {
@@ -114,7 +198,7 @@ export function SetupPanel() {
                     {item.product.name}
                   </p>
                   <p className="text-xs text-lime font-semibold mt-0.5">
-                    {item.product.price.toLocaleString("ru-RU")} ₽
+                    {formatPrice(item.product.price, currency)}
                   </p>
                 </div>
 
@@ -157,14 +241,56 @@ export function SetupPanel() {
         )}
       </div>
 
-      {/* Итого */}
+      {/* Итого + сохранить в профиль */}
       {items.length > 0 && (
-        <div className="shrink-0 px-4 py-3 border-t border-dark-border bg-dark-bg">
+        <div className="shrink-0 px-4 py-3 border-t border-dark-border bg-dark-bg space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">Итого:</span>
+            <span className="text-sm text-gray-400">{t("total")}:</span>
             <span className="text-lg font-bold text-lime font-heading">
-              {totalPrice.toLocaleString("ru-RU")} ₽
+              {formatPrice(totalPrice, currency)}
             </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSaveOpen(true)}
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-accent/15 border border-accent/30 text-accent py-2.5 text-sm font-medium transition-button hover:bg-accent/25 hover:shadow-lg hover:shadow-accent/20 active:scale-95"
+          >
+            <Save className="w-4 h-4" />
+            {t("save_to_profile")}
+          </button>
+        </div>
+      )}
+
+      {saveOpen && (
+        <div className={`fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
+          <div className={`w-full max-w-sm rounded-xl border border-dark-border bg-dark-card p-5 shadow-xl ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}>
+            <h3 className="text-white font-semibold mb-2">Сохранить сборку</h3>
+            <p className="text-xs text-gray-500 mb-3">
+              Конфигурация появится в разделе «Ваши сетапы» на странице профиля.
+            </p>
+            <input
+              type="text"
+              value={saveName}
+              onChange={(e) => setSaveName(e.target.value)}
+              placeholder="Название"
+              className="w-full rounded-lg border border-dark-border bg-dark-surface px-3 py-2 text-sm text-white mb-4 focus:border-accent focus:outline-none"
+            />
+            <div className="flex gap-2 justify-end">
+              <button
+                type="button"
+                onClick={closeSaveModal}
+                className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-smooth"
+              >
+                Отмена
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveToProfile}
+                className="px-4 py-2 rounded-lg bg-accent text-dark-bg text-sm font-semibold transition-button hover:opacity-90 hover:shadow-lg hover:shadow-accent/30 active:scale-95"
+              >
+                Сохранить
+              </button>
+            </div>
           </div>
         </div>
       )}

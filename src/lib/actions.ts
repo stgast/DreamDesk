@@ -44,3 +44,37 @@ export async function getProductsByCategory(slug: string): Promise<Product[]> {
   });
   return products.map(parseProduct);
 }
+
+// Получить setups пользователя
+export async function getSetups(userId: string) {
+  const setups = await prisma.setup.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+  });
+  return setups.map((s) => ({
+    ...s,
+    items: JSON.parse(s.items),
+  }));
+}
+
+// Сохранить setup
+export async function saveSetup(userId: string, name: string, items: any[], totalPrice: number) {
+  return await prisma.setup.create({
+    data: {
+      userId,
+      name,
+      items: JSON.stringify(items),
+      totalPrice,
+    },
+  });
+}
+
+// Удалить setup
+export async function deleteSetup(userId: string, setupId: string) {
+  return await prisma.setup.deleteMany({
+    where: {
+      id: setupId,
+      userId, // безопасность
+    },
+  });
+}

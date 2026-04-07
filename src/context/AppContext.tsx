@@ -8,6 +8,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import { Currency, Language } from "@/types";
 
 type Theme = "dark" | "light";
 
@@ -18,16 +19,24 @@ interface AppContextValue {
   theme: Theme;
   setTheme: (t: Theme) => void;
   toggleTheme: () => void;
+  currency: Currency;
+  setCurrency: (c: Currency) => void;
+  language: Language;
+  setLanguage: (l: Language) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
 
 const STORAGE_THEME = "desk-setup-theme";
 const STORAGE_SIDEBAR = "desk-setup-sidebar";
+const STORAGE_CURRENCY = "desk-setup-currency";
+const STORAGE_LANGUAGE = "desk-setup-language";
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsedState] = useState(false);
   const [theme, setThemeState] = useState<Theme>("dark");
+  const [currency, setCurrencyState] = useState<Currency>("RUB");
+  const [language, setLanguageState] = useState<Language>("RU");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -35,6 +44,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (savedSidebar === "true") setSidebarCollapsedState(true);
     const savedTheme = localStorage.getItem(STORAGE_THEME) as Theme;
     if (savedTheme) setThemeState(savedTheme);
+    const savedCurrency = localStorage.getItem(STORAGE_CURRENCY) as Currency;
+    if (savedCurrency) setCurrencyState(savedCurrency);
+    const savedLanguage = localStorage.getItem(STORAGE_LANGUAGE) as Language;
+    if (savedLanguage) setLanguageState(savedLanguage);
     setMounted(true);
   }, []);
 
@@ -66,9 +79,33 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const setCurrency = useCallback((c: Currency) => {
+    setCurrencyState(c);
+    localStorage.setItem(STORAGE_CURRENCY, c);
+  }, []);
+
+  const setLanguage = useCallback((l: Language) => {
+    setLanguageState(l);
+    localStorage.setItem(STORAGE_LANGUAGE, l);
+  }, []);
+
   useEffect(() => {
     document.documentElement.classList.toggle("light", theme === "light");
   }, [theme]);
+
+  useEffect(() => {
+    const langCode =
+      language === "RU"
+        ? "ru"
+        : language === "EN"
+        ? "en"
+        : language === "UK"
+        ? "uk"
+        : language === "PL"
+        ? "pl"
+        : "en";
+    document.documentElement.lang = langCode;
+  }, [language]);
 
   return (
     <AppContext.Provider
@@ -79,6 +116,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         theme,
         setTheme,
         toggleTheme,
+        currency,
+        setCurrency,
+        language,
+        setLanguage,
       }}
     >
       {children}

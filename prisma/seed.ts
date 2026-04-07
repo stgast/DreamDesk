@@ -3,6 +3,11 @@
 // Запуск: npm run db:seed
 // ============================================
 
+import { config } from "dotenv";
+import { resolve } from "path";
+// cwd — корень проекта; override — чтобы .env перекрывал устаревший DATABASE_URL в shell
+config({ path: resolve(process.cwd(), ".env"), override: true });
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -134,7 +139,7 @@ async function main() {
       categoryId: keyboards.id,
     },
 
-    // === Мыши ===
+    // === Мыши (габариты в мм, вес в г; humpPercent — положение пика корпуса для силуэта) ===
     {
       name: "Logitech MX Master 3S",
       description: "Эргономичная беспроводная мышь для профессионалов. MagSpeed колесо, 8000 DPI, тихие клики.",
@@ -144,6 +149,10 @@ async function main() {
       features: f(["8000 DPI", "Bluetooth + Logi Bolt", "MagSpeed Scroll", "Тихие клики", "USB-C зарядка", "Flow"]),
       weight: 141,
       categoryId: mice.id,
+      lengthMm: 126.0,
+      widthMm: 84.3,
+      heightMm: 51.0,
+      humpPercent: 56,
     },
     {
       name: "Razer DeathAdder V3 Pro",
@@ -154,6 +163,52 @@ async function main() {
       features: f(["30000 DPI", "Focus Pro 30K", "HyperSpeed Wireless", "63г", "90ч батарея", "Эргономичная"]),
       weight: 63,
       categoryId: mice.id,
+      lengthMm: 128.0,
+      widthMm: 68.0,
+      heightMm: 44.0,
+      humpPercent: 52,
+    },
+    {
+      name: "Razer Viper V4 Pro",
+      description: "Симметричная ультралёгкая мышь. Razer Focus Pro 50K Gen-3, оптические переключатели Gen-4.",
+      price: 14990,
+      imageUrl: img("Viper V4 Pro"),
+      connectionType: "Wireless",
+      features: f(["50000 DPI", "Focus Pro 50K Gen-3", "8000 Гц", "49г", "Оптические клики Gen-4", "Симметричная"]),
+      weight: 49,
+      categoryId: mice.id,
+      lengthMm: 127.1,
+      widthMm: 63.9,
+      heightMm: 39.9,
+      humpPercent: 53,
+    },
+    {
+      name: "Logitech G Pro X2 Superstrike",
+      description: "Про-мышь Logitech с сенсором HERO 2 и переключателями SUPERSTRIKE.",
+      price: 13990,
+      imageUrl: img("G Pro X2 SS"),
+      connectionType: "Wireless",
+      features: f(["44000 DPI", "HERO 2", "8000 Гц", "61г", "SUPERSTRIKE switches", "Симметричная"]),
+      weight: 61,
+      categoryId: mice.id,
+      lengthMm: 125.0,
+      widthMm: 63.5,
+      heightMm: 40.0,
+      humpPercent: 53,
+    },
+    {
+      name: "Hitscan Hyperlight",
+      description: "Компактная ультралёгкая мышь. PixArt PAW3395, Omron Optical, 8 кГц.",
+      price: 8990,
+      imageUrl: img("Hyperlight"),
+      connectionType: "Wireless",
+      features: f(["26000 DPI", "PAW3395", "8000 Гц", "39г", "Omron Optical 70M", "Симметричная"]),
+      weight: 39,
+      categoryId: mice.id,
+      lengthMm: 118.0,
+      widthMm: 61.0,
+      heightMm: 38.0,
+      humpPercent: 58,
     },
 
     // === Микрофоны ===

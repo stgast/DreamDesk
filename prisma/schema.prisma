@@ -1,23 +1,20 @@
 // ============================================
 // DreamDesk — Prisma Schema
 // ============================================
-// База данных: PostgreSQL (продакшен) / SQLite (разработка)
+// Supabase: пул (6543 + pgbouncer) для приложения, direct (5432) для migrate/db push
 //
-// Для PostgreSQL в .env:
-//   DATABASE_URL="postgresql://user:password@localhost:5432/dreamdesk?schema=public"
-//
-// Для SQLite (по умолчанию для разработки):
-//   DATABASE_URL="file:./dev.db"
+// DATABASE_URL  — Transaction pooler
+// DIRECT_URL    — Session mode (обязателен для prisma migrate / db push)
 // ============================================
 
 generator client {
   provider = "prisma-client-js"
 }
 
-// Переключите provider на "postgresql" при деплое на сервер с PostgreSQL
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // Категория товаров (Мониторы, Клавиатуры, Мыши и т.д.)
@@ -42,7 +39,13 @@ model Product {
   imageUrl       String?             // URL изображения
   connectionType String              // "USB", "XLR", "Wireless", "HDMI", "USB-C" и т.д.
   features       String   @default("[]") // JSON-массив характеристик: ["4K", "HDR", "IPS"]
-  weight         Float?              // Вес в граммах (для проверки совместимости)
+  weight         Float?              // Вес в граммах (мыши/лёгкая периферия) или граммы для тяжёлых устройств
+
+  // Габариты мыши (мм) — для сравнения форм на /compare; у остальных категорий null
+  lengthMm    Float?
+  widthMm     Float?
+  heightMm    Float?
+  humpPercent Float?   // 0–100: положение пика корпуса по длине (нос слева), как на EloShapes
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
@@ -50,4 +53,75 @@ model Product {
   createdAt DateTime @default(now())
 
   @@index([categoryId])
+}
+
+// Пользователь
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // Хешированный пароль для Credentials (null для OAuth)
+
+  accounts      Account[]
+  sessions      Session[]
+  setups        Setup[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// NextAuth: учётные записи от провайдеров (Google, Credentials и т.д.)
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// NextAuth: сессии
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// NextAuth: верификация email
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Сохранённая конфигурация (сетап)
+model Setup {
+  id         String   @id @default(cuid())
+  name       String   // Название сборки, например "My Gaming Setup"
+  items      String   @default("[]") // JSON-строка со списком ID товаров
+  totalPrice Float
+
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
 }

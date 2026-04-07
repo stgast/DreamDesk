@@ -6,6 +6,8 @@
 import { getProducts, getCategories } from "@/lib/actions";
 import { Configurator } from "@/components/Configurator";
 
+export const dynamic = "force-dynamic";
+
 export default async function BuildPage() {
   const [products, categories] = await Promise.all([
     getProducts(),
