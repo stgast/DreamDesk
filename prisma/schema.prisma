@@ -60,6 +60,7 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
+  nickname      String?   @unique  // Уникальный никнейм для входа
   emailVerified DateTime?
   image         String?
   password      String?   // Хешированный пароль для Credentials (null для OAuth)

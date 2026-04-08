@@ -38,12 +38,25 @@ interface SetupContextValue {
 
   // Получить товар из конкретной категории (если есть)
   getItemByCategory: (categoryId: string) => SetupItem | undefined;
+
+  // Загрузить сборку целиком
+  loadSetup: (newItems: SetupItem[]) => void;
+
+  // Избранное (Wishlist)
+  wishlistIds: string[];
+  toggleWishlist: (productId: string) => void;
+
+  // Сравнение (Compare)
+  compareIds: string[];
+  toggleCompare: (productId: string) => void;
 }
 
 const SetupContext = createContext<SetupContextValue | null>(null);
 
 export function SetupProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<SetupItem[]>([]);
+  const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+  const [compareIds, setCompareIds] = useState<string[]>([]);
 
   // Добавить товар (заменяет существующий в той же категории)
   const addItem = useCallback((product: Product) => {
@@ -83,6 +96,29 @@ export function SetupProvider({ children }: { children: ReactNode }) {
     [items]
   );
 
+  // Загрузить сборку целиком
+  const loadSetup = useCallback((newItems: SetupItem[]) => {
+    setItems(newItems);
+  }, []);
+
+  // Переключить избранное
+  const toggleWishlist = useCallback((productId: string) => {
+    setWishlistIds((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId]
+    );
+  }, []);
+
+  // Переключить сравнение
+  const toggleCompare = useCallback((productId: string) => {
+    setCompareIds((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId]
+    );
+  }, []);
+
   return (
     <SetupContext.Provider
       value={{
@@ -94,6 +130,11 @@ export function SetupProvider({ children }: { children: ReactNode }) {
         totalPrice,
         hasCategory,
         getItemByCategory,
+        loadSetup,
+        wishlistIds,
+        toggleWishlist,
+        compareIds,
+        toggleCompare,
       }}
     >
       {children}

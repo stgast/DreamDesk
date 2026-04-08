@@ -99,11 +99,39 @@ const config: Config = {
       },
       animation: {
         "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+        "fade-in": "fadeIn 0.6s ease-out forwards",
+        "scale-up": "scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "shimmer": "shimmer 1.5s infinite",
+        "gradient-x": "gradient 3s linear infinite",
+        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "spin-slow": "spin 20s linear infinite",
+        "spin-slow-reverse": "spin 25s linear infinite reverse",
+        "float": "float 6s ease-in-out infinite",
+        "float-delay": "float 7s ease-in-out 3.5s infinite",
       },
       keyframes: {
         fadeInUp: {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0", filter: "blur(10px)" },
+          "100%": { opacity: "1", filter: "blur(0)" },
+        },
+        scaleUp: {
+          "0%": { transform: "scale(0.92)" },
+          "100%": { transform: "scale(1)" },
+        },
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
+        gradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-20px) rotate(5deg)" },
         },
       },
     },

@@ -1,9 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { DollarSign, Globe } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { useTranslation } from "@/lib/i18n";
+import { CustomDropdown, type DropdownOption } from "@/components/CustomDropdown";
 import type { Currency, Language } from "@/types";
+
+const LANGUAGE_OPTIONS: DropdownOption[] = [
+  { value: "RU", label: "Русский" },
+  { value: "EN", label: "English" },
+  { value: "UK", label: "Українська" },
+  { value: "PL", label: "Polski" },
+];
+
+const CURRENCY_OPTIONS: DropdownOption[] = [
+  { value: "RUB", label: "₽ (RUB)" },
+  { value: "EUR", label: "€ (EUR)" },
+  { value: "USD", label: "$ (USD)" },
+  { value: "PLN", label: "zł (PLN)" },
+];
 
 export function Footer() {
   const { currency, setCurrency, language, setLanguage } = useApp();
@@ -29,32 +45,21 @@ export function Footer() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 sm:items-end lg:w-[520px]">
-            <div>
-              <label className="block text-sm text-on-surface-variant mb-2">{t("currency")}</label>
-              <select
-                value={currency}
-                onChange={(event) => setCurrency(event.target.value as Currency)}
-                className="w-full bg-surface-container-high border border-outline-variant rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors"
-              >
-                <option value="RUB">₽ Рубль (RUB)</option>
-                <option value="EUR">€ Евро (EUR)</option>
-                <option value="USD">$ Доллар (USD)</option>
-                <option value="PLN">zł Злотый (PLN)</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm text-on-surface-variant mb-2">{t("language")}</label>
-              <select
-                value={language}
-                onChange={(event) => setLanguage(event.target.value as Language)}
-                className="w-full bg-surface-container-high border border-outline-variant rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-primary transition-colors"
-              >
-                <option value="RU">Русский</option>
-                <option value="EN">English</option>
-                <option value="UK">Українська</option>
-                <option value="PL">Polski</option>
-              </select>
-            </div>
+            <CustomDropdown
+              options={CURRENCY_OPTIONS}
+              value={currency}
+              onChange={(value) => setCurrency(value as Currency)}
+              label={t("currency")}
+              dropDirection="up"
+            />
+            <CustomDropdown
+              options={LANGUAGE_OPTIONS}
+              value={language}
+              onChange={(value) => setLanguage(value as Language)}
+              label={t("language")}
+              icon={<Globe className="w-4 h-4" />}
+              dropDirection="up"
+            />
           </div>
         </div>
       </div>

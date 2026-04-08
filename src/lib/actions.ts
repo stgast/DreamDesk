@@ -78,3 +78,19 @@ export async function deleteSetup(userId: string, setupId: string) {
     },
   });
 }
+
+// Обновить setup (название и/или состав)
+export async function updateSetup(userId: string, setupId: string, data: { name?: string; items?: any[]; totalPrice?: number }) {
+  const updateData: any = {};
+  if (data.name) updateData.name = data.name;
+  if (data.items) updateData.items = JSON.stringify(data.items);
+  if (data.totalPrice !== undefined) updateData.totalPrice = data.totalPrice;
+
+  return await prisma.setup.updateMany({
+    where: {
+      id: setupId,
+      userId,
+    },
+    data: updateData,
+  });
+}

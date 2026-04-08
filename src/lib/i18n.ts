@@ -4,7 +4,7 @@
 
 import { Language } from "@/types";
 
-type TranslationKey =
+export type TranslationKey =
   | "account"
   | "email"
   | "logout"
@@ -114,7 +114,88 @@ type TranslationKey =
   | "visual_comparison"
   | "visual_comparison_desc"
   | "testimonials"
-  | "get_started_today";
+  | "get_started_today"
+  | "compare_title"
+  | "compare_search_placeholder"
+  | "search_by_name_description"
+  | "not_found"
+  | "compare_shapes"
+  | "top_view"
+  | "side_view"
+  | "remove_item"
+  | "added_to_compare"
+  | "add_to_compare"
+  | "mm"
+  | "weight_label"
+  | "max_count_reached"
+  | "connection_label"
+  | "characteristic"
+  | "where_to_buy"
+  | "find_where_to_buy"
+  | "no_mice_for_comparison"
+  | "best_offers"
+  | "go_to_store"
+  | "best_price"
+  | "fast_shipping"
+  | "official_dealer"
+  | "region_eu"
+  | "region_global"
+  | "region_china"
+  | "all_offers"
+  | "value_verdict_best"
+  | "value_verdict_balanced"
+  | "popular_choice"
+  | "value_king"
+  | "premium_pick"
+  | "shipping_free"
+  | "shipping_fast"
+  | "reviews"
+  | "sort_by"
+  | "sort_price"
+  | "sort_delivery"
+  | "sort_rating"
+  | "filter_fast"
+  | "filter_instock"
+  | "filter_official"
+  | "return_14_days"
+  | "notify_price_drop"
+  | "price_history_30_days"
+  | "trusted_store"
+  | "your_builds"
+  | "build_management_hint"
+  | "active_filtering"
+  | "search_results_zero"
+  | "change_request_or_create"
+  | "new_tag"
+  | "open_details"
+  | "duplicate_success"
+  | "delete_build_confirm"
+  | "delete_build_warning"
+  | "yes_delete"
+  | "quick_peek"
+  | "total_budget"
+  | "stats_title"
+  | "total_builds"
+  | "total_cost"
+  | "close_preview"
+  | "id_label"
+  | "save_photo"
+  | "duplicate"
+  | "build_intelligence"
+  | "name_build_placeholder"
+  | "setup_composition"
+  | "items_count"
+  | "empty_build"
+  | "delete_build_long"
+  | "active_sync"
+  | "found_offers_text"
+  | "economy_percent"
+  | "low_stock_text"
+  | "shipping_label"
+  | "subscribed_label"
+  | "trend_30_days"
+  | "shipping_time_fast"
+  | "shipping_time_standard";
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   RU: {
@@ -220,6 +301,87 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     key_features: "Основные характеристики",
     replace: "Заменить",
     ai_recommendations: "AI-рекомендации по подбору",
+    compare_title: "Сравнение мышей",
+    compare_search_placeholder: "Поиск по названию и описанию...",
+    search_by_name_description: "Поиск по названию и описанию...",
+    not_found: "Ничего не найдено.",
+    compare_shapes: "Сравнение форм",
+    top_view: "Вид сверху",
+    side_view: "Вид сбоку",
+    remove_item: "Убрать",
+    added_to_compare: "Убрано",
+    add_to_compare: "В сравнение",
+    mm: "мм",
+    weight_label: "Вес: ",
+    max_count_reached: "Достигнут максимум элементов",
+    connection_label: "Подключение",
+    characteristic: "Характеристика",
+    where_to_buy: "Где купить",
+    find_where_to_buy: "Посмотреть цены",
+    no_mice_for_comparison: "В базе нет мышей с габаритами для сравнения форм. Запустите npm run db:seed.",
+    best_offers: "Выгодные предложения",
+    go_to_store: "В магазин",
+    best_price: "Лучшая цена",
+    fast_shipping: "Быстрая доставка",
+    official_dealer: "Офиц. дилер",
+    region_eu: "Европа",
+    region_global: "Весь мир",
+    region_china: "Китай",
+    all_offers: "Все предложения",
+    value_verdict_best: "Лучший выбор",
+    value_verdict_balanced: "Сбалансированно",
+    popular_choice: "Популярный выбор",
+    value_king: "Король выгоды",
+    premium_pick: "Премиум выбор",
+    shipping_free: "Бесплатно",
+    shipping_fast: "Молниеносно",
+    reviews: "отзывов",
+    sort_by: "Сортировка",
+    sort_price: "По цене",
+    sort_delivery: "По доставке",
+    sort_rating: "По рейтингу",
+    filter_fast: "Быстрая доставка",
+    filter_instock: "В наличии",
+    filter_official: "Официальная гарантия",
+    return_14_days: "Возврат 14 дней",
+    notify_price_drop: "Уведомить о скидке",
+    price_history_30_days: "Цена за 30 дней",
+    trusted_store: "Проверенный магазин",
+    your_builds: "Ваши Сборки",
+    build_management_hint: "Управляйте конфигурациями и сравнивайте предложения",
+    active_filtering: "Активная фильтрация",
+    search_results_zero: "У вас нет такой сборки",
+    change_request_or_create: "Попробуйте изменить запрос или создайте новую сборку",
+    new_tag: "НОВОЕ",
+    open_details: "Открыть детали",
+    duplicate_success: 'Сборка "{name}" успешно продублирована!',
+    delete_build_confirm: "Удалить сборку?",
+    delete_build_warning: "Это действие нельзя отменить. Все компоненты будут удалены.",
+    yes_delete: "Да, удалить",
+    quick_peek: "Быстрый просмотр",
+    total_budget: "Общий бюджет",
+    stats_title: "Статистика сборок",
+    total_builds: "Всего сборок",
+    total_cost: "Общая стоимость",
+    close_preview: "Закрыть просмотр",
+    id_label: "ID",
+    save_photo: "Сохранить фото",
+    duplicate: "Дублировать",
+    build_intelligence: "Интеллект Сборки",
+    name_build_placeholder: "Назовите сборку...",
+    setup_composition: "Состав сетапа",
+    items_count: "позиции",
+    empty_build: "Сборка пуста",
+    delete_build_long: "Удалить сборку полностью",
+    active_sync: "Активная синхронизация",
+    found_offers_text: "Мы нашли {count} актуальных предложений для этой модели. Обратите внимание на наличие официальной гарантии.",
+    economy_percent: "Экономия {percent}%",
+    low_stock_text: "Мало ({count} шт)",
+    shipping_label: "Доставка",
+    subscribed_label: "Вы подписаны",
+    trend_30_days: "Тренд за 30 дней",
+    shipping_time_fast: "2-3 дня",
+    shipping_time_standard: "15-20 дней",
     start_building: "Начать сборку",
     features_section: "Возможности",
     compatibility_engine: "Движок совместимости",
@@ -332,6 +494,87 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     key_features: "Key features",
     replace: "Replace",
     ai_recommendations: "AI recommendations for selection",
+    compare_title: "Compare Mice",
+    compare_search_placeholder: "Search by name and description...",
+    search_by_name_description: "Search by name and description...",
+    not_found: "Nothing found.",
+    compare_shapes: "Compare Shapes",
+    top_view: "Top View",
+    side_view: "Side View",
+    remove_item: "Remove",
+    added_to_compare: "Added",
+    add_to_compare: "To Compare",
+    mm: "mm",
+    weight_label: "Weight: ",
+    max_count_reached: "Maximum items reached",
+    connection_label: "Connection",
+    characteristic: "Characteristic",
+    where_to_buy: "Where to buy",
+    find_where_to_buy: "Find price",
+    no_mice_for_comparison: "No mice with dimensions for shape comparison in the database. Run npm run db:seed.",
+    best_offers: "Best Offers",
+    go_to_store: "To Store",
+    best_price: "Best Price",
+    fast_shipping: "Fast Shipping",
+    official_dealer: "Official Dealer",
+    region_eu: "Europe",
+    region_global: "Global",
+    region_china: "China",
+    all_offers: "All Offers",
+    value_verdict_best: "Best Choice",
+    value_verdict_balanced: "Balanced Deal",
+    popular_choice: "Popular Choice",
+    value_king: "Value King",
+    premium_pick: "Premium Pick",
+    shipping_free: "Free Shipping",
+    shipping_fast: "Lightning Fast",
+    reviews: "reviews",
+    sort_by: "Sort By",
+    sort_price: "Price",
+    sort_delivery: "Delivery",
+    sort_rating: "Rating",
+    filter_fast: "Fast Shipping",
+    filter_instock: "In Stock",
+    filter_official: "Official Warranty",
+    return_14_days: "14-day Returns",
+    notify_price_drop: "Notify Price Drop",
+    price_history_30_days: "30-day Price History",
+    trusted_store: "Trusted Store",
+    your_builds: "Your Builds",
+    build_management_hint: "Manage configurations and compare best offers",
+    active_filtering: "Active Filtering",
+    search_results_zero: "You don't have such a build",
+    change_request_or_create: "Try changing the query or create a new build",
+    new_tag: "NEW",
+    open_details: "Open Details",
+    duplicate_success: 'Build "{name}" successfully duplicated!',
+    delete_build_confirm: "Delete build?",
+    delete_build_warning: "This action cannot be undone. All components will be removed.",
+    yes_delete: "Yes, delete",
+    quick_peek: "Quick Peek",
+    total_budget: "Total Budget",
+    stats_title: "Build Stats",
+    total_builds: "Total Builds",
+    total_cost: "Total Cost",
+    close_preview: "Close Preview",
+    id_label: "ID",
+    save_photo: "Save Photo",
+    duplicate: "Duplicate",
+    build_intelligence: "Build Intelligence",
+    name_build_placeholder: "Name your build...",
+    setup_composition: "Setup Composition",
+    items_count: "items",
+    empty_build: "Build is empty",
+    delete_build_long: "Delete build completely",
+    active_sync: "Active Sync",
+    found_offers_text: "We found {count} relevant offers for this model. Look for the official warranty.",
+    economy_percent: "Save {percent}%",
+    low_stock_text: "Low stock ({count} left)",
+    shipping_label: "Shipping",
+    subscribed_label: "Subscribed",
+    trend_30_days: "30-Day Trend",
+    shipping_time_fast: "2-3 days",
+    shipping_time_standard: "15-20 days",
     start_building: "Start Building",
     features_section: "Features",
     compatibility_engine: "Compatibility Engine",
@@ -429,7 +672,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     try_change_filters: "Спробуйте змінити фільтри або запит",
     search_placeholder: "Пошук за назвою, брендом чи характеристиками...",
     all: "Усі",
-    category_monitors: "Монітори",
+    category_monitors: "Монитори",
     category_arms: "Кронштейни",
     category_keyboards: "Клавіатури",
     category_mice: "Миші",
@@ -444,6 +687,87 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     key_features: "Основні характеристики",
     replace: "Замінити",
     ai_recommendations: "AI-рекомендації по підбору",
+    compare_title: "Порівняння мишей",
+    compare_search_placeholder: "Пошук за назвою та описом...",
+    search_by_name_description: "Пошук за назвою та описом...",
+    not_found: "Нічого не знайдено.",
+    compare_shapes: "Порівняння форм",
+    top_view: "Вид зверху",
+    side_view: "Вид збоку",
+    remove_item: "Видалити",
+    added_to_compare: "Видалено",
+    add_to_compare: "До порівняння",
+    mm: "мм",
+    weight_label: "Вага: ",
+    max_count_reached: "Досягнуто максимум елементів",
+    connection_label: "Підключення",
+    characteristic: "Характеристика",
+    where_to_buy: "Де купити",
+    find_where_to_buy: "Подивитися ціни",
+    no_mice_for_comparison: "У базі немає мишей з габаритками для порівняння форм. Запустіть npm run db:seed.",
+    best_offers: "Вигідні пропозиції",
+    go_to_store: "В магазин",
+    best_price: "Найкраща ціна",
+    fast_shipping: "Швидка доставка",
+    official_dealer: "Офіц. дилер",
+    region_eu: "Європа",
+    region_global: "Весь світ",
+    region_china: "Китай",
+    all_offers: "Усі пропозиції",
+    value_verdict_best: "Найкращий вибір",
+    value_verdict_balanced: "Збалансовано",
+    popular_choice: "Популярний вибір",
+    value_king: "Король вигоди",
+    premium_pick: "Преміум вибір",
+    shipping_free: "Безкоштовно",
+    shipping_fast: "Блискавично",
+    reviews: "відгуків",
+    sort_by: "Сортування",
+    sort_price: "За ціною",
+    sort_delivery: "За доставкою",
+    sort_rating: "За рейтингом",
+    filter_fast: "Швидка доставка",
+    filter_instock: "В наявності",
+    filter_official: "Офіційна гарантія",
+    return_14_days: "Повернення 14 днів",
+    notify_price_drop: "Сповістити про знижку",
+    price_history_30_days: "Ціна за 30 днів",
+    trusted_store: "Перевірений магазин",
+    your_builds: "Ваші Збірки",
+    build_management_hint: "Керуйте конфігураціями та порівнюйте пропозиції",
+    active_filtering: "Активна фільтрація",
+    search_results_zero: "У вас немає такої збірки",
+    change_request_or_create: "Спробуйте змінити запит або створіть нову збірку",
+    new_tag: "НОВЕ",
+    open_details: "Відкрити деталі",
+    duplicate_success: 'Збірка "{name}" успішно продубльована!',
+    delete_build_confirm: "Видалити збірку?",
+    delete_build_warning: "Цю дію не можна скасувати. Всі компоненти будуть видалені.",
+    yes_delete: "Так, видалити",
+    quick_peek: "Швидкий перегляд",
+    total_budget: "Загальний бюджет",
+    stats_title: "Статистика збірок",
+    total_builds: "Всього збірок",
+    total_cost: "Загальна вартість",
+    close_preview: "Закрити перегляд",
+    id_label: "ID",
+    save_photo: "Зберегти фото",
+    duplicate: "Дублювати",
+    build_intelligence: "Інтелект Збірки",
+    name_build_placeholder: "Назвіть збірку...",
+    setup_composition: "Склад сетапа",
+    items_count: "позиції",
+    empty_build: "Збірка порожня",
+    delete_build_long: "Видалити збірку повністю",
+    active_sync: "Активна синхронізація",
+    found_offers_text: "Ми знайшли {count} актуальних пропозицій для цієї моделі. Зверніть увагу на наявність офіційної гарантії.",
+    economy_percent: "Економія {percent}%",
+    low_stock_text: "Мало ({count} шт)",
+    shipping_label: "Доставка",
+    subscribed_label: "Ви підписані",
+    trend_30_days: "Тренд за 30 днів",
+    shipping_time_fast: "2-3 дні",
+    shipping_time_standard: "15-20 днів",
     start_building: "Почати збірку",
     features_section: "Можливості",
     compatibility_engine: "Рушій сумісності",
@@ -556,6 +880,87 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     key_features: "Kluczowe cechy",
     replace: "Zamień",
     ai_recommendations: "Rekomendacje AI do wyboru",
+    compare_title: "Porównaj myszki",
+    compare_search_placeholder: "Szukaj według nazwy i opisu...",
+    search_by_name_description: "Szukaj według nazwy i opisu...",
+    not_found: "Nic nie znaleziono.",
+    compare_shapes: "Porównaj kształty",
+    top_view: "Widok z góry",
+    side_view: "Widok z boku",
+    remove_item: "Usuń",
+    added_to_compare: "Usunięto",
+    add_to_compare: "Do porównania",
+    mm: "mm",
+    weight_label: "Waga: ",
+    max_count_reached: "Osiągnięto maksymalną liczbę elementów",
+    connection_label: "Połączenie",
+    characteristic: "Charakterystyka",
+    where_to_buy: "Gdzie kupić",
+    find_where_to_buy: "Zobacz ceny",
+    no_mice_for_comparison: "W bazie nie ma myszek z wymiarami do porównania kształtów. Uruchom npm run db:seed.",
+    best_offers: "Najlepsze oferty",
+    go_to_store: "Do sklepu",
+    best_price: "Najlepsza cena",
+    fast_shipping: "Szybka dostawa",
+    official_dealer: "Oficj. dealer",
+    region_eu: "Europa",
+    region_global: "Cały świat",
+    region_china: "Chiny",
+    all_offers: "Wszystkie oferty",
+    value_verdict_best: "Najlepszy wybór",
+    value_verdict_balanced: "Zrównoważone",
+    popular_choice: "Popularny wybór",
+    value_king: "Król opłacalności",
+    premium_pick: "Wybór Premium",
+    shipping_free: "Za darmo",
+    shipping_fast: "Błyskawicznie",
+    reviews: "opinii",
+    sort_by: "Sortuj",
+    sort_price: "Po cenie",
+    sort_delivery: "Po dostawie",
+    sort_rating: "Po ocenach",
+    filter_fast: "Szybka dostawa",
+    filter_instock: "W magazynie",
+    filter_official: "Oficjalna gwarancja",
+    return_14_days: "Zwrot 14 dni",
+    notify_price_drop: "Powiadom o zniżce",
+    price_history_30_days: "Historia cen 30 dni",
+    trusted_store: "Zaufany sklep",
+    your_builds: "Twoje Zestawy",
+    build_management_hint: "Zarządzaj konfiguracjami i porównuj oferty",
+    active_filtering: "Aktywna filtracja",
+    search_results_zero: "Nie masz takiego zestawu",
+    change_request_or_create: "Spróbuj zmienić zapytanie lub utwórz nowy zestaw",
+    new_tag: "NOWE",
+    open_details: "Otwórz szczegóły",
+    duplicate_success: 'Zestaw "{name}" został zduplikowany!',
+    delete_build_confirm: "Usunąć zestaw?",
+    delete_build_warning: "Tej akcji nie można cofnąć. Wszystkie elementy zostaną usunięte.",
+    yes_delete: "Tak, usuń",
+    quick_peek: "Szybki podgląd",
+    total_budget: "Całkowity budżet",
+    stats_title: "Statystyki zestawów",
+    total_builds: "Wszystkich zestawów",
+    total_cost: "Całkowity koszt",
+    close_preview: "Zamknij podgląd",
+    id_label: "ID",
+    save_photo: "Zapisz zdjęcie",
+    duplicate: "Duplikuj",
+    build_intelligence: "Inteligencja Zestawu",
+    name_build_placeholder: "Nazwij swój zestaw...",
+    setup_composition: "Skład zestawu",
+    items_count: "pozycje",
+    empty_build: "Zestaw jest pusty",
+    delete_build_long: "Usuń całkowicie zestaw",
+    active_sync: "Aktywna synchronizacja",
+    found_offers_text: "Znaleźliśmy {count} aktualnych ofert dla tego modelu. Zwróć uwagę na oficjalną gwarancję.",
+    economy_percent: "Oszczędność {percent}%",
+    low_stock_text: "Niski stan ({count} szt)",
+    shipping_label: "Wysyłka",
+    subscribed_label: "Subskrypcja aktywna",
+    trend_30_days: "Trend 30-dniowy",
+    shipping_time_fast: "2-3 dni",
+    shipping_time_standard: "15-20 dni",
     start_building: "Rozpocznij budowanie",
     features_section: "Funkcje",
     compatibility_engine: "Silnik kompatybilności",
@@ -565,6 +970,13 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     testimonials: "Opinie",
     get_started_today: "Zacznij dzisiaj",
   },
+};
+
+export const LANGUAGE_LOCALES: Record<Language, string> = {
+  RU: "ru-RU",
+  EN: "en-US",
+  UK: "uk-UA",
+  PL: "pl-PL",
 };
 
 /**

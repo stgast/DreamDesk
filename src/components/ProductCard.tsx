@@ -111,80 +111,79 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
           </span>
         </div>
 
-      {/* Изображение */}
-      <div className="h-32 flex items-center justify-center rounded-lg bg-dark-surface mb-3 overflow-hidden">
-        {product.imageUrl ? (
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="w-full h-full object-contain"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-16 h-16 rounded-lg bg-dark-border" />
-        )}
-      </div>
-
-      {/* Название и описание */}
-      <h3 className="font-medium text-white text-sm leading-tight">
-        {product.name}
-      </h3>
-      {product.description && (
-        <p className="text-[11px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">
-          {product.description}
-        </p>
-      )}
-
-      {/* Характеристики (features) — как теги */}
-      {product.features.length > 0 && (
-        <div className="flex flex-wrap gap-1 mt-2">
-          {(product.features as string[]).slice(0, 4).map((feat, i) => (
-            <span
-              key={i}
-              className="text-[10px] text-gray-400 bg-dark-surface rounded px-1.5 py-0.5"
-            >
-              {feat}
-            </span>
-          ))}
-          {product.features.length > 4 && (
-            <span className="text-[10px] text-gray-600">
-              +{product.features.length - 4}
-            </span>
+        {/* Изображение */}
+        <div className="h-32 flex items-center justify-center rounded-lg bg-dark-surface mb-3 overflow-hidden">
+          {product.imageUrl ? (
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="w-full h-full object-contain"
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-lg bg-dark-border" />
           )}
         </div>
-      )}
 
-      {/* Цена + кнопка добавления */}
-      <div className="flex items-center justify-between mt-3 pt-3 border-t border-dark-border">
-        <span className="text-sm font-bold text-lime">
-          {formatPrice(product.price, currency)}
-        </span>
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-            onAdd();
-          }}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-button active:scale-95 ${
-            isInSetup
-              ? "bg-lime/15 text-lime hover:bg-lime/25"
-              : "bg-accent/10 text-accent hover:bg-accent/20"
-          }`}
-        >
-          {isInSetup ? (
-            <>
-              <Check className="w-3.5 h-3.5" />
-              {t("replace")}
-            </>
-          ) : (
-            <>
-              <Plus className="w-3.5 h-3.5" />
-              {t("add_to_setup")}
-            </>
-          )}
-        </button>
+        {/* Название и описание */}
+        <h3 className="font-medium text-white text-sm leading-tight">
+          {product.name}
+        </h3>
+        {product.description && (
+          <p className="text-[11px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">
+            {product.description}
+          </p>
+        )}
+
+        {/* Характеристики (features) — как теги */}
+        {product.features.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-2">
+            {(product.features as string[]).slice(0, 4).map((feat, i) => (
+              <span
+                key={i}
+                className="text-[10px] text-gray-400 bg-dark-surface rounded px-1.5 py-0.5"
+              >
+                {feat}
+              </span>
+            ))}
+            {product.features.length > 4 && (
+              <span className="text-[10px] text-gray-600">
+                +{product.features.length - 4}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Цена + кнопка добавления */}
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-dark-border">
+          <span className="text-sm font-bold text-lime">
+            {formatPrice(product.price, currency)}
+          </span>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onAdd();
+            }}
+            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-button active:scale-95 ${isInSetup
+                ? "bg-lime/15 text-lime hover:bg-lime/25"
+                : "bg-accent/10 text-accent hover:bg-accent/20"
+              }`}
+          >
+            {isInSetup ? (
+              <>
+                <Check className="w-3.5 h-3.5" />
+                {t("replace")}
+              </>
+            ) : (
+              <>
+                <Plus className="w-3.5 h-3.5" />
+                {t("add_to_setup")}
+              </>
+            )}
+          </button>
+        </div>
       </div>
-    </div>
       {isModalOpen && (
         <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
           <div className={`w-full max-w-3xl overflow-hidden rounded-3xl border border-dark-border bg-dark-card shadow-2xl ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}>

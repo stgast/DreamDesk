@@ -25,13 +25,11 @@ export default function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <body className="min-h-screen bg-dark-bg text-white antialiased">
         <Providers>
-          <div className="flex min-h-screen">
-            <div className="flex flex-1 flex-col min-w-0 min-h-screen relative">
-              <Header />
-              <main className="flex-1 overflow-auto">{children}</main>
-              <Footer />
-              <AIChatWidget />
-            </div>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1 overflow-auto">{children}</main>
+            <Footer />
+            <AIChatWidget />
           </div>
         </Providers>
       </body>

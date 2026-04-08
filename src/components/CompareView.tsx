@@ -11,6 +11,7 @@ import {
   Search,
   DollarSign,
   MoreVertical,
+  Sparkles,
 } from "lucide-react";
 import type { Product } from "@/types";
 import {
@@ -21,6 +22,7 @@ import {
 import { useApp } from "@/context/AppContext";
 import { formatPrice } from "@/lib/currency";
 import { useTranslation } from "@/lib/i18n";
+import { WhereToBuy } from "./WhereToBuy";
 
 const COMPARE_KEY = "dreamdesk-compare-ids";
 const MAX = 4;
@@ -158,50 +160,63 @@ export function CompareView({ products }: CompareViewProps) {
   return (
     <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8 pb-24">
       {/* Поиск */}
-      <div className="mx-auto w-full max-w-3xl">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-          <input
-            type="search"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Поиск по названию и описанию..."
-            className="w-full rounded-xl border border-dark-border bg-dark-surface py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-gray-600 focus:border-accent focus:outline-none"
-          />
-          {q.trim() && (
-            <div className="absolute left-0 right-0 z-10 mt-1 overflow-hidden rounded-2xl border border-dark-border bg-dark-card shadow-xl">
-                {suggestions.length > 0 ? (
-                  suggestions.map((product) => (
-                    <button
-                      key={product.id}
-                      type="button"
-                      onClick={() => toggle(product.id)}
-                      className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm transition-smooth hover:bg-white/5"
-                    >
-                      <div className="min-w-0">
-                        <p className="font-medium text-white truncate">{product.name}</p>
-                        <p className="text-xs text-gray-500 truncate">{product.category?.name}</p>
-                      </div>
-                      <span className="text-xs text-gray-400">
-                        {ids.includes(product.id) ? "Убрано" : "В сравнение"}
-                      </span>
-                    </button>
-                  ))
-                ) : (
-                  <div className="px-4 py-3 text-sm text-gray-500">
-                    Ничего не найдено.
-                  </div>
-                )}
-              </div>
-            )}
+      <div className="sticky top-[80px] z-20 bg-dark-bg/95 backdrop-blur-sm py-4 -mx-4 px-4 overflow-visible">
+        <div className="mx-auto w-full max-w-3xl">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <input
+                type="search"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={t("compare_search_placeholder")}
+                className="w-full rounded-xl border border-dark-border bg-dark-surface py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-gray-600 focus:border-accent focus:outline-none"
+              />
+              {q.trim() && (
+                <div className="absolute left-0 right-0 z-10 mt-1 overflow-hidden rounded-2xl border border-dark-border bg-dark-card shadow-xl">
+                  {suggestions.length > 0 ? (
+                    suggestions.map((product) => (
+                      <button
+                        key={product.id}
+                        type="button"
+                        onClick={() => toggle(product.id)}
+                        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm transition-smooth hover:bg-white/5"
+                      >
+                        <div className="min-w-0">
+                          <p className="font-medium text-white truncate">{product.name}</p>
+                          <p className="text-xs text-gray-500 truncate">{product.category?.name}</p>
+                        </div>
+                        <span className="text-xs text-gray-400">
+                          {ids.includes(product.id) ? t("added_to_compare") : t("add_to_compare")}
+                        </span>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-sm text-gray-500">
+                      {t("not_found")}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Встроенная кнопка ИИ */}
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("toggle-dreamdesk-ai"))}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-surface-container-highest/50 border border-primary/20 text-primary hover:bg-surface-container-highest hover:border-primary/40 transition-all group shrink-0"
+            >
+              <Sparkles className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="text-sm font-bold tracking-wide hidden sm:inline">DreamDesk AI</span>
+            </button>
           </div>
         </div>
+      </div>
 
       {/* Сравнение: карточки слева + силуэты */}
       {compared.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-lg font-heading font-bold text-white">
-            Сравнение форм
+            {t("compare_shapes")}
           </h2>
           <div className="grid grid-cols-1 xl:grid-cols-[280px_1fr_1fr] gap-4 items-start">
             {/* Карточки выбранных */}
@@ -243,10 +258,10 @@ export function CompareView({ products }: CompareViewProps) {
                       </div>
                     </div>
                     <p className="text-xs text-gray-400">
-                      {p.lengthMm} × {p.widthMm} × {p.heightMm} мм
+                      {p.lengthMm} × {p.widthMm} × {p.heightMm} {t("mm")}
                     </p>
                     <p className="text-xs text-gray-300">
-                      Вес: {formatWeightG(p.weight)}
+                      {t("weight_label")} {formatWeightG(p.weight)}
                     </p>
                   </div>
                 );
@@ -256,7 +271,7 @@ export function CompareView({ products }: CompareViewProps) {
             {/* Вид сверху */}
             <div className="order-1 xl:order-2 rounded-2xl border border-dark-border bg-black overflow-hidden min-h-[260px] flex flex-col">
               <div className="px-4 py-2 border-b border-white/5 text-xs text-gray-500 uppercase tracking-wider">
-                Вид сверху
+                {t("top_view")}
               </div>
               <div className="flex-1 flex items-center justify-center p-4 min-h-[220px]">
                 <svg
@@ -299,7 +314,7 @@ export function CompareView({ products }: CompareViewProps) {
             {/* Вид сбоку */}
             <div className="order-3 rounded-2xl border border-dark-border bg-black overflow-hidden min-h-[260px] flex flex-col">
               <div className="px-4 py-2 border-b border-white/5 text-xs text-gray-500 uppercase tracking-wider">
-                Вид сбоку
+                {t("side_view")}
               </div>
               <div className="flex-1 flex items-center justify-center p-4 min-h-[220px]">
                 <svg
@@ -379,7 +394,7 @@ export function CompareView({ products }: CompareViewProps) {
                   ))}
                 </tr>
                 <tr className="border-b border-dark-border/80">
-                  <td className="p-3 text-gray-500">Подключение</td>
+                  <td className="p-3 text-gray-500">{t("connection_label")}</td>
                   {compared.map((p) => (
                     <td key={p.id} className="p-3 text-gray-200">
                       {p.connectionType}
@@ -390,7 +405,7 @@ export function CompareView({ products }: CompareViewProps) {
                   length: Math.max(0, ...compared.map((p) => p.features.length)),
                 }).map((_, fi) => (
                   <tr key={fi} className="border-b border-dark-border/40">
-                    <td className="p-3 text-gray-500">Характеристика {fi + 1}</td>
+                    <td className="p-3 text-gray-500">{t("characteristic")} {fi + 1}</td>
                     {compared.map((p) => (
                       <td key={p.id} className="p-3 text-gray-300 text-xs">
                         {p.features[fi] ?? "—"}
@@ -402,36 +417,14 @@ export function CompareView({ products }: CompareViewProps) {
             </table>
           </div>
 
-          <div className="space-y-3">
-            <h3 className="text-base font-semibold text-white">Где купить</h3>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {compared.map((p) => (
-                <button
-                  type="button"
-                  key={p.id}
-                  onClick={() =>
-                    window.open(
-                      `https://www.google.com/search?q=${encodeURIComponent(
-                        `${p.name} купить`
-                      )}`,
-                      "_blank"
-                    )
-                  }
-                  className="rounded-xl border border-dark-border bg-dark-card px-4 py-4 text-left text-sm text-white transition hover:border-accent/50 hover:bg-accent/5"
-                >
-                  <div className="font-medium">{p.name}</div>
-                  <div className="text-xs text-gray-500 mt-1">Найти где купить</div>
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Интегрированный блок агрегации цен */}
+          <WhereToBuy products={compared} />
         </section>
       )}
 
       {mice.length === 0 && (
         <div className="rounded-2xl border border-dashed border-dark-border p-12 text-center text-gray-500">
-          В базе нет мышей с габаритами для сравнения форм. Запустите{" "}
-          <code className="text-accent">npm run db:seed</code>.
+          {t("no_mice_for_comparison")} <code className="text-accent">npm run db:seed</code>.
         </div>
       )}
     </div>

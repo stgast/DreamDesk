@@ -6,6 +6,7 @@
 
 import Link from "next/link";
 import { ParticleBackground } from "@/components/ParticleBackground";
+import { HeroSection } from "@/components/HeroSection";
 import { useState, useEffect, useCallback } from "react";
 import {
   ArrowRight,
@@ -105,35 +106,7 @@ export default function HomePage() {
       {/* Main Content */}
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] flex items-center px-12 overflow-hidden">
-          <ParticleBackground />
-
-          <div className="relative z-10 max-w-[1920px] mx-auto w-full flex items-center justify-center">
-            <div className="max-w-3xl text-center flex flex-col items-center">
-              <span className="inline-block py-1 px-4 rounded-full bg-primary-container/20 text-primary font-label text-xs tracking-widest uppercase mb-6">
-                {t("new_level")}
-              </span>
-              <h1 className="text-6xl md:text-8xl font-black font-headline tracking-tighter text-white mb-8 leading-none uppercase">
-                {t("hero_title")}
-              </h1>
-              <p className="text-on-surface-variant text-xl max-w-lg mb-12 leading-relaxed">
-                {t("hero_subtitle")}
-              </p>
-              <div className="flex flex-wrap gap-6 justify-center">
-                <Link href="/build">
-                  <button className="px-8 py-4 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold transition-transform hover:scale-105 active:scale-95">
-                    {t("start_building")}
-                  </button>
-                </Link>
-                <Link href="/catalog">
-                  <button className="px-8 py-4 rounded-full bg-surface-container-high text-white font-medium border border-outline-variant/15 hover:bg-surface-container-highest transition-colors">
-                    {t("catalog_devices")}
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeroSection />
 
         {/* How It Works Section */}
         <section className="py-32 px-12 bg-surface-container-lowest">

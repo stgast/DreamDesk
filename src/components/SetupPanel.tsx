@@ -56,14 +56,25 @@ export function SetupPanel() {
           body: JSON.stringify({
             name,
             items: items.map((i) => ({
+              id: i.product.id,
               name: i.product.name,
               category: i.product.category?.name ?? "—",
+              categorySlug: i.product.category?.slug ?? "",
               price: i.product.price,
+              imageUrl: i.product.imageUrl,
+              description: i.product.description,
+              features: i.product.features,
+              connectionType: i.product.connectionType,
             })),
             totalPrice,
           }),
         });
         if (res.ok) {
+          const data = await res.json();
+          // Dispatch custom event for real-time sync with profile
+          window.dispatchEvent(new CustomEvent("dreamdesk-setup-saved", { 
+            detail: { setup: data.setup } 
+          }));
           closeSaveModal();
           setSaveName("Моя сборка");
         }
@@ -84,13 +95,20 @@ export function SetupPanel() {
         id,
         name,
         items: items.map((i) => ({
+          id: i.product.id,
           name: i.product.name,
           category: i.product.category?.name ?? "—",
+          categorySlug: i.product.category?.slug ?? "",
           price: i.product.price,
+          imageUrl: i.product.imageUrl,
+          description: i.product.description,
+          features: i.product.features,
+          connectionType: i.product.connectionType,
         })),
         totalPrice,
         savedAt: new Date().toISOString(),
       });
+      // Note: We don't dispatch event for local storage for now as it doesn't trigger API refresh
       closeSaveModal();
       setSaveName("Моя сборка");
     }
