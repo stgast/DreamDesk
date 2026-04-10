@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Edit3, Trash2, Calendar, Wallet, Package, ArrowRight, Check, Edit2, Trash } from "lucide-react";
-import { formatPrice, getCurrencySymbol } from "@/lib/currency";
+import { formatPrice, getCurrencySymbol, convertPrice } from "@/lib/currency";
 import { useApp } from "@/context/AppContext";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { WhereToBuy } from "../WhereToBuy";
@@ -26,7 +26,7 @@ function AnimatedPrice({ value, language }: { value: number, language: any }) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      
+
       const current = Math.round(start + (end - start) * easeOutQuart);
       setDisplayValue(current);
 
@@ -52,7 +52,7 @@ interface BuildDetailsModalProps {
 export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }: BuildDetailsModalProps) {
   const { currency, language } = useApp();
   const t = useTranslation(language);
-  
+
   const [localItems, setLocalItems] = useState<any[]>([]);
   const [editNameValue, setEditNameValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -78,8 +78,11 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
     }, 0);
   }, [localItems]);
 
+  const convertedTotal = useMemo(() => Math.round(convertPrice(total, currency)), [total, currency]);
+
+
   const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const handleNameChange = (val: string) => {
     setEditNameValue(val);
     if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
@@ -111,23 +114,24 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
   const removeItem = (instanceId: string) => {
     const newItems = localItems.filter(item => item.instanceId !== instanceId);
     setLocalItems(newItems);
-    handleUpdate({ 
-      items: newItems, 
-      totalPrice: newItems.reduce((acc, i) => acc + (parseFloat(String(i.price)) || 0), 0) 
+    handleUpdate({
+      items: newItems,
+      totalPrice: newItems.reduce((acc, i) => acc + (parseFloat(String(i.price)) || 0), 0)
     });
   };
 
+
   const productsForWhereToBuy = useMemo(() => {
-     return localItems.map(item => ({
-       id: item.id || Math.random().toString(),
-       name: item.name,
-       price: parseFloat(String(item.price)) || 0,
-       imageUrl: item.imageUrl,
-       categoryId: item.categorySlug || 'default',
-       connectionType: item.connectionType || '',
-       features: item.features || [],
-       description: item.description || '',
-     } as unknown as Product));
+    return localItems.map(item => ({
+      id: item.id || Math.random().toString(),
+      name: item.name,
+      price: parseFloat(String(item.price)) || 0,
+      imageUrl: item.imageUrl,
+      categoryId: item.categorySlug || 'default',
+      connectionType: item.connectionType || '',
+      features: item.features || [],
+      description: item.description || '',
+    } as unknown as Product));
   }, [localItems]);
 
   if (!setup) return null;
@@ -150,7 +154,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-            className="relative w-full max-w-4xl bg-[#0F0F12] border border-white/10 rounded-[3rem] shadow-[0_60px_120px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[92vh]"
+            className="relative w-full max-w-4xl bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[3.5rem] shadow-[0_60px_150px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[92vh]"
           >
             {/* Close Cross (Floating) */}
             <button
@@ -166,9 +170,9 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
                 <div className="w-2 h-2 rounded-full bg-indigo-500" />
                 <span>{t("build_intelligence")}</span>
               </div>
-              
+
               <div className="relative group/name">
-                <input 
+                <input
                   type="text"
                   className="w-full text-3xl sm:text-4xl font-black text-white bg-transparent border-none focus:outline-none focus:ring-0 placeholder-gray-800 transition-all tracking-tighter"
                   value={editNameValue}
@@ -181,29 +185,33 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
 
             {/* Components Scrollable List */}
             <div className="flex-1 overflow-y-auto custom-scrollbar px-12 py-6 space-y-12">
-              
+
               {/* Components List */}
               <div className="space-y-8">
                 <div className="flex items-center justify-between">
-                   <h3 className="text-[10px] font-black text-gray-600 uppercase tracking-widest">{t("setup_composition")}</h3>
-                   <div className="text-[10px] text-gray-500 font-bold bg-white/5 px-4 py-1.5 rounded-full border border-white/10 uppercase tracking-tighter">
-                     {localItems.length} {t("items_count")}
-                   </div>
+                  <h3 className="text-[10px] font-black text-gray-600 uppercase tracking-widest">{t("setup_composition")}</h3>
+                  <div className="text-[10px] text-gray-500 font-bold bg-white/5 px-4 py-1.5 rounded-full border border-white/10 uppercase tracking-tighter">
+                    {localItems.length} {t("items_count")}
+                  </div>
                 </div>
+
 
                 <div className="grid gap-6">
                   <AnimatePresence mode="popLayout">
                     {localItems.map((item) => (
-                      <motion.div 
+                      <motion.div
                         layout
                         key={item.instanceId}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, height: 0, marginTop: 0, marginBottom: 0, padding: 0 }}
-                        className="group relative flex items-center gap-8 p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-white/15 hover:bg-white/[0.04] transition-all duration-500 shadow-lg"
+                        className="group relative flex items-center gap-8 p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:border-white/15 hover:bg-white/[0.06] transition-all duration-500 shadow-xl overflow-hidden"
                       >
+                        {/* Internal Glow Effect */}
+                        <div className="absolute -top-12 -right-12 w-24 h-24 bg-indigo-500/5 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity" />
+
                         {/* Enlarged Product Icon */}
-                        <div className="w-24 h-24 rounded-[2rem] bg-[#050507] p-4 flex items-center justify-center overflow-hidden shrink-0 shadow-2xl border border-white/5 relative group-hover:scale-105 transition-transform duration-500">
+                        <div className="w-24 h-24 rounded-[2rem] bg-white/[0.03] p-4 flex items-center justify-center overflow-hidden shrink-0 shadow-inner border border-white/5 relative group-hover:scale-105 transition-transform duration-500">
                           {item.imageUrl ? (
                             <img src={item.imageUrl} alt="" className="w-full h-full object-contain relative z-10" />
                           ) : (
@@ -241,7 +249,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
                     ))}
                   </AnimatePresence>
                 </div>
-                
+
                 {localItems.length === 0 && (
                   <div className="p-20 text-center rounded-[3rem] border border-dashed border-white/10 bg-white/[0.01] text-gray-700">
                     <Package className="w-16 h-16 mx-auto mb-6 opacity-20" />
@@ -253,26 +261,28 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
               {/* Market Analytics Section */}
               {localItems.length > 0 && (
                 <div className="pt-16 border-t border-white/5">
-                   <WhereToBuy products={productsForWhereToBuy} />
+                  <WhereToBuy products={productsForWhereToBuy} />
                 </div>
               )}
             </div>
 
+
             {/* Total Domination Block */}
             <div className="px-12 pb-6 pt-8">
-              <div className="rounded-[3rem] bg-gradient-to-br from-indigo-900/40 via-[#0B0B0F] to-[#0A0A0C] p-12 border border-white/10 relative overflow-hidden group/total shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_20px_40px_rgba(0,0,0,0.4)]">
-                {/* Glow */}
-                <div className="absolute top-1/2 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none group-hover:opacity-100 opacity-60 transition-opacity duration-1000" />
-                
+              <div className="rounded-[3rem] bg-white/[0.03] backdrop-blur-3xl p-12 border border-white/10 relative overflow-hidden group/total shadow-2xl">
+                {/* Glow Overlay */}
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none group-hover:opacity-100 opacity-40 transition-opacity duration-1000" />
+                <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="space-y-2">
                     <p className="text-xs text-indigo-400 font-black uppercase tracking-[0.5em]">{t("total_cost")}</p>
                     <h3 className="text-5xl sm:text-6xl font-black text-white tracking-tighter leading-none flex items-baseline">
-                       <AnimatedPrice value={total} language={language} />
-                       <span className="text-indigo-500/40 ml-4">{getCurrencySymbol(currency)}</span>
+                      <AnimatedPrice value={convertedTotal} language={language} />
+                      <span className="text-indigo-500/40 ml-4">{getCurrencySymbol(currency)}</span>
                     </h3>
                   </div>
-                  
+
                   <div className="text-right">
                     <p className="text-3xl font-black text-white leading-none mb-1">{localItems.length}</p>
                     <p className="text-[10px] text-gray-600 font-black uppercase tracking-[0.2em]">{t("devices")}</p>
@@ -291,12 +301,12 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
                 <Trash2 className="w-5 h-5 transition-transform group-hover:scale-110" />
                 <span>{t("delete_build_long")}</span>
               </button>
-              
+
               <div className="flex items-center gap-3">
-                 <div className="flex items-center gap-1.5 bg-lime/10 px-3 py-1 rounded-full border border-lime/20">
-                    <div className="w-1.5 h-1.5 rounded-full bg-lime animate-pulse" />
-                    <span className="text-[9px] text-lime font-black uppercase tracking-widest">{t("active_sync")}</span>
-                 </div>
+                <div className="flex items-center gap-1.5 bg-lime/10 px-3 py-1 rounded-full border border-lime/20">
+                  <div className="w-1.5 h-1.5 rounded-full bg-lime animate-pulse" />
+                  <span className="text-[9px] text-lime font-black uppercase tracking-widest">{t("active_sync")}</span>
+                </div>
               </div>
             </div>
           </motion.div>

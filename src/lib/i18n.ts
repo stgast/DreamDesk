@@ -195,7 +195,10 @@ export type TranslationKey =
   | "subscribed_label"
   | "trend_30_days"
   | "shipping_time_fast"
-  | "shipping_time_standard";
+  | "shipping_time_standard"
+  | "quick_peek_short"
+  | "rename_build"
+  | "delete_build_short";
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   RU: {
@@ -390,6 +393,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     visual_comparison_desc: "Сравнивайте вес, отклик и визуальный стиль вариантов вашей сборки",
     testimonials: "Отзывы",
     get_started_today: "Начать сегодня",
+    quick_peek_short: "Быстрый просмотр",
+    rename_build: "Переименовать",
+    delete_build_short: "Удалить сборку",
   },
   EN: {
     account: "Account",
@@ -583,6 +589,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     visual_comparison_desc: "Compare weight, response and visual style of your setup options",
     testimonials: "Testimonials",
     get_started_today: "Get Started Today",
+    quick_peek_short: "Quick Peek",
+    rename_build: "Rename",
+    delete_build_short: "Delete",
   },
   UK: {
     account: "Обліковий запис",
@@ -776,6 +785,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     visual_comparison_desc: "Порівнюйте вагу, відгук та візуальний стиль варіантів вашої збірки",
     testimonials: "Відгуки",
     get_started_today: "Почати сьогодні",
+    quick_peek_short: "Швидкий перегляд",
+    rename_build: "Перейменувати",
+    delete_build_short: "Видалити збірку",
   },
   PL: {
     account: "Konto",
@@ -969,6 +981,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     visual_comparison_desc: "Porównaj wagę, odpowiedź i styl wizualny opcji swojego zestawu",
     testimonials: "Opinie",
     get_started_today: "Zacznij dzisiaj",
+    quick_peek_short: "Szybki podgląd",
+    rename_build: "Zmień nazwę",
+    delete_build_short: "Usuń zestaw",
   },
 };
 

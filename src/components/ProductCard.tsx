@@ -5,8 +5,8 @@
 
 "use client";
 
-import { Plus, Check } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Plus, Check, X } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
 import type { Product } from "@/types";
 import { useSetup } from "@/context/SetupContext";
 import { useApp } from "@/context/AppContext";
@@ -35,60 +35,81 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
   const { currency, language } = useApp();
   const t = useTranslation(language);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+  const [mainImageIndex, setMainImageIndex] = useState(0);
 
   const getCategoryLabel = (slug: string, fallback: string) => {
     switch (slug) {
-      case "monitors":
-        return t("category_monitors");
-      case "arms":
-        return t("category_arms");
-      case "keyboards":
-        return t("category_keyboards");
-      case "mice":
-        return t("category_mice");
-      case "microphones":
-        return t("category_microphones");
-      case "boom-arms":
-        return t("category_boom_arms");
-      case "audio-interfaces":
-        return t("category_audio_interfaces");
-      case "headphones":
-        return t("category_headphones");
-      default:
-        return fallback;
+      case "monitors": return t("category_monitors");
+      case "arms": return t("category_arms");
+      case "keyboards": return t("category_keyboards");
+      case "mice": return t("category_mice");
+      case "microphones": return t("category_microphones");
+      case "boom-arms": return t("category_boom_arms");
+      case "audio-interfaces": return t("category_audio_interfaces");
+      case "headphones": return t("category_headphones");
+      default: return fallback;
     }
   };
-  const [isClosing, setIsClosing] = useState(false);
+
   const isInSetup = hasCategory(product.categoryId);
-  const catSlug = product.category?.slug ?? "";
-  const catColor = CATEGORY_COLORS[catSlug] ?? "text-gray-400";
-  const detailImages = product.imageUrl
-    ? [product.imageUrl, product.imageUrl, product.imageUrl]
-    : [];
+
+  const badgeLabel = useMemo(() => {
+    if (product.price > 120000 || product.name.toUpperCase().includes("OLED")) return "Флагман";
+    if (product.price < 30000) return "Топ";
+    return "Новинка";
+  }, [product.price, product.name]);
+
+  const detailImages = useMemo(() => {
+    if (!product.imageUrl) return [];
+    const mainImg = product.imageUrl;
+    const gallery = [mainImg];
+
+    try {
+      if (mainImg.includes("_1.")) {
+        const img2 = mainImg.replace("_1.", "_2.");
+        const img3 = mainImg.replace("_1.", "_3.");
+        gallery.push(img2, img3);
+      }
+    } catch (e) {
+      console.warn("Gallery error", e);
+    }
+    return gallery;
+  }, [product.imageUrl]);
 
   const closeModal = () => {
     setIsClosing(true);
     setTimeout(() => {
       setIsModalOpen(false);
       setIsClosing(false);
+      setFailedImages(new Set());
+      setMainImageIndex(0);
     }, 200);
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape" && isModalOpen && !isClosing) {
-      closeModal();
-    }
-  };
-
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isModalOpen && !isClosing) {
+        closeModal();
+      }
+    };
     if (isModalOpen) {
+      document.body.style.overflow = "hidden"; // Prevent background scroll
       window.addEventListener("keydown", handleKeyDown);
-      return () => window.removeEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "auto";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
   }, [isModalOpen, isClosing]);
 
+  const validGallery = detailImages.filter(src => !failedImages.has(src));
+  const currentImage = validGallery[mainImageIndex] || validGallery[0] || product.imageUrl;
+
   return (
     <>
+      {/* --- КАРТОЧКА В КАТАЛОГЕ --- */}
       <div
         role="button"
         tabIndex={0}
@@ -99,175 +120,192 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
             setIsModalOpen(true);
           }
         }}
-        className="group rounded-lg border border-dark-border bg-dark-card p-4 hover:border-dark-hover hover:shadow-card-hover transition-smooth hover:scale-[1.01] cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/40"
+        className="group relative flex flex-col h-full rounded-2xl bg-dark-card border border-dark-border hover:shadow-xl hover:shadow-black/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer overflow-hidden focus:outline-none focus:ring-2 focus:ring-accent/40"
       >
-        {/* Заголовок: категория + тип подключения */}
-        <div className="flex items-center justify-between mb-2">
-          <span className={`text-[11px] font-semibold uppercase tracking-wider ${catColor}`}>
-            {product.category ? getCategoryLabel(product.category.slug, product.category.name) : t("product")}
-          </span>
-          <span className="text-[10px] text-gray-600 bg-dark-surface rounded px-1.5 py-0.5">
-            {product.connectionType}
-          </span>
-        </div>
+        {/* Изображение и Бейдж */}
+        <div className="relative w-full aspect-square bg-dark-surface/20">
+          <div className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-lg backdrop-blur-md border text-[12px] font-semibold ${
+            badgeLabel === "Флагман" 
+              ? "bg-accent/20 border-accent/20 text-accent" 
+              : "bg-white/10 border-white/5 text-white"
+          }`}>
+            {badgeLabel}
+          </div>
 
-        {/* Изображение */}
-        <div className="h-32 flex items-center justify-center rounded-lg bg-dark-surface mb-3 overflow-hidden">
           {product.imageUrl ? (
             <img
-              src={product.imageUrl}
+              src={encodeURI(product.imageUrl)}
               alt={product.name}
-              className="w-full h-full object-contain"
+              className="absolute inset-0 w-full h-full object-cover p-3"
               loading="lazy"
             />
           ) : (
-            <div className="w-16 h-16 rounded-lg bg-dark-border" />
+            <div className="absolute inset-0 flex items-center justify-center bg-dark-border" />
           )}
         </div>
 
-        {/* Название и описание */}
-        <h3 className="font-medium text-white text-sm leading-tight">
-          {product.name}
-        </h3>
-        {product.description && (
-          <p className="text-[11px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">
-            {product.description}
-          </p>
-        )}
+        {/* Контент карточки */}
+        <div className="flex flex-col flex-1 p-4 sm:p-5">
+           <h3 className="text-[18px] sm:text-[20px] font-bold text-white line-clamp-2 leading-[1.2]">
+             {product.name}
+           </h3>
 
-        {/* Характеристики (features) — как теги */}
-        {product.features.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {(product.features as string[]).slice(0, 4).map((feat, i) => (
-              <span
-                key={i}
-                className="text-[10px] text-gray-400 bg-dark-surface rounded px-1.5 py-0.5"
-              >
-                {feat}
-              </span>
-            ))}
-            {product.features.length > 4 && (
-              <span className="text-[10px] text-gray-600">
-                +{product.features.length - 4}
-              </span>
-            )}
-          </div>
-        )}
+           {product.features.length > 0 && (
+             <div className="flex flex-wrap gap-2 mt-3">
+               {(product.features as string[]).slice(0, 4).map((feat, i) => (
+                 <span
+                   key={i}
+                   className="px-2.5 py-1 text-[12px] sm:text-[13px] font-medium text-gray-300 bg-white/5 rounded-full whitespace-nowrap"
+                 >
+                   {feat}
+                 </span>
+               ))}
+               {product.features.length > 4 && (
+                 <span className="px-2.5 py-1 text-[12px] sm:text-[13px] font-medium text-gray-500 bg-white/5 rounded-full whitespace-nowrap">
+                   +{product.features.length - 4}
+                 </span>
+               )}
+             </div>
+           )}
 
-        {/* Цена + кнопка добавления */}
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-dark-border">
-          <span className="text-sm font-bold text-lime">
-            {formatPrice(product.price, currency)}
-          </span>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              onAdd();
-            }}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-button active:scale-95 ${isInSetup
-                ? "bg-lime/15 text-lime hover:bg-lime/25"
-                : "bg-accent/10 text-accent hover:bg-accent/20"
-              }`}
-          >
-            {isInSetup ? (
-              <>
-                <Check className="w-3.5 h-3.5" />
-                {t("replace")}
-              </>
-            ) : (
-              <>
-                <Plus className="w-3.5 h-3.5" />
-                {t("add_to_setup")}
-              </>
-            )}
-          </button>
+           <p className="text-[12px] sm:text-[13px] text-gray-400 mt-2 line-clamp-1">
+             {product.connectionType} • {product.category ? getCategoryLabel(product.category.slug, product.category.name) : ""}
+             {product.description ? ` • ${product.description}` : ""}
+           </p>
+
+           <div className="flex items-center justify-between pt-4 mt-auto">
+             <span className="text-[20px] sm:text-[24px] font-bold text-accent tracking-tight">
+               {formatPrice(product.price, currency)}
+             </span>
+             {isInSetup && (
+               <div className="flex items-center gap-1.5 text-lime px-2 py-1 rounded bg-lime/10">
+                 <Check className="w-3.5 h-3.5" />
+                 <span className="text-[10px] font-bold uppercase tracking-wider">В сборке</span>
+               </div>
+             )}
+           </div>
         </div>
       </div>
+
+      {/* --- МОДАЛЬНОЕ ОКНО --- */}
       {isModalOpen && (
-        <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
-          <div className={`w-full max-w-3xl overflow-hidden rounded-3xl border border-dark-border bg-dark-card shadow-2xl ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}>
-            <div className="flex items-center justify-between border-b border-dark-border px-5 py-4">
-              <div>
-                <h2 className="text-lg font-semibold text-white">{product.name}</h2>
-                <p className="text-[11px] text-gray-500">
+        <div 
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 sm:p-6 md:p-12 ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}
+          onClick={closeModal}
+        >
+          <div 
+            className={`relative w-full max-w-5xl max-h-[95vh] overflow-y-auto custom-scrollbar rounded-[1.5rem] sm:rounded-[2rem] bg-dark-card border border-dark-border shadow-2xl flex flex-col md:flex-row ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Кнопка закрытия */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 z-[60] w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-gray-300 hover:text-white hover:bg-black/80 transition-all border border-white/10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Левая колонка: Галерея */}
+            <div className="w-full md:w-[45%] flex flex-col gap-4 p-6 sm:p-8 bg-dark-surface/20 border-b md:border-b-0 md:border-r border-dark-border">
+              {/* Основное фото */}
+              <div className="relative w-full aspect-square rounded-[1.5rem] overflow-hidden bg-dark-border/20 shadow-inner flex items-center justify-center">
+                 {currentImage ? (
+                   <img 
+                      src={encodeURI(currentImage)}
+                      alt={product.name}
+                      onError={() => setFailedImages(prev => new Set(prev).add(currentImage))}
+                      className="w-full h-full object-cover p-2"
+                   />
+                 ) : (
+                   <div className="text-gray-500">{t("no_image")}</div>
+                 )}
+              </div>
+              
+              {/* Миниатюры */}
+              {validGallery.length > 1 && (
+                <div className="flex gap-3 overflow-x-auto pb-2 custom-scrollbar snap-x">
+                  {validGallery.map((src, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setMainImageIndex(idx)}
+                      className={`relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 snap-center ${
+                        mainImageIndex === idx ? "border-accent shadow-md shadow-accent/20 scale-105" : "border-transparent opacity-50 hover:opacity-100 hover:scale-[1.02]"
+                      }`}
+                    >
+                      <div className="absolute inset-0 bg-dark-surface/40" />
+                      <img 
+                         src={encodeURI(src)} 
+                         alt="thumb" 
+                         className="relative z-10 w-full h-full object-cover" 
+                         onError={() => setFailedImages(prev => new Set(prev).add(src))}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Правая колонка: Контент */}
+            <div className="w-full md:w-[55%] flex flex-col p-6 sm:p-8 md:p-10">
+              <div className="mb-6">
+                <div className={`inline-block px-3 py-1 mb-4 rounded-lg backdrop-blur-md border text-[13px] font-bold tracking-wide uppercase ${
+                  badgeLabel === "Флагман" 
+                    ? "bg-accent/10 border-accent/20 text-accent" 
+                    : "bg-white/5 border-white/5 text-gray-300"
+                }`}>
+                  {badgeLabel}
+                </div>
+                <h2 className="text-[24px] sm:text-[28px] font-bold text-white leading-[1.15] mb-2 pr-8">
+                  {product.name}
+                </h2>
+                <p className="text-[14px] text-gray-400 capitalize">
                   {product.category ? getCategoryLabel(product.category.slug, product.category.name) : t("product")}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={closeModal}
-                className="text-gray-400 hover:text-white transition-smooth hover:scale-110"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="grid gap-6 p-5 lg:grid-cols-[1.2fr_0.8fr]">
-              <div className="space-y-4">
-                <div className="grid grid-cols-3 gap-3">
-                  {detailImages.length > 0 ? (
-                    detailImages.map((src, index) => (
-                      <img
-                        key={index}
-                        src={src}
-                        alt={`${product.name} ${index + 1}`}
-                        className="h-32 w-full rounded-2xl border border-dark-border object-contain bg-black"
-                      />
-                    ))
-                  ) : (
-                    <div className="col-span-3 flex h-32 items-center justify-center rounded-2xl border border-dark-border bg-dark-surface text-sm text-gray-500">
-                      {t("no_image")}
-                    </div>
-                  )}
-                </div>
-                <div className="space-y-3 rounded-2xl border border-dark-border bg-dark-surface p-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-wider text-gray-500">{t("price")}</span>
-                    <span className="text-sm font-semibold text-lime">{formatPrice(product.price, currency)}</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-xs text-gray-500">{t("connection")}</div>
-                    <div className="text-sm text-white">{product.connectionType}</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-xs text-gray-500">{t("dimensions")}</div>
-                    <div className="text-sm text-white">
-                      {product.lengthMm ?? "—"} × {product.widthMm ?? "—"} × {product.heightMm ?? "—"} мм
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-xs text-gray-500">{t("weight")}</div>
-                    <div className="text-sm text-white">{product.weight != null ? `${product.weight} г` : "—"}</div>
+
+              {/* Ключевые фичи (Chips) */}
+              {product.features.length > 0 && (
+                <div className="mb-5">
+                  <div className="flex flex-wrap gap-2.5">
+                    {(product.features as string[]).map((feat, i) => (
+                      <span
+                        key={i}
+                        className="px-3.5 py-1.5 text-[13px] sm:text-[14px] font-medium text-gray-200 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors cursor-default"
+                      >
+                        {feat}
+                      </span>
+                    ))}
                   </div>
                 </div>
+              )}
+
+              {/* Второстепенные характеристики */}
+              <div className="mb-6 text-[13px] sm:text-[14px] text-gray-500">
+                <p>
+                  {product.connectionType}
+                  {product.lengthMm ? ` • ${product.lengthMm}x${product.widthMm}x${product.heightMm}mm` : ""}
+                  {product.weight != null ? ` • ${product.weight}g` : ""}
+                </p>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-white">{t("description_label")}</h3>
-                  <p className="mt-2 text-sm text-gray-300">{product.description ?? t("no_description")}</p>
+
+              {/* Описание */}
+              {product.description && (
+                <div className="mb-8">
+                  <p className="text-[14px] text-gray-400 leading-relaxed line-clamp-3">
+                    {product.description}
+                  </p>
                 </div>
-                {product.features.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white">{t("key_features")}</h3>
-                    <div className="mt-3 grid gap-2">
-                      {product.features.map((feature, index) => (
-                        <div key={index} className="rounded-2xl border border-dark-border bg-black/40 px-3 py-2 text-sm text-gray-200">
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
+              )}
+
+              {/* Footer с ценой */}
+              <div className="mt-auto pt-6 border-t border-dark-border">
+                <div className="flex flex-col gap-5">
+                  <div className="flex items-baseline gap-3">
+                     <span className="text-[28px] sm:text-[34px] font-bold text-accent tracking-tight">
+                       {formatPrice(product.price, currency)}
+                     </span>
                   </div>
-                )}
-                <button
-                  type="button"
-                  onClick={() => {
-                    closeModal();
-                    onAdd();
-                  }}
-                  className="w-full rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-dark-bg transition-button hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/30 active:scale-95"
-                >
-                  {t("add_to_setup")}
-                </button>
+                </div>
               </div>
             </div>
           </div>

@@ -1,12 +1,3 @@
-// ============================================
-// DreamDesk — Prisma Schema
-// ============================================
-// Supabase: пул (6543 + pgbouncer) для приложения, direct (5432) для migrate/db push
-//
-// DATABASE_URL  — Transaction pooler
-// DIRECT_URL    — Session mode (обязателен для prisma migrate / db push)
-// ============================================
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,83 +8,69 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-// Категория товаров (Мониторы, Клавиатуры, Мыши и т.д.)
 model Category {
-  id       String    @id @default(cuid())
-  name     String    @unique  // "Мониторы", "Клавиатуры" и т.д.
-  slug     String    @unique  // "monitors", "keyboards" — для фильтрации
-  icon     String?            // Название иконки из lucide-react
-  order    Int       @default(0)  // Порядок отображения в UI
-
-  products Product[]
-
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  icon      String?
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  products  Product[]
 }
 
-// Товар (конкретная периферия)
 model Product {
   id             String   @id @default(cuid())
-  name           String              // "LG 27UL850-W"
-  description    String?             // Краткое описание
-  price          Float               // Цена в рублях
-  imageUrl       String?             // URL изображения
-  connectionType String              // "USB", "XLR", "Wireless", "HDMI", "USB-C" и т.д.
-  features       String   @default("[]") // JSON-массив характеристик: ["4K", "HDR", "IPS"]
-  weight         Float?              // Вес в граммах (мыши/лёгкая периферия) или граммы для тяжёлых устройств
-
-  // Габариты мыши (мм) — для сравнения форм на /compare; у остальных категорий null
-  lengthMm    Float?
-  widthMm     Float?
-  heightMm    Float?
-  humpPercent Float?   // 0–100: положение пика корпуса по длине (нос слева), как на EloShapes
-
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-
-  createdAt DateTime @default(now())
+  name           String
+  description    String?
+  price          Float
+  imageUrl       String?
+  connectionType String
+  features       String   @default("[]")
+  weight         Float?
+  categoryId     String
+  createdAt      DateTime @default(now())
+  heightMm       Float?
+  humpPercent    Float?
+  lengthMm       Float?
+  widthMm        Float?
+  category       Category @relation(fields: [categoryId], references: [id])
 
   @@index([categoryId])
 }
 
-// Пользователь
 model User {
   id            String    @id @default(cuid())
-  name          String?
   email         String?   @unique
-  nickname      String?   @unique  // Уникальный никнейм для входа
+  password      String?
+  name          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   emailVerified DateTime?
   image         String?
-  password      String?   // Хешированный пароль для Credentials (null для OAuth)
-
+  nickname      String?   @unique
   accounts      Account[]
   sessions      Session[]
   setups        Setup[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
-// NextAuth: учётные записи от провайдеров (Google, Credentials и т.д.)
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-// NextAuth: сессии
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -102,7 +79,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// NextAuth: верификация email
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -111,18 +87,15 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// Сохранённая конфигурация (сетап)
 model Setup {
   id         String   @id @default(cuid())
-  name       String   // Название сборки, например "My Gaming Setup"
-  items      String   @default("[]") // JSON-строка со списком ID товаров
+  name       String
+  items      String   @default("[]")
   totalPrice Float
-
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }

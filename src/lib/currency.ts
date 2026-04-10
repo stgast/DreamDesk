@@ -5,7 +5,7 @@
 import { Currency } from "@/types";
 
 // Курсы валют относительно RUB (на 2024 год, приблизительные)
-const EXCHANGE_RATES = {
+export const EXCHANGE_RATES = {
   RUB: 1,
   EUR: 0.011, // 1 RUB = ~0.011 EUR
   USD: 0.012, // 1 RUB = ~0.012 USD

@@ -8,9 +8,9 @@ import { useTranslation } from "@/lib/i18n";
 export function SearchEmptyState() {
   const { language } = useApp();
   const t = useTranslation(language);
-  
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -18,17 +18,17 @@ export function SearchEmptyState() {
     >
       <div className="relative">
         {/* Pulsing Aura */}
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             scale: [1, 1.4, 1],
-            opacity: [0.3, 0.1, 0.3] 
+            opacity: [0.3, 0.1, 0.3]
           }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-indigo-500/10 blur-[60px] rounded-full" 
+          className="absolute inset-0 bg-indigo-500/10 blur-[60px] rounded-full"
         />
-        
+
         {/* Animated Icon Container */}
-        <motion.div 
+        <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           className="relative w-28 h-28 rounded-[2rem] bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-white/5 flex items-center justify-center shadow-2xl backdrop-blur-xl group"

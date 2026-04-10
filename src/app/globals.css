@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap');
@@ -11,14 +11,16 @@
   --card: #1e1f24;
   --border: #34343a;
   --hover: #292a2f;
-  
+
   --text: #e3e2e9;
-  --text-muted: #c2c6d5; /* on-surface-variant */
-  
-  --accent: #adc6ff; /* primary */
+  --text-muted: #c2c6d5;
+  /* on-surface-variant */
+
+  --accent: #adc6ff;
+  /* primary */
   --accent-hover: #d8e2ff;
   --accent-muted: rgba(173, 198, 255, 0.15);
-  
+
   --glow-color: rgba(173, 198, 255, 0.2);
 }
 
@@ -35,17 +37,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 .glass-panel {
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 /* Анимации */
@@ -54,6 +61,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -65,6 +73,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -75,6 +84,7 @@ h1, h2, h3, h4, h5, h6 {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -85,6 +95,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -95,6 +106,7 @@ h1, h2, h3, h4, h5, h6 {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -105,6 +117,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 1;
     transform: scale(1);
   }
+
   to {
     opacity: 0;
     transform: scale(0.95);
@@ -115,9 +128,11 @@ h1, h2, h3, h4, h5, h6 {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(0.98);
   }
+
   100% {
     transform: scale(1);
   }
@@ -162,44 +177,81 @@ h1, h2, h3, h4, h5, h6 {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
 /* Category colors */
-.cat-mouse { color: #64B5F6; }
-.cat-keyboard { color: #CE93D8; }
-.cat-headphones { color: #FFB74D; }
-.cat-mousepad { color: #4DB6AC; }
+.cat-mouse {
+  color: #64B5F6;
+}
 
-.cat-mouse-bg { background: rgba(100, 181, 246, 0.1); border-color: rgba(100, 181, 246, 0.3); }
-.cat-keyboard-bg { background: rgba(206, 147, 216, 0.1); border-color: rgba(206, 147, 216, 0.3); }
-.cat-headphones-bg { background: rgba(255, 183, 77, 0.1); border-color: rgba(255, 183, 77, 0.3); }
-.cat-mousepad-bg { background: rgba(77, 182, 172, 0.1); border-color: rgba(77, 182, 172, 0.3); }
+.cat-keyboard {
+  color: #CE93D8;
+}
+
+.cat-headphones {
+  color: #FFB74D;
+}
+
+.cat-mousepad {
+  color: #4DB6AC;
+}
+
+.cat-mouse-bg {
+  background: rgba(100, 181, 246, 0.1);
+  border-color: rgba(100, 181, 246, 0.3);
+}
+
+.cat-keyboard-bg {
+  background: rgba(206, 147, 216, 0.1);
+  border-color: rgba(206, 147, 216, 0.3);
+}
+
+.cat-headphones-bg {
+  background: rgba(255, 183, 77, 0.1);
+  border-color: rgba(255, 183, 77, 0.3);
+}
+
+.cat-mousepad-bg {
+  background: rgba(77, 182, 172, 0.1);
+  border-color: rgba(77, 182, 172, 0.3);
+}
 
 /* Skeleton pulse */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
+
 .skeleton {
   background: linear-gradient(90deg, var(--card) 25%, var(--border) 50%, var(--card) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
+
 /* Antigravity premium starfield with glassmorphism */
 .starfield {
   background: radial-gradient(ellipse at 50% 50%, var(--surface) 0%, var(--bg) 100%);
   overflow: hidden;
 }
+
 .starfield::before,
 .starfield::after {
   content: "";
@@ -216,6 +268,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: stars-drift 50s linear infinite;
   opacity: 0.15;
 }
+
 .starfield::after {
   background-size: 350px 180px;
   animation: stars-drift-alt 60s linear infinite reverse;
@@ -223,10 +276,102 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes stars-drift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(0, -320px); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(0, -320px);
+  }
 }
+
 @keyframes stars-drift-alt {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-30px, 180px); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(-30px, 180px);
+  }
+}
+
+/* Premium Chat Utilities */
+.glass-chat {
+  background: rgba(26, 27, 32, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neon-border {
+  position: relative;
+}
+
+.neon-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, transparent, rgba(173, 198, 255, 0.3), transparent);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neon-border:focus-within::after {
+  opacity: 1;
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(173, 198, 255, 0.5);
+}
+
+.ai-message-gradient {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+.user-message-gradient {
+  background: linear-gradient(135deg, #adc6ff 0%, #7096ff 100%);
+}
+
+/* Markdown styling within chat */
+.prose-invert h1,
+.prose-invert h2,
+.prose-invert h3 {
+  color: #fff;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-invert p {
+  margin-bottom: 0.75rem;
+}
+
+.prose-invert p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-invert ul,
+.prose-invert ol {
+  margin-left: 1.25rem;
+  margin-bottom: 0.75rem;
+  list-style-type: disc;
+}
+
+.prose-invert li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-invert strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.prose-invert code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
 }
