@@ -25,10 +25,10 @@ export function CatalogPreview() {
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 min-h-[600px]">
           
           {/* Keyboards */}
-          <Link href="/catalog?cat=keyboards" className="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-2xl block">
+          <Link href="/catalog?category=keyboards" className="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-2xl block">
              <div className="absolute inset-0 bg-dark-bg" />
              <img 
-               src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6WG9Lvpkvp18r8gnwBPNN7DDglYl9DRM-gdeCArFENbAeDiCArgMDn2WD4qYzvn7alJ0KL1xA5YqCo82_1EsEyi7b54vAqZcc31LgjIwAys5LzOVr9eE6RJGD1dPxlCboTaYiK5cq24qdjZATw50EaziDW7d2YZhhfZF72T62hwujeK9wwLmBDj2v0ptvMV2Uo4QFJGJFbv3QIS6lGkG0q92P2kzT3H4Qma797pwcjxvoCr9qXDmKSKk_K9afimu6Yb-NVXNtWcA" 
+               src="/images/mainpage_pictures/keyboard.webp" 
                alt="Keyboards" 
                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
              />
@@ -43,10 +43,10 @@ export function CatalogPreview() {
           </Link>
 
           {/* Mice */}
-          <Link href="/catalog?cat=mice" className="md:col-span-2 relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-xl block">
+          <Link href="/catalog?category=mice" className="md:col-span-2 relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-xl block">
             <div className="absolute inset-0 bg-dark-bg" />
             <img 
-               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuCOuoG5YGDyle_OVO24igUae_EEzVKBuDjIgk4gXOoV60HA-UC1eaO3kWuC2nyWsIumhHP1a45ocUSc_0OmfJh2R8CPpOauQ_OI7-RLILi8tVuoUblCJ1nSEYy4pnI6byowzaxU50i6gh7pB4uj9eCbKFNnCvvewmiFsDykuuXKIWWf5XByTK6mSNFoPvW3XFZ3DVVJNOPlGeN3xA2PRbNokAgDmzx40hFFh13l2o_xocJXoR9cez_2ktAnJKpN81yOZKBUNmSSA" 
+               src="/images/mainpage_pictures/mouse.webp" 
                alt="Mice" 
                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100 mix-blend-lighten"
             />
@@ -58,10 +58,10 @@ export function CatalogPreview() {
           </Link>
 
           {/* Audio */}
-          <Link href="/catalog?cat=headphones" className="relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-xl block">
+          <Link href="/catalog?category=headphones" className="relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-xl block">
             <div className="absolute inset-0 bg-dark-bg" />
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKoXe3LLLmWqai27QeSMw9foFmJGBgViEhZ4dFpwtXPpVfAhB7rKewcBefsuDViJau7c4lIjbKuVw52kZ0PW6m8OKbSST64YnK-3H92f8AcBCEPkEzZfs07E1AVQLbIvO8lzJqUViEu26Ds3foMnOKVQyqkxa_i56zJ_HZwjheC25A3b9taJA9wW8hbasN7ZioJIR_j3fn9lIywFQBrj1wa0hhri7MtRWjXDcfNKDDEA_VYOonsZevDquxXe7zBJkJbOspp6KME7o" 
+              src="/images/mainpage_pictures/audiocard.webp" 
               alt="Audio" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
             />
@@ -72,10 +72,10 @@ export function CatalogPreview() {
           </Link>
 
           {/* Microphones */}
-          <Link href="/catalog?cat=microphones" className="relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-xl block">
+          <Link href="/catalog?category=microphones" className="relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 shadow-xl block">
             <div className="absolute inset-0 bg-dark-bg" />
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuANbpBs90cumT8Yt6wt_tFLupaLmzWIb5ifkFJmuKNyCexr0Avm-i0nWl-9EQj-eJs7ttj27FUSjYL6gN4iHBKuLKbfZ9OKrd6wjsVoyK7vUoDnZAaRrLDTnfBxGzdKnSWI4o0BbOiAt3OT--Sq3tkVIZS4liQXrZPNSng7zgyF0ACA-QzlubtFdLGSrfdzlsn0yCFirxrHLF4cn_LfcBJrN7lf_oKdp9EhK-iQ20kEcE8ZRvyVfgab8hY8n2zAxDRJaNcTtt-jOFs" 
+              src="/images/mainpage_pictures/microphone.webp" 
               alt="Microphones" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
             />

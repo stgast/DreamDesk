@@ -198,7 +198,65 @@ export type TranslationKey =
   | "shipping_time_standard"
   | "quick_peek_short"
   | "rename_build"
-  | "delete_build_short";
+  | "delete_build_short"
+  | "filter_resolution_panel"
+  | "filter_performance"
+  | "filter_sensor_speed"
+  | "filter_weight_shape"
+  | "filter_switches"
+  | "filter_form_factor"
+  | "filter_build_features"
+  | "filter_mic_pattern"
+  | "filter_io_quality"
+  | "filter_acoustic_impedance"
+  | "filter_capacity_size"
+  | "filter_mount_adjust"
+  | "filter_connection"
+  | "filter_others"
+  | "filter_brand"
+  | "filter_diagonal"
+  | "filter_resolution_max"
+  | "filter_refresh_rate_hz"
+  | "filter_curved"
+  | "filter_aspect_ratio"
+  | "filter_hdr"
+  | "filter_height_adj"
+  | "filter_video_ports"
+  | "filter_vesa"
+  | "filter_screen_size_max"
+  | "filter_load_max"
+  | "filter_swivel"
+  | "filter_kb_type"
+  | "filter_hot_swap"
+  | "filter_color"
+  | "filter_wireless"
+  | "filter_wireless_type"
+  | "filter_grip"
+  | "filter_buttons_count"
+  | "filter_mouse_shape"
+  | "filter_dpi_max"
+  | "filter_mic_interface"
+  | "filter_ports"
+  | "filter_backlight"
+  | "filter_mute_button"
+  | "filter_payload"
+  | "filter_height_max"
+  | "filter_height_min"
+  | "filter_rotate_360"
+  | "filter_asio"
+  | "filter_audio_format"
+  | "filter_dac_bitrate"
+  | "filter_dac_freq"
+  | "filter_headphone_amp"
+  | "filter_os_support"
+  | "filter_headphones_design"
+  | "filter_headphones_type"
+  | "filter_mic_included"
+  | "filter_anc"
+  | "filter_port_connection"
+  | "yes"
+  | "no";
+
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   RU: {
@@ -396,6 +454,63 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     quick_peek_short: "Быстрый просмотр",
     rename_build: "Переименовать",
     delete_build_short: "Удалить сборку",
+    filter_resolution_panel: "Разрешение и панель",
+    filter_performance: "Производительность",
+    filter_sensor_speed: "Сенсор и скорость",
+    filter_weight_shape: "Вес и форма",
+    filter_switches: "Переключатели",
+    filter_form_factor: "Форм-фактор",
+    filter_build_features: "Корпус и функции",
+    filter_mic_pattern: "Тип и направленность",
+    filter_io_quality: "Входы и качество",
+    filter_acoustic_impedance: "Акустика и ТТХ",
+    filter_capacity_size: "Грузоподъемность и размер",
+    filter_mount_adjust: "Крепление и регулировка",
+    filter_connection: "Подключение",
+    filter_others: "Другое",
+    filter_brand: "Бренд",
+    filter_diagonal: "Диагональ экрана",
+    filter_resolution_max: "Максимальное разрешение",
+    filter_refresh_rate_hz: "Частота экрана (Гц)",
+    filter_curved: "Изогнутый монитор",
+    filter_aspect_ratio: "Соотношение сторон",
+    filter_hdr: "Поддержка HDR",
+    filter_height_adj: "Регулировка по высоте",
+    filter_video_ports: "Видеоразъемы",
+    filter_vesa: "Размер VESA",
+    filter_screen_size_max: "Макс. диагональ экрана",
+    filter_load_max: "Максимальная нагрузка",
+    filter_swivel: "Угол поворота",
+    filter_kb_type: "Тип клавиатуры",
+    filter_hot_swap: "Hot swap",
+    filter_color: "Цвет",
+    filter_wireless: "Беспроводное подключение",
+    filter_wireless_type: "Тип беспр. подключения",
+    filter_grip: "Хват",
+    filter_buttons_count: "Общее кол-во кнопок",
+    filter_mouse_shape: "Форма мыши",
+    filter_dpi_max: "Макс. разрешение датчика (DPI)",
+    filter_mic_interface: "Интерфейс подключения",
+    filter_ports: "Разъемы",
+    filter_backlight: "Подсветка",
+    filter_mute_button: "Кнопка откл. микрофона",
+    filter_payload: "Грузоподъемность",
+    filter_height_max: "Максимальная высота (мм)",
+    filter_height_min: "Минимальная высота (мм)",
+    filter_rotate_360: "Поворот на 360°",
+    filter_asio: "Поддержка ASIO",
+    filter_audio_format: "Формат звуковой карты",
+    filter_dac_bitrate: "Разрядность ЦАП",
+    filter_dac_freq: "Макс. частота ЦАП",
+    filter_headphone_amp: "Встр. усилитель наушников",
+    filter_os_support: "Поддержка ОС",
+    filter_headphones_design: "Тип конструкции",
+    filter_headphones_type: "Тип",
+    filter_mic_included: "Микрофон",
+    filter_anc: "Система шумоподавления (ANC)",
+    filter_port_connection: "Разъем для подключения",
+    yes: "Да",
+    no: "Нет",
   },
   EN: {
     account: "Account",
@@ -591,6 +706,63 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     get_started_today: "Get Started Today",
     quick_peek_short: "Quick Peek",
     rename_build: "Rename",
+    filter_resolution_panel: "Resolution & Panel",
+    filter_performance: "Performance",
+    filter_sensor_speed: "Sensor & Speed",
+    filter_weight_shape: "Weight & Shape",
+    filter_switches: "Switches",
+    filter_form_factor: "Form Factor",
+    filter_build_features: "Build & Features",
+    filter_mic_pattern: "Type & Pattern",
+    filter_io_quality: "I/O & Quality",
+    filter_acoustic_impedance: "Acoustic & Specs",
+    filter_capacity_size: "Capacity & Size",
+    filter_mount_adjust: "Mount & Adjust",
+    filter_connection: "Connection",
+    filter_others: "Others",
+    filter_brand: "Brand",
+    filter_diagonal: "Screen Diagonal",
+    filter_resolution_max: "Max Resolution",
+    filter_refresh_rate_hz: "Refresh Rate (Hz)",
+    filter_curved: "Curved Monitor",
+    filter_aspect_ratio: "Aspect Ratio",
+    filter_hdr: "HDR Support",
+    filter_height_adj: "Height Adjustment",
+    filter_video_ports: "Video Connectors",
+    filter_vesa: "VESA Size",
+    filter_screen_size_max: "Max Screen Size",
+    filter_load_max: "Max Load",
+    filter_swivel: "Swivel Angle",
+    filter_kb_type: "Keyboard Type",
+    filter_hot_swap: "Hot Swap",
+    filter_color: "Color",
+    filter_wireless: "Wireless Connection",
+    filter_wireless_type: "Wireless Connection Type",
+    filter_grip: "Grip",
+    filter_buttons_count: "Number of Buttons",
+    filter_mouse_shape: "Mouse Shape",
+    filter_dpi_max: "Max Sensor Resolution (DPI)",
+    filter_mic_interface: "Connection Interface",
+    filter_ports: "Connectors",
+    filter_backlight: "Backlight",
+    filter_mute_button: "Mute Button",
+    filter_payload: "Payload",
+    filter_height_max: "Max Height (mm)",
+    filter_height_min: "Min Height (mm)",
+    filter_rotate_360: "360° Rotation",
+    filter_asio: "ASIO Support",
+    filter_audio_format: "Audio Format",
+    filter_dac_bitrate: "DAC Bit Depth",
+    filter_dac_freq: "Max DAC Frequency",
+    filter_headphone_amp: "Headphone Amp",
+    filter_os_support: "OS Support",
+    filter_headphones_design: "Design Type",
+    filter_headphones_type: "Type",
+    filter_mic_included: "Microphone",
+    filter_anc: "ANC Support",
+    filter_port_connection: "Connection Port",
+    yes: "Yes",
+    no: "No",
     delete_build_short: "Delete",
   },
   UK: {
@@ -787,6 +959,63 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     get_started_today: "Почати сьогодні",
     quick_peek_short: "Швидкий перегляд",
     rename_build: "Перейменувати",
+    filter_resolution_panel: "Роздільна здатність та панель",
+    filter_performance: "Продуктивність",
+    filter_sensor_speed: "Сенсор та швидкість",
+    filter_weight_shape: "Вага та форма",
+    filter_switches: "Перемикачі",
+    filter_form_factor: "Форм-фактор",
+    filter_build_features: "Корпус та функції",
+    filter_mic_pattern: "Тип та спрямованість",
+    filter_io_quality: "Входи та якість",
+    filter_acoustic_impedance: "Акустика та ТТХ",
+    filter_capacity_size: "Вантажопідйомність та розмір",
+    filter_mount_adjust: "Кріплення та регулювання",
+    filter_connection: "Підключення",
+    filter_others: "Інше",
+    filter_brand: "Бренд",
+    filter_diagonal: "Діагональ екрана",
+    filter_resolution_max: "Максимальна роздільна здатність",
+    filter_refresh_rate_hz: "Частота екрана (Гц)",
+    filter_curved: "Вигнутий монітор",
+    filter_aspect_ratio: "Співвідношення сторін",
+    filter_hdr: "Підтримка HDR",
+    filter_height_adj: "Регулювання по висоті",
+    filter_video_ports: "Відеороз'єми",
+    filter_vesa: "Розмір VESA",
+    filter_screen_size_max: "Макс. діагональ екрана",
+    filter_load_max: "Максимальне навантаження",
+    filter_swivel: "Кут повороту",
+    filter_kb_type: "Тип клавіатури",
+    filter_hot_swap: "Hot swap",
+    filter_color: "Колір",
+    filter_wireless: "Бездротове підключення",
+    filter_wireless_type: "Тип бедрот. підключення",
+    filter_grip: "Хват",
+    filter_buttons_count: "Загальна кількість кнопок",
+    filter_mouse_shape: "Форма миші",
+    filter_dpi_max: "Макс. роздільна здатність (DPI)",
+    filter_mic_interface: "Інтерфейс підключення",
+    filter_ports: "Роз'єми",
+    filter_backlight: "Підсвічування",
+    filter_mute_button: "Кнопка вимк. мікрофона",
+    filter_payload: "Вантажопідйомність",
+    filter_height_max: "Максимальна висота (мм)",
+    filter_height_min: "Мінімальна висота (мм)",
+    filter_rotate_360: "Поворот на 360°",
+    filter_asio: "Підтримка ASIO",
+    filter_audio_format: "Формат звукової карти",
+    filter_dac_bitrate: "Розрядність ЦАП",
+    filter_dac_freq: "Макс. частота ЦАП",
+    filter_headphone_amp: "Вбудований підсилювач",
+    filter_os_support: "Підтримка ОС",
+    filter_headphones_design: "Тип конструкції",
+    filter_headphones_type: "Тип",
+    filter_mic_included: "Микрофон",
+    filter_anc: "Система шумозаглушення (ANC)",
+    filter_port_connection: "Роз'єм для підключення",
+    yes: "Так",
+    no: "Ні",
     delete_build_short: "Видалити збірку",
   },
   PL: {
@@ -983,6 +1212,63 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     get_started_today: "Zacznij dzisiaj",
     quick_peek_short: "Szybki podgląd",
     rename_build: "Zmień nazwę",
+    filter_resolution_panel: "Rozdzielczość i panel",
+    filter_performance: "Wydajność",
+    filter_sensor_speed: "Sensor i szybkość",
+    filter_weight_shape: "Waga i kształt",
+    filter_switches: "Przełączniki",
+    filter_form_factor: "Form-factor",
+    filter_build_features: "Obudowa i funkcje",
+    filter_mic_pattern: "Typ i kierunkowość",
+    filter_io_quality: "Wejścia i jakość",
+    filter_acoustic_impedance: "Akustyka i specyfikacja",
+    filter_capacity_size: "Nośność i rozmiar",
+    filter_mount_adjust: "Montaż i regulacja",
+    filter_connection: "Połączenie",
+    filter_others: "Inne",
+    filter_brand: "Marka",
+    filter_diagonal: "Przekątna ekranu",
+    filter_resolution_max: "Maksymalna rozdzielczość",
+    filter_refresh_rate_hz: "Częstotliwość (Hz)",
+    filter_curved: "Zakrzywiony monitor",
+    filter_aspect_ratio: "Proporcje ekranu",
+    filter_hdr: "Obsługa HDR",
+    filter_height_adj: "Regulacja wysokości",
+    filter_video_ports: "Złącza wideo",
+    filter_vesa: "Rozmiar VESA",
+    filter_screen_size_max: "Maks. przekątna ekranu",
+    filter_load_max: "Maksymalne obciążenie",
+    filter_swivel: "Kąt obrotu",
+    filter_kb_type: "Typ klawiatury",
+    filter_hot_swap: "Hot swap",
+    filter_color: "Kolor",
+    filter_wireless: "Połączenie bezprzewodowe",
+    filter_wireless_type: "Typ poł. bezprzewodowego",
+    filter_grip: "Chwyt",
+    filter_buttons_count: "Liczba przycisków",
+    filter_mouse_shape: "Kształt myszy",
+    filter_dpi_max: "Maks. rozdzielczość (DPI)",
+    filter_mic_interface: "Interfejs połączenia",
+    filter_ports: "Złącza",
+    filter_backlight: "Podświetlenie",
+    filter_mute_button: "Przycisk wyciszenia",
+    filter_payload: "Nośność",
+    filter_height_max: "Maksymalna wysokość (mm)",
+    filter_height_min: "Minimalna wysokość (mm)",
+    filter_rotate_360: "Obrót o 360°",
+    filter_asio: "Obsługa ASIO",
+    filter_audio_format: "Format karty dźwiękowej",
+    filter_dac_bitrate: "Głębia bitowa DAC",
+    filter_dac_freq: "Maks. częstotliwość DAC",
+    filter_headphone_amp: "Wbudowany wzmacniacz",
+    filter_os_support: "Obsługa systemów",
+    filter_headphones_design: "Typ konstrukcji",
+    filter_headphones_type: "Typ",
+    filter_mic_included: "Mikrofon",
+    filter_anc: "System redukcji szumów (ANC)",
+    filter_port_connection: "Złącze połączeniowe",
+    yes: "Tak",
+    no: "Nie",
     delete_build_short: "Usuń zestaw",
   },
 };

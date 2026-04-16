@@ -31,7 +31,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[85vh] flex items-center px-6 md:px-12 overflow-hidden">
+    <section className="relative h-screen flex items-center px-6 md:px-12 overflow-hidden">
       <ParticleBackground />
 
       {/* Animated gradient background layers */}

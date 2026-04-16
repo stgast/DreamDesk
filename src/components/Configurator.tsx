@@ -80,7 +80,7 @@ export function Configurator({ products, categories }: ConfiguratorProps) {
         isSidebarHidden ? "pr-0" : "lg:pr-[420px]"
       }`}>
         {/* Шапка каталога: поиск + табы */}
-        <div className="shrink-0 sticky top-[80px] z-20 border-b border-dark-border bg-dark-bg/95 backdrop-blur-sm">
+        <div className="shrink-0 sticky top-0 z-20 border-b border-dark-border bg-dark-bg">
           <div className="flex items-center gap-4 px-6 py-3">
             <div className="flex-1 max-w-md">
               <div className="relative">
@@ -124,7 +124,7 @@ export function Configurator({ products, categories }: ConfiguratorProps) {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}

@@ -5,6 +5,7 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
+import ClickSpark from "@/components/ui/ClickSpark";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
 import { AIChatWidget } from "@/components/AIChatWidget";
@@ -25,12 +26,20 @@ export default function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <body className="min-h-screen bg-dark-bg text-white antialiased">
         <Providers>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1 overflow-auto">{children}</main>
-            <Footer />
-            <AIChatWidget />
-          </div>
+          <ClickSpark
+            sparkColor="#fff"
+            sparkSize={10}
+            sparkRadius={15}
+            sparkCount={8}
+            duration={400}
+          >
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1 overflow-auto">{children}</main>
+              <Footer />
+              <AIChatWidget />
+            </div>
+          </ClickSpark>
         </Providers>
       </body>
     </html>

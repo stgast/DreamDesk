@@ -191,7 +191,7 @@ export function SetupPanel() {
           <div className="space-y-2">
             {items.map((item) => (
               <div
-                key={item.product.categoryId}
+                key={item.addedAt}
                 className="flex items-start gap-3 rounded-lg bg-dark-card border border-dark-border p-3 group"
               >
                 {/* Картинка */}
@@ -223,7 +223,7 @@ export function SetupPanel() {
                 {/* Удалить */}
                 <button
                   type="button"
-                  onClick={() => removeItem(item.product.categoryId)}
+                  onClick={() => removeItem(item.addedAt)}
                   className="p-1.5 rounded-md text-gray-600 hover:text-red-400 hover:bg-red-400/10 transition opacity-0 group-hover:opacity-100"
                 >
                   <Trash2 className="w-3.5 h-3.5" />

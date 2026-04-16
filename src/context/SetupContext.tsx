@@ -21,8 +21,8 @@ interface SetupContextValue {
   // Добавить товар в сборку (макс. 1 товар на категорию)
   addItem: (product: Product) => void;
 
-  // Удалить товар из сборки по categoryId
-  removeItem: (categoryId: string) => void;
+  // Удалить товар из сборки по времени добавления (addedAt)
+  removeItem: (addedAt: number) => void;
 
   // Заменить товар в категории
   replaceItem: (product: Product) => void;
@@ -58,18 +58,14 @@ export function SetupProvider({ children }: { children: ReactNode }) {
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
   const [compareIds, setCompareIds] = useState<string[]>([]);
 
-  // Добавить товар (заменяет существующий в той же категории)
+  // Добавить товар в сборку (можно добавлять несколько товаров одной категории)
   const addItem = useCallback((product: Product) => {
-    setItems((prev) => {
-      // Убираем старый товар из этой категории, добавляем новый
-      const filtered = prev.filter((i) => i.product.categoryId !== product.categoryId);
-      return [...filtered, { product, addedAt: Date.now() }];
-    });
+    setItems((prev) => [...prev, { product, addedAt: Date.now() }]);
   }, []);
 
-  // Удалить товар по categoryId
-  const removeItem = useCallback((categoryId: string) => {
-    setItems((prev) => prev.filter((i) => i.product.categoryId !== categoryId));
+  // Удалить конкретный товар по времени добавления (уникальный ID в сборке)
+  const removeItem = useCallback((addedAt: number) => {
+    setItems((prev) => prev.filter((i) => i.addedAt !== addedAt));
   }, []);
 
   // Заменить — алиас для addItem (семантически понятнее)

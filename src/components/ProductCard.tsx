@@ -31,7 +31,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onAdd }: ProductCardProps) {
-  const { hasCategory } = useSetup();
+  const { items } = useSetup();
   const { currency, language } = useApp();
   const t = useTranslation(language);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +53,8 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
     }
   };
 
-  const isInSetup = hasCategory(product.categoryId);
+  const isExactProductInSetup = items.some((i) => i.product.id === product.id);
+  const isCategoryInSetup = items.some((i) => i.product.categoryId === product.categoryId);
 
   const badgeLabel = useMemo(() => {
     if (product.price > 120000 || product.name.toUpperCase().includes("OLED")) return "Флагман";
@@ -177,12 +178,22 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
              <span className="text-[20px] sm:text-[24px] font-bold text-accent tracking-tight">
                {formatPrice(product.price, currency)}
              </span>
-             {isInSetup && (
-               <div className="flex items-center gap-1.5 text-lime px-2 py-1 rounded bg-lime/10">
-                 <Check className="w-3.5 h-3.5" />
-                 <span className="text-[10px] font-bold uppercase tracking-wider">В сборке</span>
-               </div>
-             )}
+             <div className="flex items-center gap-2">
+               {isExactProductInSetup ? (
+                 <div className="flex items-center gap-1.5 text-lime px-2 py-1.5 rounded-lg bg-lime/10">
+                   <Check className="w-4 h-4" />
+                   <span className="text-xs font-bold uppercase tracking-wider">В сборке</span>
+                 </div>
+               ) : (
+                 <button 
+                   onClick={(e) => { e.stopPropagation(); onAdd(); }}
+                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/10 text-accent hover:bg-accent/20 transition-colors shrink-0 border border-accent/20"
+                 >
+                   <Plus className="w-4 h-4" />
+                   <span className="text-sm font-bold tracking-wide">Добавить</span>
+                 </button>
+               )}
+             </div>
            </div>
         </div>
       </div>

@@ -77,9 +77,42 @@ export function CatalogPage({ products, categories }: CatalogPageProps) {
     }
 
     if (activeFeatures.length > 0) {
-      filtered = filtered.filter((p) => 
-        activeFeatures.some(f => p.features.includes(f))
-      );
+      filtered = filtered.filter((p) => {
+        return activeFeatures.every(filterVal => {
+          if (filterVal.startsWith("brand:")) {
+            const brand = filterVal.replace("brand:", "").toLowerCase();
+            return p.name.toLowerCase().includes(brand);
+          }
+          
+          if (filterVal.startsWith("bool:")) {
+            const [, group, val] = filterVal.split(":");
+            const keywordsMap: Record<string, string[]> = {
+              filter_curved: ["Изогнутый", "Curved", "1000R", "1800R", "1500R"],
+              filter_hdr: ["HDR"],
+              filter_height_adj: ["Height", "Регулировка по высоте"],
+              filter_hot_swap: ["Hot-Swap", "Хот-свап"],
+              filter_wireless: ["Wireless", "Беспроводная", "2.4GHz", "Bluetooth"],
+              filter_backlight: ["RGB", "Light", "Подсветка"],
+              filter_mute_button: ["Mute", "Отключение"],
+              filter_rotate_360: ["360", "поворот"],
+              filter_asio: ["ASIO"],
+              filter_headphone_amp: ["Amp", "Усилитель", "мониторинг"],
+              filter_mic_included: ["Микрофон", "Microphone", "Гарнитура"],
+              filter_anc: ["ANC", "Шумоподавление"]
+            };
+            const keywords = keywordsMap[group] || [];
+            const hasFeature = p.features.some(f => keywords.some(k => f.toLowerCase().includes(k.toLowerCase())));
+            return val === "yes" ? hasFeature : !hasFeature;
+          }
+
+          if (filterVal.startsWith("feat:")) {
+            const feat = filterVal.replace("feat:", "");
+            return p.features.includes(feat);
+          }
+
+          return p.features.includes(filterVal);
+        });
+      });
     }
 
     if (activeConnections.length > 0) {
@@ -96,6 +129,7 @@ export function CatalogPage({ products, categories }: CatalogPageProps) {
 
     return filtered;
   }, [products, activeCategory, searchQuery, activeFeatures, activeConnections, priceRange]);
+
 
   const handleCategoryChange = (catId: string) => {
      setActiveCategory(catId);

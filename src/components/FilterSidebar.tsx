@@ -1,10 +1,134 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import type { Category, Product } from "@/types";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslation, TranslationKey } from "@/lib/i18n";
 import { useApp } from "@/context/AppContext";
+
+// ============================================
+// Standalone PriceSlider — extracted outside FilterSidebar
+// to prevent React from remounting during parent re-renders
+// ============================================
+function PriceSlider({
+  min,
+  max,
+  value,
+  onChange,
+}: {
+  min: number;
+  max: number;
+  value: [number, number];
+  onChange: (range: [number, number]) => void;
+}) {
+  const valMin = Math.max(min, value[0]);
+  const valMax = Math.min(max, value[1]);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const draggingRef = useRef<"min" | "max" | null>(null);
+  const valMinRef = useRef(valMin);
+  const valMaxRef = useRef(valMax);
+  const onChangeRef = useRef(onChange);
+  valMinRef.current = valMin;
+  valMaxRef.current = valMax;
+  onChangeRef.current = onChange;
+
+  const getValueFromPosition = useCallback(
+    (clientX: number) => {
+      if (!trackRef.current) return min;
+      const rect = trackRef.current.getBoundingClientRect();
+      const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      return Math.round(min + percent * (max - min));
+    },
+    [min, max]
+  );
+
+  const getValueFromPositionRef = useRef(getValueFromPosition);
+  getValueFromPositionRef.current = getValueFromPosition;
+
+  useEffect(() => {
+    const handleMove = (clientX: number) => {
+      if (!draggingRef.current) return;
+      const val = getValueFromPositionRef.current(clientX);
+      if (draggingRef.current === "min") {
+        onChangeRef.current([Math.min(val, valMaxRef.current - 1), valMaxRef.current]);
+      } else {
+        onChangeRef.current([valMinRef.current, Math.max(val, valMinRef.current + 1)]);
+      }
+    };
+
+    const handleEnd = () => {
+      draggingRef.current = null;
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
+    };
+
+    const onMouseMove = (e: MouseEvent) => handleMove(e.clientX);
+    const onTouchMove = (e: TouchEvent) => handleMove(e.touches[0].clientX);
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", handleEnd);
+    document.addEventListener("touchmove", onTouchMove);
+    document.addEventListener("touchend", handleEnd);
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", handleEnd);
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", handleEnd);
+    };
+  }, []);
+
+  const startDrag = (thumb: "min" | "max") => (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    draggingRef.current = thumb;
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "grabbing";
+  };
+
+  const leftPercent = min === max ? 0 : ((valMin - min) / (max - min)) * 100;
+  const rightPercent = min === max ? 0 : 100 - ((valMax - min) / (max - min)) * 100;
+
+  return (
+    <div className="px-3 mb-6">
+      <h4 className="mb-3 text-[11px] font-bold uppercase tracking-widest text-gray-500">Цена</h4>
+      <div className="flex gap-2 mb-4">
+        <input
+          type="number"
+          value={valMin === 0 ? "" : valMin}
+          onChange={(e) => onChange([Number(e.target.value), valMax])}
+          placeholder={min.toString()}
+          className="w-full bg-black/20 border border-white/10 rounded-lg px-2 py-1.5 text-[12px] text-white focus:outline-none focus:border-accent/40"
+        />
+        <input
+          type="number"
+          value={valMax >= 1000000 ? "" : valMax}
+          onChange={(e) => onChange([valMin, Number(e.target.value)])}
+          placeholder={max.toString()}
+          className="w-full bg-black/20 border border-white/10 rounded-lg px-2 py-1.5 text-[12px] text-white focus:outline-none focus:border-accent/40"
+        />
+      </div>
+
+      <div ref={trackRef} className="relative w-full h-6 flex items-center select-none">
+        <div className="absolute left-0 right-0 h-1 bg-white/10 rounded-full" />
+        <div
+          className="absolute h-1 bg-accent rounded-full shadow-[0_0_10px_rgba(var(--accent-rgb),0.5)]"
+          style={{ left: `${leftPercent}%`, right: `${rightPercent}%` }}
+        />
+        <div
+          onMouseDown={startDrag("min")}
+          onTouchStart={startDrag("min")}
+          className="absolute w-5 h-5 rounded-full bg-white border-2 border-accent shadow-lg cursor-grab active:cursor-grabbing active:scale-110 transition-transform z-[3] -translate-x-1/2 hover:shadow-accent/30 hover:shadow-xl"
+          style={{ left: `${leftPercent}%` }}
+        />
+        <div
+          onMouseDown={startDrag("max")}
+          onTouchStart={startDrag("max")}
+          className="absolute w-5 h-5 rounded-full bg-white border-2 border-accent shadow-lg cursor-grab active:cursor-grabbing active:scale-110 transition-transform z-[4] -translate-x-1/2 hover:shadow-accent/30 hover:shadow-xl"
+          style={{ left: `${100 - rightPercent}%` }}
+        />
+      </div>
+    </div>
+  );
+}
 
 interface FilterSidebarProps {
   categories: Category[];
@@ -66,146 +190,153 @@ export function FilterSidebar({
   // Organize filters into structured groups per category
   const categoryFilters = useMemo(() => {
     const map: Record<string, {
-      connections: string[],
-      speed: string[],
-      display: string[],
-      physical: string[],
-      others: string[],
-      priceLimit: { min: number, max: number },
-      headers: { speed: string, display: string, physical: string, others: string }
+      groups: { title: string, items: { label: string, value: string }[] }[],
+      priceLimit: { min: number, max: number }
     }> = {};
 
     categories.forEach((cat) => {
       const catProducts = products.filter((p) => p.categoryId === cat.id);
       
-      // 1. Price Limits - Fix: Use actual data bounds
       const prices = catProducts.map(p => p.price);
       const minP = prices.length > 0 ? Math.min(...prices) : 0;
       const maxP = prices.length > 0 ? Math.max(...prices) : 100000;
 
-      // 2. Connections
-      const connections = Array.from(new Set(catProducts.map(p => p.connectionType))).sort();
+      const brands = Array.from(new Set(catProducts.map(p => p.name.split(" ")[0]))).sort();
 
-      // 3. Categorize Features
-      const speedSet = new Set<string>();
-      const displaySet = new Set<string>();
-      const physSet = new Set<string>();
-      const otherSet = new Set<string>();
-
-      // Heuristics
-      const speedKeywords = ["Hz", "Гц", "ms", "мс", "DPI", "Refresh", "Response", "Sync", "Reflex", "Latency"];
-      const displayKeywords = ["4K", "1440p", "IPS", "OLED", "VA", "TN", "Resolution", "Panel", "Curved", "HDR", "\"", "”", "1000R", "1800R"];
-      const physKeywords = ["g", "г", "кг", "kg", "RGB", "Wireless", "Bluetooth", "Ergonomic", "Weight", "Вес", "Симметричная", "Эргономичная"];
-      const sizeKeywords = ["До 27", "До 34", "До 32", "До 49"];
-
-      // Category specific naming
-      let speedHeader = "Скорость";
-      let displayHeader = "Экран и панель";
-      let physHeader = "Физические свойства";
-      let otherHeader = "Дополнительно";
+      type GroupConfig = { title: string, keys?: string[], isBoolean?: boolean, booleanKeywords?: string[] };
+      const config: GroupConfig[] = [];
 
       if (cat.slug === "monitors") {
-          speedHeader = "Частота и отклик";
-          displayHeader = "Разрешение и тип матрицы";
-      } else if (cat.slug === "keyboards") {
-          speedHeader = "Скорость отклика";
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_diagonal", keys: ["\"", "”", " диагональ"] },
+          { title: "filter_resolution_max", keys: ["4K", "1440p", "QHD", "FHD", "2160", "1080", "Resolution"] },
+          { title: "filter_refresh_rate_hz", keys: ["Hz", "Гц"] },
+          { title: "filter_panel_type", keys: ["IPS", "OLED", "VA", "TN", "QD-OLED"] },
+          { title: "filter_curved", isBoolean: true, booleanKeywords: ["Изогнутый", "Curved", "1000R", "1800R", "1500R"] },
+          { title: "filter_aspect_ratio", keys: ["21:9", "16:9", "32:9"] },
+          { title: "filter_hdr", isBoolean: true, booleanKeywords: ["HDR"] },
+          { title: "filter_height_adj", isBoolean: true, booleanKeywords: ["Height", "Регулировка по высоте"] },
+          { title: "filter_video_ports", keys: ["HDMI", "DisplayPort", "DP", "USB-C", "Thunderbolt"] }
+        );
       } else if (cat.slug === "arms") {
-          physHeader = "Макс. вес";
-          displayHeader = "Размер экрана";
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_mount_type", keys: ["C-Clamp", "Grommet", "Зажим", "Втулка", "Настольный"] },
+          { title: "filter_vesa", keys: ["VESA"] },
+          { title: "filter_screen_size_max", keys: ["До ", "Up to "] },
+          { title: "filter_load_max", keys: ["кг", "kg", "lbs", "Макс. "] },
+          { title: "filter_swivel", keys: ["поворот", "angle", "Swivel", "°"] }
+        );
+      } else if (cat.slug === "keyboards") {
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_connection", keys: ["Bluetooth", "Wireless", "Wired", "2.4GHz", "Bolt", "USB-C"] },
+          { title: "filter_kb_type", keys: ["Mechanical", "Membrane", "Magnetic", "Механическая", "Мембранная", "Магнитная"] },
+          { title: "filter_hot_swap", isBoolean: true, booleanKeywords: ["Hot-Swap", "Хот-свап"] },
+          { title: "filter_color", keys: ["White", "Black", "Silver", "Gray", "Белый", "Черный", "Серый"] },
+          { title: "filter_switches" as TranslationKey, keys: ["Switch", "Gateron", "Cherry", "Brown", "Red", "Blue", "Yellow", "Speed"] }
+        );
+      } else if (cat.slug === "mice") {
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_wireless", isBoolean: true, booleanKeywords: ["Wireless", "Беспроводная", "2.4GHz", "Bluetooth"] },
+          { title: "filter_wireless_type", keys: ["Bluetooth", "Logi Bolt", "HyperSpeed", "LIGHTSPEED", "Radio"] },
+          { title: "filter_grip", keys: ["Claw", "Palm", "Fingertip", "Хват"] },
+          { title: "filter_color", keys: ["White", "Black", "Pink", "Blue", "Red", "Белый", "Черный"] },
+          { title: "filter_buttons_count", keys: ["кнопок", "buttons"] },
+          { title: "filter_mouse_shape", keys: ["Symmetric", "Ergonomic", "Симметричная", "Эргономичная"] },
+          { title: "filter_dpi_max", keys: ["DPI", "CPI"] }
+        );
+      } else if (cat.slug === "microphones") {
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_mic_type", keys: ["Dynamic", "Condenser", "Динамический", "Конденсаторный"] },
+          { title: "filter_mic_interface", keys: ["USB", "XLR", "3.5mm"] },
+          { title: "filter_ports", keys: ["XLR", "Jack", "Monitoring"] },
+          { title: "filter_polar_pattern", keys: ["Cardioid", "Omni", "Bi", "Pattern", "Направленность"] },
+          { title: "filter_backlight", isBoolean: true, booleanKeywords: ["RGB", "Light", "Подсветка"] },
+          { title: "filter_mute_button", isBoolean: true, booleanKeywords: ["Mute", "Отключение"] },
+          { title: "filter_color", keys: ["White", "Black", "Silver", "Белый", "Черный"] }
+        );
+      } else if (cat.slug === "boom-arms") {
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_color", keys: ["White", "Black", "Silver", "Белый", "Черный"] },
+          { title: "filter_payload", keys: ["кг", "kg", "lbs", " нагрузка"] },
+          { title: "filter_height_max", keys: ["max height", "макс. высота"] },
+          { title: "filter_height_min", keys: ["min height", "мин. высота"] },
+          { title: "filter_rotate_360", isBoolean: true, booleanKeywords: ["360", "поворот"] }
+        );
+      } else if (cat.slug === "audio-interfaces") {
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_connection", keys: ["USB", "Thunderbolt", "Firewire"] },
+          { title: "filter_asio", isBoolean: true, booleanKeywords: ["ASIO"] },
+          { title: "filter_audio_format", keys: ["2.0", "5.1", "7.1"] },
+          { title: "filter_dac_bitrate", keys: ["bit", "бит"] },
+          { title: "filter_dac_freq", keys: ["kHz", "кГц"] },
+          { title: "filter_headphone_amp", isBoolean: true, booleanKeywords: ["Amp", "Усилитель", "мониторинг"] },
+          { title: "filter_os_support", keys: ["Win", "Mac", "iOS", "Android", "OS"] }
+        );
+      } else if (cat.slug === "headphones") {
+        config.push(
+          { title: "filter_brand" },
+          { title: "filter_headphones_design", keys: ["Open", "Closed", "Закрытые", "Открытые", "In-ear", "Over-ear"] },
+          { title: "filter_headphones_type", keys: ["Studio", "Gaming", "Consumer", "Студийные", "Игровые"] },
+          { title: "filter_mic_included", isBoolean: true, booleanKeywords: ["Микрофон", "Microphone", "Гарнитура"] },
+          { title: "filter_anc", isBoolean: true, booleanKeywords: ["ANC", "Шумоподавление"] },
+          { title: "filter_port_connection", keys: ["3.5mm", "6.3mm", "USB", "Bluetooth", "Wireless"] }
+        );
       }
 
-      catProducts.forEach((p) => {
-        p.features.forEach((f) => {
-          const feat = f as string;
+      const finalGroups: { title: string, items: { label: string, value: string }[] }[] = [];
+
+      config.forEach(group => {
+          const itemsMap = new Map<string, string>();
           
-          // Logic for arms - strip all except weight and size
-          if (cat.slug === "arms") {
-             if (physKeywords.some(k => feat.toLowerCase().includes(k)) && (feat.includes("кг") || feat.includes("kg"))) {
-                 physSet.add(feat);
-             } else if (sizeKeywords.some(k => feat.includes(k))) {
-                 displaySet.add(feat);
-             }
-             return; // Discard others for arms
+          if (group.title === "filter_brand") {
+              brands.forEach(b => itemsMap.set(b, `brand:${b}`));
+          } else if (group.isBoolean) {
+              const hasYes = catProducts.some(p => p.features.some(f => group.booleanKeywords?.some(k => f.toLowerCase().includes(k.toLowerCase()))));
+              if (hasYes) {
+                itemsMap.set(t("yes"), `bool:${group.title}:yes`);
+                itemsMap.set(t("no"), `bool:${group.title}:no`);
+              }
+          } else {
+              catProducts.forEach(p => {
+                  p.features.forEach(f => {
+                      if (group.keys?.some(k => f.toLowerCase().includes(k.toLowerCase()))) {
+                          itemsMap.set(f, `feat:${f}`);
+                      }
+                  });
+              });
           }
 
-          if (speedKeywords.some(k => feat.includes(k))) speedSet.add(feat);
-          else if (displayKeywords.some(k => feat.includes(k))) displaySet.add(feat);
-          else if (physKeywords.some(k => feat.includes(k))) physSet.add(feat);
-          else otherSet.add(feat);
-        });
+          if (itemsMap.size > 0) {
+              const sortedItems = Array.from(itemsMap.entries())
+                  .sort(([a], [b]) => {
+                      if (a === t("yes")) return -1;
+                      if (b === t("yes")) return 1;
+                      return extractNumber(a) - extractNumber(b);
+                  })
+                  .map(([label, value]) => ({ label, value }));
+
+              finalGroups.push({
+                  title: t(group.title as TranslationKey),
+                  items: sortedItems
+              });
+          }
       });
 
       map[cat.id] = {
-        connections,
-        speed: Array.from(speedSet).sort((a, b) => extractNumber(a) - extractNumber(b)),
-        display: Array.from(displaySet).sort((a, b) => extractNumber(a) - extractNumber(b)),
-        physical: Array.from(physSet).sort((a, b) => extractNumber(a) - extractNumber(b)),
-        others: Array.from(otherSet).sort(),
-        priceLimit: { min: minP, max: maxP },
-        headers: { speed: speedHeader, display: displayHeader, physical: physHeader, others: otherHeader }
+        groups: finalGroups,
+        priceLimit: { min: minP, max: maxP }
       };
     });
     return map;
-  }, [categories, products]);
+  }, [categories, products, language, t]);
 
-  // Price Range Component
-  const PriceSlider = ({ min, max }: { min: number, max: number }) => {
-    // Current state values clamped to the range
-    const valMin = Math.max(min, activePriceRange[0]);
-    const valMax = Math.min(max, activePriceRange[1]);
-
-    const handleChange = (newMin: number, newMax: number) => {
-        onPriceChange([newMin, newMax]);
-    };
-
-    return (
-        <div className="px-3 mb-6">
-            <h4 className="mb-3 text-[11px] font-bold uppercase tracking-widest text-gray-500">Цена</h4>
-            <div className="flex gap-2 mb-4">
-                <input 
-                    type="number" 
-                    value={valMin === 0 ? "" : valMin} 
-                    onChange={(e) => handleChange(Number(e.target.value), valMax)}
-                    placeholder={min.toString()}
-                    className="w-full bg-black/20 border border-white/10 rounded-lg px-2 py-1.5 text-[12px] text-white focus:outline-none focus:border-accent/40"
-                />
-                <input 
-                    type="number" 
-                    value={valMax >= 1000000 ? "" : valMax} 
-                    onChange={(e) => handleChange(valMin, Number(e.target.value))}
-                    placeholder={max.toString()}
-                    className="w-full bg-black/20 border border-white/10 rounded-lg px-2 py-1.5 text-[12px] text-white focus:outline-none focus:border-accent/40"
-                />
-            </div>
-            
-            <div className="relative w-full h-1 bg-white/10 rounded-full">
-                <div 
-                    className="absolute h-full bg-accent rounded-full shadow-[0_0_10px_rgba(var(--accent-rgb),0.5)]"
-                    style={{
-                        left: `${min === max ? 0 : ((valMin - min) / (max - min)) * 100}%`,
-                        right: `${min === max ? 0 : 100 - ((valMax - min) / (max - min)) * 100}%`
-                    }}
-                />
-                <input
-                    type="range"
-                    min={min}
-                    max={max}
-                    value={valMin}
-                    onChange={(e) => handleChange(Math.min(Number(e.target.value), valMax - 1), valMax)}
-                    className="absolute inset-0 w-full h-1 bg-transparent appearance-none pointer-events-none cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-accent [&::-webkit-slider-thumb]:shadow-lg"
-                />
-                <input
-                    type="range"
-                    min={min}
-                    max={max}
-                    value={valMax}
-                    onChange={(e) => handleChange(valMin, Math.max(Number(e.target.value), valMin + 1))}
-                    className="absolute inset-0 w-full h-1 bg-transparent appearance-none pointer-events-none cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-accent [&::-webkit-slider-thumb]:shadow-lg"
-                />
-            </div>
-        </div>
-    );
-  };
 
   const FilterSection = ({ title, items, activeItems, onToggle }: any) => {
     if (!items || items.length === 0) return null;
@@ -216,11 +347,11 @@ export function FilterSidebar({
         </h4>
         <div className="flex flex-col gap-0.5">
           {items.map((item: any) => {
-            const isChecked = activeItems.includes(item);
+            const isChecked = activeItems.includes(item.value);
             return (
               <button
-                key={item}
-                onClick={() => onToggle(item)}
+                key={item.value}
+                onClick={() => onToggle(item.value)}
                 className="group flex items-center gap-3 px-3 py-1.5 rounded-xl hover:bg-white/5 transition-all text-left w-full"
               >
                 <div className={`flex-shrink-0 w-4 h-4 rounded-full border flex items-center justify-center transition-all ${
@@ -231,7 +362,7 @@ export function FilterSidebar({
                   {isChecked && <Check className="w-2.5 h-2.5 stroke-[4]" />}
                 </div>
                 <span className={`text-[12px] font-medium leading-tight ${isChecked ? "text-white" : "text-gray-400 group-hover:text-gray-200"}`}>
-                  {item}
+                  {item.label}
                 </span>
               </button>
             );
@@ -240,6 +371,7 @@ export function FilterSidebar({
       </div>
     );
   };
+
 
   return (
     <div className="flex flex-col gap-2">
@@ -286,59 +418,27 @@ export function FilterSidebar({
               <div className="py-4">
                 <hr className="border-white/5 mb-4 mx-4" />
                 
-                {filters && <PriceSlider min={filters.priceLimit.min} max={filters.priceLimit.max} />}
+                {filters && <PriceSlider min={filters.priceLimit.min} max={filters.priceLimit.max} value={activePriceRange} onChange={onPriceChange} />}
 
-                <FilterSection 
-                  title="Подключение" 
-                  items={filters?.connections} 
-                  activeItems={activeConnections} 
-                  onToggle={(val: string) => {
-                    if (activeCategoryId !== cat.id) onSelectCategory(cat.id);
-                    onToggleConnection(val);
-                  }} 
-                />
-
-                <FilterSection 
-                  title={filters?.headers.speed || "Скорость"} 
-                  items={filters?.speed} 
-                  activeItems={activeFeatures} 
-                  onToggle={(val: string) => {
-                    if (activeCategoryId !== cat.id) onSelectCategory(cat.id);
-                    onToggleFeature(val);
-                  }} 
-                />
-
-                <FilterSection 
-                  title={filters?.headers.display || "Экран"} 
-                  items={filters?.display} 
-                  activeItems={activeFeatures} 
-                  onToggle={(val: string) => {
-                    if (activeCategoryId !== cat.id) onSelectCategory(cat.id);
-                    onToggleFeature(val);
-                  }} 
-                />
-
-                <FilterSection 
-                  title={filters?.headers.physical || "Физические свойства"} 
-                  items={filters?.physical} 
-                  activeItems={activeFeatures} 
-                  onToggle={(val: string) => {
-                    if (activeCategoryId !== cat.id) onSelectCategory(cat.id);
-                    onToggleFeature(val);
-                  }} 
-                />
-
-                <FilterSection 
-                  title={filters?.headers.others || "Дополнительно"} 
-                  items={filters?.others} 
-                  activeItems={activeFeatures} 
-                  onToggle={(val: string) => {
-                    if (activeCategoryId !== cat.id) onSelectCategory(cat.id);
-                    onToggleFeature(val);
-                  }} 
-                />
+                {filters?.groups.map((group, idx) => {
+                  const isConnection = group.title === t("filter_connection");
+                  return (
+                    <FilterSection 
+                      key={idx}
+                      title={group.title} 
+                      items={group.items} 
+                      activeItems={isConnection ? activeConnections : activeFeatures} 
+                      onToggle={(val: string) => {
+                        if (activeCategoryId !== cat.id) onSelectCategory(cat.id);
+                        if (isConnection) onToggleConnection(val);
+                        else onToggleFeature(val);
+                      }} 
+                    />
+                  );
+                })}
               </div>
             </div>
+
           </div>
         );
       })}
