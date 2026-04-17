@@ -255,7 +255,61 @@ export type TranslationKey =
   | "filter_anc"
   | "filter_port_connection"
   | "yes"
-  | "no";
+  | "no"
+  | "empty_build_title"
+  | "empty_build_desc"
+  | "empty_build_create"
+  | "empty_build_ai_hint_title"
+  | "empty_build_ai_hint_desc"
+  | "empty_build_ai_hint_start"
+  | "how_it_works_title"
+  | "how_it_works_subtitle"
+  | "rotating_fast"
+  | "rotating_no_errors"
+  | "rotating_ai_help"
+  | "testimonial_1_quote"
+  | "testimonial_1_author"
+  | "testimonial_2_quote"
+  | "testimonial_2_author"
+  | "testimonial_3_quote"
+  | "testimonial_3_author"
+  | "privacy_title_main"
+  | "privacy_subtitle"
+  | "privacy_intro_title"
+  | "privacy_intro_text"
+  | "privacy_data_title"
+  | "privacy_data_text"
+  | "privacy_security_title"
+  | "privacy_security_text"
+  | "terms_title_main"
+  | "terms_subtitle"
+  | "terms_1_title"
+  | "terms_1_text"
+  | "terms_2_title"
+  | "terms_2_text"
+  | "terms_2_list_1"
+  | "terms_2_list_2"
+  | "terms_2_list_3"
+  | "terms_3_title"
+  | "terms_3_text"
+  | "terms_4_title"
+  | "terms_4_text"
+  | "contact_title_main"
+  | "contact_subtitle"
+  | "contact_answer_time"
+  | "add"
+  | "in_setup"
+  | "current_setup"
+  | "clear"
+  | "compatibility_ok"
+  | "save_setup_title"
+  | "save_setup_desc"
+  | "cancel"
+  | "save"
+  | "name_placeholder"
+  | "xlr_mic_warning"
+  | "monitor_arm_warning"
+  | "empty_setup_help";
 
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
@@ -511,6 +565,60 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     filter_port_connection: "Разъем для подключения",
     yes: "Да",
     no: "Нет",
+    empty_build_title: "Ещё нет ни одной сборки",
+    empty_build_desc: "Начните свой путь к идеальному сетапу. Используйте наш конфигуратор или получите персональные AI-рекомендации.",
+    empty_build_create: "Создать первую сборку",
+    empty_build_ai_hint_title: "AI-рекомендация",
+    empty_build_ai_hint_desc: "Доверьте подбор компонентов нашему искусственному интеллекту",
+    empty_build_ai_hint_start: "Начать",
+    how_it_works_title: "КАК ЭТО РАБОТАЕТ",
+    how_it_works_subtitle: "Соберите свой идеальный сетап",
+    rotating_fast: "быстро",
+    rotating_no_errors: "без ошибок",
+    rotating_ai_help: "с помощью ИИ",
+    testimonial_1_quote: '"AI-ассистент предложил заменить звуковую карту на более совместимую с моим микрофоном. Сэкономил мне 15 000₽ на возвратах."',
+    testimonial_1_author: "— Дмитрий К., подкастер",
+    testimonial_2_quote: '"Собрал полный сетап за 3 минуты. Конфигуратор сразу показал, что мой монитор не поддерживает VESA — сэкономил время и нервы."',
+    testimonial_2_author: "— Алексей М., дизайнер",
+    testimonial_3_quote: '"AI-чат помог подобрать тихую клавиатуру для стримов. Раньше тратил часы на форумах, а тут — моментальный ответ."',
+    testimonial_3_author: "— Ольга В., стример",
+    privacy_title_main: "Политика конфиденциальности",
+    privacy_subtitle: "Ваша конфиденциальность — приоритет DreamDesk",
+    privacy_intro_title: "Введение",
+    privacy_intro_text: "DreamDesk уважает вашу конфиденциальность и берет на себя ответственность за защиту ваших персональных данных. Это значит, что мы объясним вам, как мы собираем, используем и защищаем ваши данные.",
+    privacy_data_title: "Сбор данных",
+    privacy_data_text: "Мы собираем только необходимые данные для работы с нашим сервисом: имя, email, и ваши сохраненные конфигурации. Никакие данные не передаются третьим лицам без вашего согласия.",
+    privacy_security_title: "Защита данных",
+    privacy_security_text: "Все данные передаются и хранятся согласно современным стандартам безопасности. Мы используем SSL/TLS для защиты данных в пути.",
+    terms_title_main: "Условия использования",
+    terms_subtitle: "Прочитайте наши условия перед использованием DreamDesk",
+    terms_1_title: "1. Общие условия",
+    terms_1_text: "Используя DreamDesk, вы согласны с этими условиями использования и нашей политикой конфиденциальности. Если вы не согласны с какими-либо условиями, пожалуйста, не используйте наш сервис.",
+    terms_2_title: "2. Использование сервиса",
+    terms_2_text: "Вы используете DreamDesk только в личных целях. Вам запрещается:",
+    terms_2_list_1: "Распространять вредоносный код или проводить атаки на наш сервис",
+    terms_2_list_2: "Использовать автоматизированные инструменты без разрешения",
+    terms_2_list_3: "Нарушать права интеллектуальной собственности",
+    terms_3_title: "3. Ответственность",
+    terms_3_text: 'DreamDesk предоставляется "как есть". Мы не отвечаем за прямые или косвенные убытки, вытекающие из использования сервиса или невозможности его использования.',
+    terms_4_title: "4. Изменения условий",
+    terms_4_text: "Мы можем изменять эти условия в любое время. Изменения вступают в силу незамедлительно после публикации на сайте.",
+    contact_title_main: "Свяжитесь с нами",
+    contact_subtitle: "Ответим на любые вопросы о DreamDesk и поможем вам создать идеальный сетап.",
+    contact_answer_time: "Мы ответим вам в течение 24 часов",
+    add: "Добавить",
+    in_setup: "В сборке",
+    current_setup: "Текущая сборка",
+    clear: "Очистить",
+    compatibility_ok: "Проблем совместимости не обнаружено",
+    save_setup_title: "Сохранить сборку",
+    save_setup_desc: "Конфигурация появится в разделе «Ваши сетапы» на странице профиля.",
+    cancel: "Отмена",
+    save: "Сохранить",
+    name_placeholder: "Название",
+    xlr_mic_warning: "XLR-микрофон не будет работать без аудиоинтерфейса (звуковой карты). Добавьте устройство из категории «Звуковые карты».",
+    monitor_arm_warning: "Монитор {name} весит {weight} кг — рекомендуем добавить надёжный кронштейн.",
+    empty_setup_help: "Добавляйте товары из каталога слева",
   },
   EN: {
     account: "Account",
@@ -568,7 +676,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     smart_peripheral_configurator: "Smart Peripheral Configurator",
     catalog_description: "Device catalog with smart filtering and search",
     new_level: "A new tier of desk setup",
-    hero_title: "Build the perfect setup for creation and streaming",
+    hero_title: "Build the perfect setup",
     hero_subtitle: "DreamDesk helps you choose compatible peripherals fast and without errors",
     catalog_devices: "Browse the catalog",
     how_it_works: "How it works",
@@ -764,6 +872,60 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     yes: "Yes",
     no: "No",
     delete_build_short: "Delete",
+    empty_build_title: "No builds yet",
+    empty_build_desc: "Start your journey to the perfect setup. Use our configurator or get personal AI recommendations.",
+    empty_build_create: "Create first setup",
+    empty_build_ai_hint_title: "AI Recommendation",
+    empty_build_ai_hint_desc: "Let our artificial intelligence select the components for you",
+    empty_build_ai_hint_start: "Start",
+    how_it_works_title: "HOW IT WORKS",
+    how_it_works_subtitle: "Build your perfect setup",
+    rotating_fast: "fast",
+    rotating_no_errors: "error-free",
+    rotating_ai_help: "with AI assistance",
+    testimonial_1_quote: '"AI assistant suggested replacing the sound card with one more compatible with my microphone. Saved me $200 on returns."',
+    testimonial_1_author: "— Dmitry K., podcaster",
+    testimonial_2_quote: '"Built a full setup in 3 minutes. The configurator immediately showed my monitor didn\'t support VESA — saved time and stress."',
+    testimonial_2_author: "— Alex M., designer",
+    testimonial_3_quote: '"AI chat helped pick a quiet keyboard for streaming. Used to spend hours on forums, but here — instant answer."',
+    testimonial_3_author: "— Olga V., streamer",
+    privacy_title_main: "Privacy Policy",
+    privacy_subtitle: "Your privacy is DreamDesk's priority",
+    privacy_intro_title: "Introduction",
+    privacy_intro_text: "DreamDesk respects your privacy and assumes responsibility for protecting your personal data. This means we will explain how we collect, use, and protect your data.",
+    privacy_data_title: "Data Collection",
+    privacy_data_text: "We only collect data necessary for our service: name, email, and your saved configurations. No data is shared with third parties without your consent.",
+    privacy_security_title: "Data Protection",
+    privacy_security_text: "All data is transmitted and stored according to modern security standards. We use SSL/TLS to protect data in transit.",
+    terms_title_main: "Terms of Use",
+    terms_subtitle: "Read our terms before using DreamDesk",
+    terms_1_title: "1. General Terms",
+    terms_1_text: "By using DreamDesk, you agree to these terms of use and our privacy policy. If you do not agree with any terms, please do not use our service.",
+    terms_2_title: "2. Service Usage",
+    terms_2_text: "You use DreamDesk for personal purposes only. You are prohibited from:",
+    terms_2_list_1: "Distributing malicious code or conducting attacks on our service",
+    terms_2_list_2: "Using automated tools without permission",
+    terms_2_list_3: "Violating intellectual property rights",
+    terms_3_title: "3. Liability",
+    terms_3_text: 'DreamDesk is provided "as is". We are not liable for direct or indirect damages arising from the use or inability to use the service.',
+    terms_4_title: "4. Changes to Terms",
+    terms_4_text: "We may change these terms at any time. Changes take effect immediately upon publication on the website.",
+    contact_title_main: "Contact Us",
+    contact_subtitle: "We'll answer any questions about DreamDesk and help you create the perfect setup.",
+    contact_answer_time: "We will answer you within 24 hours",
+    add: "Add",
+    in_setup: "In Setup",
+    current_setup: "Current Setup",
+    clear: "Clear",
+    compatibility_ok: "No compatibility issues found",
+    save_setup_title: "Save Setup",
+    save_setup_desc: "The configuration will appear in the 'Your Setups' section on the profile page.",
+    cancel: "Cancel",
+    save: "Save",
+    name_placeholder: "Name",
+    xlr_mic_warning: "An XLR microphone will not work without an audio interface (sound card). Add a device from the 'Audio Interfaces' category.",
+    monitor_arm_warning: "Monitor {name} weighs {weight} kg — we recommend adding a reliable arm.",
+    empty_setup_help: "Add products from the catalog on the left",
   },
   UK: {
     account: "Обліковий запис",
@@ -821,7 +983,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     smart_peripheral_configurator: "Розумний конфігуратор периферії",
     catalog_description: "Каталог пристроїв з розумною фільтрацією та пошуком",
     new_level: "Новий рівень робочого місця",
-    hero_title: "Збери ідеальний сетап для створення та стриму",
+    hero_title: "Збери ідеальний сетап",
     hero_subtitle: "DreamDesk допомагає швидко підібрати сумісні периферійні пристрої без помилок",
     catalog_devices: "Перейти до каталогу",
     how_it_works: "Як це працює",
@@ -1017,6 +1179,60 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     yes: "Так",
     no: "Ні",
     delete_build_short: "Видалити збірку",
+    empty_build_title: "Ще немає жодної збірки",
+    empty_build_desc: "Почніть свій шлях до ідеального сетапу. Використовуйте наш конфігуратор або отримайте персональні AI-рекомендації.",
+    empty_build_create: "Створити першу збірку",
+    empty_build_ai_hint_title: "AI-рекомендація",
+    empty_build_ai_hint_desc: "Довірте підбір компонентів нашому штучному інтелекту",
+    empty_build_ai_hint_start: "Почати",
+    how_it_works_title: "ЯК ЦЕ ПРАЦЮЄ",
+    how_it_works_subtitle: "Зберіть свій ідеальний сетап",
+    rotating_fast: "швидко",
+    rotating_no_errors: "без помилок",
+    rotating_ai_help: "за допомогою ШІ",
+    testimonial_1_quote: '"AI-асистент запропонував замінити звукову карту на більш сумісну з моїм мікрофоном. Заощадив мені 5000₴ на поверненнях."',
+    testimonial_1_author: "— Дмитро К., подкастер",
+    testimonial_2_quote: '"Зібрав повний сетап за 3 хвилини. Конфігуратор відразу показав, що мій монітор не підтримує VESA — заощадив час та нерви."',
+    testimonial_2_author: "— Олексій М., дизайнер",
+    testimonial_3_quote: '"AI-чат допоміг підібрати тиху клавіатуру для стрімів. Раніше витрачав години на форумах, а тут — моментальна відповідь."',
+    testimonial_3_author: "— Ольга В., стрімер",
+    privacy_title_main: "Політика конфіденційності",
+    privacy_subtitle: "Ваша конфіденційність — пріоритет DreamDesk",
+    privacy_intro_title: "Вступ",
+    privacy_intro_text: "DreamDesk поважає вашу конфіденційність і бере на себе відповідальність за захист ваших персональних даних. Це означає, що ми пояснимо вам, як ми збираємо, використовуємо та захищаємо ваші дані.",
+    privacy_data_title: "Збір даних",
+    privacy_data_text: "Ми збираємо лише необхідні дані для роботи з нашим сервісом: ім'я, email та ваші збережені конфігурації. Жодні дані не передаються третім особам без вашої згоди.",
+    privacy_security_title: "Захист даних",
+    privacy_security_text: "Всі дані передаються та зберігаються згідно з сучасними стандартами безпеки. Ми використовуємо SSL/TLS для захисту даних у дорозі.",
+    terms_title_main: "Умови використання",
+    terms_subtitle: "Прочитайте наші умови перед використанням DreamDesk",
+    terms_1_title: "1. Загальні умови",
+    terms_1_text: "Використовуючи DreamDesk, ви погоджуєтесь із цими умовами використання та нашою політикою конфіденційності. Якщо ви не згодні з будь-якими умовами, будь ласка, не використовуйте наш сервіс.",
+    terms_2_title: "2. Використання сервісу",
+    terms_2_text: "Ви використовуєте DreamDesk лише в особистих цілях. Вам забороняється:",
+    terms_2_list_1: "Поширювати шкідливий код або проводити атаки на наш сервіс",
+    terms_2_list_2: "Використовувати автоматизовані інструменти без дозволу",
+    terms_2_list_3: "Порушувати права інтелектуальної власності",
+    terms_3_title: "3. Відповідальність",
+    terms_3_text: 'DreamDesk надається "як є". Ми не відповідаємо за прямі або непрямі збитки, що випливають із використання сервісу або неможливості його використання.',
+    terms_4_title: "4. Зміни умов",
+    terms_4_text: "Ми можемо змінювати ці умови в будь-який час. Зміни набирають чинності негайно після публікації на сайті.",
+    contact_title_main: "Зв'яжіться з нами",
+    contact_subtitle: "Відповімо на будь-які запитання про DreamDesk та допоможемо вам створити ідеальний сетап.",
+    contact_answer_time: "Ми відповімо вам протягом 24 годин",
+    add: "Додати",
+    in_setup: "В збірці",
+    current_setup: "Поточна збірка",
+    clear: "Очистити",
+    compatibility_ok: "Проблем із сумісністю не виявлено",
+    save_setup_title: "Зберегти збірку",
+    save_setup_desc: "Конфігурація з'явиться в розділі «Ваші сетапи» на сторінці профілю.",
+    cancel: "Скасувати",
+    save: "Зберегти",
+    name_placeholder: "Назва",
+    xlr_mic_warning: "XLR-мікрофон не працюватиме без аудіоінтерфейсу (звукової карти). Додайте пристрій з категорії «Звукові карти».",
+    monitor_arm_warning: "Монітор {name} важить {weight} кг — рекомендуємо додати надійний кронштейн.",
+    empty_setup_help: "Додавайте товари з каталогу ліворуч",
   },
   PL: {
     account: "Konto",
@@ -1074,7 +1290,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     smart_peripheral_configurator: "Inteligentny konfigurator urządzeń peryferyjnych",
     catalog_description: "Katalog urządzeń z inteligentnym filtrowaniem i wyszukiwaniem",
     new_level: "Nowy poziom miejsca pracy",
-    hero_title: "Zbuduj idealny zestaw do tworzenia i streamingu",
+    hero_title: "Zbuduj idealny zestaw",
     hero_subtitle: "DreamDesk pomaga wybrać kompatybilne urządzenia peryferyjne szybko i bez błędów",
     catalog_devices: "Przejdź do katalogu",
     how_it_works: "Jak to działa",
@@ -1270,6 +1486,60 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     yes: "Tak",
     no: "Nie",
     delete_build_short: "Usuń zestaw",
+    empty_build_title: "Brak zapisanych zestawów",
+    empty_build_desc: "Zacznij swoją drogę do idealnego setupu. Skorzystaj z naszego konfiguratora lub otrzymaj personalne rekomendacje AI.",
+    empty_build_create: "Utwórz pierwszy zestaw",
+    empty_build_ai_hint_title: "Rekomendacja AI",
+    empty_build_ai_hint_desc: "Pozwól naszej sztucznej inteligencji dobrać komponenty za Ciebie",
+    empty_build_ai_hint_start: "Zacznij",
+    how_it_works_title: "JAK TO DZIAŁA",
+    how_it_works_subtitle: "Zbuduj swój idealny zestaw",
+    rotating_fast: "szybko",
+    rotating_no_errors: "bez błędów",
+    rotating_ai_help: "z pomocą AI",
+    testimonial_1_quote: '"Asystent AI zasugerował wymianę karty dźwiękowej na bardziej kompatybilną z moim mikrofonem. Zaoszczędziło mi to 800 zł na zwrotach."',
+    testimonial_1_author: "— Dmitrij K., podcaster",
+    testimonial_2_quote: '"Złożyłem pełny zestaw w 3 minuty. Konfigurator od razu pokazał, że mój monitor nie obsługuje VESA — zaoszczędziło czas i stres."',
+    testimonial_2_author: "— Aleksiej M., projektant",
+    testimonial_3_quote: '"Czat AI pomógł wybrać cichą klawiaturę do streamingu. Kiedyś spędzałem godziny na forach, a tutaj — błyskawiczna odpowiedź."',
+    testimonial_3_author: "— Olga W., streamerka",
+    privacy_title_main: "Polityka Prywatności",
+    privacy_subtitle: "Twoja prywatność jest priorytetem DreamDesk",
+    privacy_intro_title: "Wprowadzenie",
+    privacy_intro_text: "DreamDesk szanuje Twoją prywatność i bierze odpowiedzialność за ochronę Twoich danych osobowych. Oznacza to, że wyjaśnimy Ci, jak zbieramy, używamy i chronimy Twoje dane.",
+    privacy_data_title: "Zbieranie danych",
+    privacy_data_text: "Zbieramy tylko dane niezbędne do działania naszego serwisu: imię, email oraz Twoje zapisane konfiguracje. Żadne dane nie są przekazywane stronom trzecim bez Twojej zgody.",
+    privacy_security_title: "Ochrona danych",
+    privacy_security_text: "Wszystkie dane są przesyłane i przechowywane zgodnie z nowoczesnymi standardami bezpieczeństwa. Używamy SSL/TLS do ochrony danych w transmisji.",
+    terms_title_main: "Warunki Użytkowania",
+    terms_subtitle: "Przeczytaj nasze warunki przed skorzystaniem z DreamDesk",
+    terms_1_title: "1. Warunki Ogólne",
+    terms_1_text: "Korzystając z DreamDesk, zgadzasz się na niniejsze warunki użytkowania oraz naszą politykę prywatności. Jeśli nie zgadzasz się z którymikolwiek warunkami, prosimy o niekorzystanie z naszego serwisu.",
+    terms_2_title: "2. Korzystanie z Serwisu",
+    terms_2_text: "DreamDesk używasz wyłącznie do celów osobistych. Zabrania się:",
+    terms_2_list_1: "Rozpowszechniania złośliwego kodu lub przeprowadzania ataków na nasz serwis",
+    terms_2_list_2: "Używania zautomatyzowanych narzędzi bez pozwolenia",
+    terms_2_list_3: "Naruszenia praw własności intelektualnej",
+    terms_3_title: "3. Odpowiedzialność",
+    terms_3_text: 'DreamDesk jest świadczony w stanie "takim, jakim jest". Nie ponosimy odpowiedzialności za bezpośrednie lub pośrednie szkody wynikające z użytkowania serwisu lub niemożności jego użytkowania.',
+    terms_4_title: "4. Zmiany Warunków",
+    terms_4_text: "Możemy zmienić niniejsze warunki w dowolnym momencie. Zmiany wchodzą w życie natychmiast po opublikowaniu na stronie.",
+    contact_title_main: "Kontakt",
+    contact_subtitle: "Odpowiemy na wszelkie pytania dotyczące DreamDesk i pomożemy Ci stworzyć idealny zestaw.",
+    contact_answer_time: "Odpоwiemy Ci w ciągu 24 godzin",
+    add: "Dodaj",
+    in_setup: "W zestawie",
+    current_setup: "Bieżąca konfiguracja",
+    clear: "Wyczyść",
+    compatibility_ok: "Nie znaleziono problemów z kompatybilnością",
+    save_setup_title: "Zapisz konfigurację",
+    save_setup_desc: "Konfiguracja pojawi się w sekcji „Twoje konfiguracje” na stronie profilu.",
+    cancel: "Anuluj",
+    save: "Zapisz",
+    name_placeholder: "Nazwa",
+    xlr_mic_warning: "Mikrofon XLR nie będzie działać bez interfejsu audio (karty dźwiękowej). Dodaj urządzenie z kategorii „Karty dźwiękowe”.",
+    monitor_arm_warning: "Monitor {name} waży {weight} kg — zalecamy dodanie solidnego uchwytu.",
+    empty_setup_help: "Dodaj produkty z katalogu po lewej stronie",
   },
 };
 
@@ -1281,15 +1551,28 @@ export const LANGUAGE_LOCALES: Record<Language, string> = {
 };
 
 /**
- * Получает переведённый текст по ключу
+ * Получает переведённый текст по ключу с поддержкой параметров
  */
-export function t(key: TranslationKey, language: Language): string {
-  return translations[language][key] || translations.EN[key] || key;
+export function t(
+  key: TranslationKey,
+  language: Language,
+  params?: Record<string, string | number>
+): string {
+  let text = translations[language][key] || translations.EN[key] || key;
+
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => {
+      text = text.replace(`{${k}}`, String(v));
+    });
+  }
+
+  return text;
 }
 
 /**
  * Хук для использования переводов
  */
 export function useTranslation(language: Language) {
-  return (key: TranslationKey) => t(key, language);
+  return (key: TranslationKey, params?: Record<string, string | number>) =>
+    t(key, language, params);
 }

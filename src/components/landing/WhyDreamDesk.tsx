@@ -13,23 +13,20 @@ const testimonials = [
   {
     stat: "99%",
     label: "compatibility",
-    quote:
-      '"AI-ассистент предложил заменить звуковую карту на более совместимую с моим микрофоном. Сэкономил мне 15 000₽ на возвратах."',
-    author: "— Дмитрий К., подкастер",
+    quote_key: "testimonial_1_quote",
+    author_key: "testimonial_1_author",
   },
   {
     stat: "3 мин",
     label: "compatibility",
-    quote:
-      '"Собрал полный сетап за 3 минуты. Конфигуратор сразу показал, что мой монитор не поддерживает VESA — сэкономил время и нервы."',
-    author: "— Алексей М., дизайнер",
+    quote_key: "testimonial_2_quote",
+    author_key: "testimonial_2_author",
   },
   {
     stat: "24/7",
     label: "compatibility",
-    quote:
-      '"AI-чат помог подобрать тихую клавиатуру для стримов. Раньше тратил часы на форумах, а тут — моментальный ответ."',
-    author: "— Ольга В., стример",
+    quote_key: "testimonial_3_quote",
+    author_key: "testimonial_3_author",
   },
 ];
 
@@ -56,14 +53,7 @@ export function WhyDreamDesk() {
 
   const current = testimonials[activeIndex];
 
-  // Fallback для ключей, которых может не быть напрямую в типе (или добавленных позже)
-  const safeT = (key: string, fallback: string) => {
-    try {
-      return t(key as any) || fallback;
-    } catch {
-      return fallback;
-    }
-  };
+
 
   return (
     <section className="py-24 px-6 md:px-12 bg-dark-bg">
@@ -116,10 +106,10 @@ export function WhyDreamDesk() {
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2">
-                    {safeT("ai_assistant", "AI-ассистент")}
+                    {t("ai_assistant")}
                   </h4>
                   <p className="text-on-surface-variant leading-relaxed">
-                    {safeT("ai_assistant_desc", "Рекомендует оптимальные комбинации устройств на основе ваших задач")}
+                    {t("ai_assistant_desc")}
                   </p>
                 </div>
               </div>
@@ -144,10 +134,10 @@ export function WhyDreamDesk() {
                    {t(current.label as any)}
                  </p>
                  <p className="text-on-surface-variant italic text-sm md:text-base opacity-80 leading-relaxed max-w-xs">
-                   {current.quote}
+                   {t(current.quote_key as any)}
                  </p>
                  <div className="mt-6 text-sm text-gray-500 font-medium">
-                   {current.author}
+                   {t(current.author_key as any)}
                  </div>
                </div>
                

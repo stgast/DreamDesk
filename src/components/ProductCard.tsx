@@ -56,11 +56,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
   const isExactProductInSetup = items.some((i) => i.product.id === product.id);
   const isCategoryInSetup = items.some((i) => i.product.categoryId === product.categoryId);
 
-  const badgeLabel = useMemo(() => {
-    if (product.price > 120000 || product.name.toUpperCase().includes("OLED")) return "Флагман";
-    if (product.price < 30000) return "Топ";
-    return "Новинка";
-  }, [product.price, product.name]);
+
 
   const detailImages = useMemo(() => {
     if (!product.imageUrl) return [];
@@ -125,13 +121,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
       >
         {/* Изображение и Бейдж */}
         <div className="relative w-full aspect-square bg-dark-surface/20">
-          <div className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-lg backdrop-blur-md border text-[12px] font-semibold ${
-            badgeLabel === "Флагман" 
-              ? "bg-accent/20 border-accent/20 text-accent" 
-              : "bg-white/10 border-white/5 text-white"
-          }`}>
-            {badgeLabel}
-          </div>
+
 
           {product.imageUrl ? (
             <img
@@ -180,18 +170,18 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
              </span>
              <div className="flex items-center gap-2">
                {isExactProductInSetup ? (
-                 <div className="flex items-center gap-1.5 text-lime px-2 py-1.5 rounded-lg bg-lime/10">
-                   <Check className="w-4 h-4" />
-                   <span className="text-xs font-bold uppercase tracking-wider">В сборке</span>
-                 </div>
+                  <div className="flex items-center gap-1.5 text-lime px-2 py-1.5 rounded-lg bg-lime/10">
+                    <Check className="w-4 h-4" />
+                    <span className="text-xs font-bold uppercase tracking-wider">{t("in_setup")}</span>
+                  </div>
                ) : (
-                 <button 
-                   onClick={(e) => { e.stopPropagation(); onAdd(); }}
-                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/10 text-accent hover:bg-accent/20 transition-colors shrink-0 border border-accent/20"
-                 >
-                   <Plus className="w-4 h-4" />
-                   <span className="text-sm font-bold tracking-wide">Добавить</span>
-                 </button>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onAdd(); }}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/10 text-accent hover:bg-accent/20 transition-colors shrink-0 border border-accent/20"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span className="text-sm font-bold tracking-wide">{t("add")}</span>
+                  </button>
                )}
              </div>
            </div>
@@ -259,13 +249,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
             {/* Правая колонка: Контент */}
             <div className="w-full md:w-[55%] flex flex-col p-6 sm:p-8 md:p-10">
               <div className="mb-6">
-                <div className={`inline-block px-3 py-1 mb-4 rounded-lg backdrop-blur-md border text-[13px] font-bold tracking-wide uppercase ${
-                  badgeLabel === "Флагман" 
-                    ? "bg-accent/10 border-accent/20 text-accent" 
-                    : "bg-white/5 border-white/5 text-gray-300"
-                }`}>
-                  {badgeLabel}
-                </div>
+
                 <h2 className="text-[24px] sm:text-[28px] font-bold text-white leading-[1.15] mb-2 pr-8">
                   {product.name}
                 </h2>

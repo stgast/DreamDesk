@@ -1,14 +1,22 @@
+"use client";
+
+import { useApp } from "@/context/AppContext";
+import { useTranslation } from "@/lib/i18n";
+
 export default function ContactPage() {
+  const { language } = useApp();
+  const t = useTranslation(language);
+
   return (
     <div className="min-h-[calc(100vh-5rem)] bg-surface">
       {/* Header */}
       <div className="bg-gradient-to-b from-white/[0.05] to-transparent border-b border-white/[0.1] py-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-black font-headline text-white mb-4 uppercase tracking-tighter">
-            Свяжитесь с нами
+            {t("contact_title_main")}
           </h1>
           <p className="text-lg text-on-surface-variant max-w-2xl mx-auto">
-            Ответим на любые вопросы о DreamDesk и поможем вам создать идеальный сетап.
+            {t("contact_subtitle")}
           </p>
         </div>
       </div>
@@ -28,7 +36,7 @@ export default function ContactPage() {
             
             <h2 className="text-3xl font-bold text-white mb-3">Email</h2>
             <p className="text-xl text-primary font-mono mb-2 select-all font-bold">support@dreamdesk.com</p>
-            <p className="text-on-surface-variant">Мы ответим вам в течение 24 часов</p>
+            <p className="text-on-surface-variant">{t("contact_answer_time")}</p>
           </div>
         </div>
       </div>

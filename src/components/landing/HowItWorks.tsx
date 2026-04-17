@@ -21,13 +21,13 @@ export function HowItWorks() {
         <div className="flex flex-col items-center text-center mb-12">
           <div className="text-4xl md:text-5xl font-black font-headline tracking-tighter text-white uppercase">
             <ScrollFloat animationDuration={1} stagger={0.03}>
-              КАК ЭТО РАБОТАЕТ
+              {t("how_it_works_title")}
             </ScrollFloat>
           </div>
           <div className="text-gray-400 text-lg flex flex-col md:flex-row items-center justify-center gap-2 mt-4">
-            <span>Соберите свой идеальный сетап</span>
+            <span>{t("how_it_works_subtitle")}</span>
             <RotatingText 
-              texts={['быстро', 'без ошибок', 'с помощью ИИ']} 
+              texts={[t('rotating_fast'), t('rotating_no_errors'), t('rotating_ai_help')]} 
               mainClassName="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-lg overflow-hidden"
               staggerDuration={0.02}
               rotationInterval={3000}

@@ -128,9 +128,7 @@ export function SetupPanel() {
       (i) => i.product.category?.slug === "audio-interfaces"
     );
     if (hasXLRMic && !hasAudioInterface) {
-      result.push(
-        "XLR-микрофон не будет работать без аудиоинтерфейса (звуковой карты). Добавьте устройство из категории «Звуковые карты»."
-      );
+      result.push(t("xlr_mic_warning"));
     }
 
     // 2. Тяжёлый монитор без кронштейна или со слабым кронштейном
@@ -138,7 +136,10 @@ export function SetupPanel() {
     const arm = items.find((i) => i.product.category?.slug === "arms");
     if (monitor && monitor.product.weight && monitor.product.weight > 6000 && !arm) {
       result.push(
-        `Монитор ${monitor.product.name} весит ${(monitor.product.weight / 1000).toFixed(1)} кг — рекомендуем добавить надёжный кронштейн.`
+        t("monitor_arm_warning", {
+          name: monitor.product.name,
+          weight: (monitor.product.weight / 1000).toFixed(1)
+        })
       );
     }
 
@@ -157,7 +158,7 @@ export function SetupPanel() {
         <div className="flex items-center gap-2">
           <ShoppingCart className="w-4 h-4 text-accent" />
           <h2 className="font-heading text-sm font-semibold text-white">
-            Текущая сборка
+            {t("current_setup")}
           </h2>
           {items.length > 0 && (
             <span className="text-[10px] bg-accent/15 text-accent rounded-full px-2 py-0.5">
@@ -172,7 +173,7 @@ export function SetupPanel() {
             className="flex items-center gap-1 text-xs text-gray-500 hover:text-red-400 transition"
           >
             <RotateCcw className="w-3 h-3" />
-            Очистить
+            {t("clear")}
           </button>
         )}
       </div>
@@ -182,9 +183,9 @@ export function SetupPanel() {
         {items.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <ShoppingCart className="w-8 h-8 text-gray-600 mb-2" />
-            <p className="text-sm text-gray-400">Сборка пуста</p>
+            <p className="text-sm text-gray-400">{t("empty_build")}</p>
             <p className="text-xs text-gray-600 mt-1">
-              Добавляйте товары из каталога слева
+              {t("empty_setup_help")}
             </p>
           </div>
         ) : (
@@ -253,7 +254,7 @@ export function SetupPanel() {
           <div className="mt-4 flex gap-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-3">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <p className="text-xs text-emerald-200">
-              Проблем совместимости не обнаружено
+              {t("compatibility_ok")}
             </p>
           </div>
         )}
@@ -282,15 +283,15 @@ export function SetupPanel() {
       {saveOpen && (
         <div className={`fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}>
           <div className={`w-full max-w-sm rounded-xl border border-dark-border bg-dark-card p-5 shadow-xl ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`}>
-            <h3 className="text-white font-semibold mb-2">Сохранить сборку</h3>
+            <h3 className="text-white font-semibold mb-2">{t("save_setup_title")}</h3>
             <p className="text-xs text-gray-500 mb-3">
-              Конфигурация появится в разделе «Ваши сетапы» на странице профиля.
+              {t("save_setup_desc")}
             </p>
             <input
               type="text"
               value={saveName}
               onChange={(e) => setSaveName(e.target.value)}
-              placeholder="Название"
+              placeholder={t("name_placeholder")}
               className="w-full rounded-lg border border-dark-border bg-dark-surface px-3 py-2 text-sm text-white mb-4 focus:border-accent focus:outline-none"
             />
             <div className="flex gap-2 justify-end">
@@ -299,14 +300,14 @@ export function SetupPanel() {
                 onClick={closeSaveModal}
                 className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-smooth"
               >
-                Отмена
+                {t("cancel")}
               </button>
               <button
                 type="button"
                 onClick={handleSaveToProfile}
                 className="px-4 py-2 rounded-lg bg-accent text-dark-bg text-sm font-semibold transition-button hover:opacity-90 hover:shadow-lg hover:shadow-accent/30 active:scale-95"
               >
-                Сохранить
+                {t("save")}
               </button>
             </div>
           </div>

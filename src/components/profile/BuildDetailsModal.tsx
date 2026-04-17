@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ShoppingBag, Edit3, Trash2, Calendar, Wallet, Package, ArrowRight, Check, Edit2, Trash } from "lucide-react";
 import { formatPrice, getCurrencySymbol, convertPrice } from "@/lib/currency";
 import { useApp } from "@/context/AppContext";
@@ -79,6 +79,35 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
   }, [localItems]);
 
   const convertedTotal = useMemo(() => Math.round(convertPrice(total, currency)), [total, currency]);
+  const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Update ref when container is available
+  useEffect(() => {
+    if (scrollContainer) {
+      scrollRef.current = scrollContainer;
+    }
+  }, [scrollContainer]);
+
+  // Scroll animation for total block
+  const { scrollY } = useScroll({ 
+    container: isMounted && scrollContainer ? scrollRef : undefined 
+  });
+  
+  const totalScale = useTransform(scrollY, [0, 100], [1, 0]);
+  const totalPadding = useTransform(scrollY, [0, 100], ["2rem", "0rem"]);
+  const totalY = useTransform(scrollY, [0, 100], [0, 20]);
+  const mainPriceOpacity = useTransform(scrollY, [0, 80], [1, 0]);
+  
+  // Sticky indicator transforms
+  const stickyOpacity = useTransform(scrollY, [50, 150], [0, 1]);
+  const stickyScale = useTransform(scrollY, [50, 150], [0.8, 1]);
+  const stickyY = useTransform(scrollY, [50, 150], [10, 0]);
 
 
   const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -154,7 +183,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-            className="relative w-full max-w-4xl bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[3.5rem] shadow-[0_60px_150px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[92vh]"
+            className="relative w-full max-w-4xl bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_60px_150px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[92vh]"
           >
             {/* Close Cross (Floating) */}
             <button
@@ -165,7 +194,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
             </button>
 
             {/* Header Content */}
-            <div className="p-12 pb-8 space-y-6">
+            <div className="p-8 pb-4 space-y-4">
               <div className="flex items-center gap-3 text-indigo-500 font-black uppercase tracking-[0.4em] text-[10px]">
                 <div className="w-2 h-2 rounded-full bg-indigo-500" />
                 <span>{t("build_intelligence")}</span>
@@ -174,7 +203,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
               <div className="relative group/name">
                 <input
                   type="text"
-                  className="w-full text-3xl sm:text-4xl font-black text-white bg-transparent border-none focus:outline-none focus:ring-0 placeholder-gray-800 transition-all tracking-tighter"
+                  className="w-full text-2xl sm:text-3xl font-black text-white bg-transparent border-none focus:outline-none focus:ring-0 placeholder-gray-800 transition-all tracking-tighter"
                   value={editNameValue}
                   onChange={(e) => handleNameChange(e.target.value)}
                   placeholder={t("name_build_placeholder")}
@@ -184,10 +213,13 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
             </div>
 
             {/* Components Scrollable List */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar px-12 py-6 space-y-12">
+            <div 
+              ref={setScrollContainer}
+              className="flex-1 overflow-y-auto custom-scrollbar px-8 py-4 space-y-8"
+            >
 
               {/* Components List */}
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h3 className="text-[10px] font-black text-gray-600 uppercase tracking-widest">{t("setup_composition")}</h3>
                   <div className="text-[10px] text-gray-500 font-bold bg-white/5 px-4 py-1.5 rounded-full border border-white/10 uppercase tracking-tighter">
@@ -205,23 +237,23 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, height: 0, marginTop: 0, marginBottom: 0, padding: 0 }}
-                        className="group relative flex items-center gap-8 p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:border-white/15 hover:bg-white/[0.06] transition-all duration-500 shadow-xl overflow-hidden"
+                        className="group relative flex items-center gap-5 p-5 rounded-3xl bg-white/[0.03] border border-white/5 hover:border-white/15 hover:bg-white/[0.06] transition-all duration-500 shadow-xl overflow-hidden"
                       >
                         {/* Internal Glow Effect */}
                         <div className="absolute -top-12 -right-12 w-24 h-24 bg-indigo-500/5 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                        {/* Enlarged Product Icon */}
-                        <div className="w-24 h-24 rounded-[2rem] bg-white/[0.03] p-4 flex items-center justify-center overflow-hidden shrink-0 shadow-inner border border-white/5 relative group-hover:scale-105 transition-transform duration-500">
+                        {/* Enlarged Product Icon - Now compacted */}
+                        <div className="w-16 h-16 rounded-xl bg-white/[0.03] p-3 flex items-center justify-center overflow-hidden shrink-0 shadow-inner border border-white/5 relative group-hover:scale-105 transition-transform duration-500">
                           {item.imageUrl ? (
                             <img src={item.imageUrl} alt="" className="w-full h-full object-contain relative z-10" />
                           ) : (
-                            <Package className="w-10 h-10 text-gray-800" />
+                            <Package className="w-8 h-8 text-gray-800" />
                           )}
                         </div>
 
                         <div className="flex-1 min-w-0">
                           <p className="text-[10px] text-indigo-400 font-black uppercase tracking-widest mb-2">{item.category}</p>
-                          <h4 className="text-xl font-black text-white truncate leading-none mb-2">
+                          <h4 className="text-lg font-black text-white truncate leading-none mb-1">
                             {item.name || "—"}
                           </h4>
                           <div className="flex items-center gap-3">
@@ -232,7 +264,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
                         </div>
 
                         <div className="text-right ml-auto">
-                          <p className="text-3xl font-black text-white tracking-tighter drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+                          <p className="text-xl font-black text-white tracking-tighter drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">
                             {formatPrice(item.price, currency)}
                           </p>
                         </div>
@@ -260,7 +292,7 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
 
               {/* Market Analytics Section */}
               {localItems.length > 0 && (
-                <div className="pt-16 border-t border-white/5">
+                <div className="pt-12 border-t border-white/5">
                   <WhereToBuy products={productsForWhereToBuy} />
                 </div>
               )}
@@ -268,46 +300,63 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
 
 
             {/* Total Domination Block */}
-            <div className="px-12 pb-6 pt-8">
-              <div className="rounded-[3rem] bg-white/[0.03] backdrop-blur-3xl p-12 border border-white/10 relative overflow-hidden group/total shadow-2xl">
+            <div className="px-8">
+              <motion.div 
+                style={{ 
+                  scale: totalScale, 
+                  padding: totalPadding,
+                  y: totalY,
+                  opacity: mainPriceOpacity
+                }}
+                className="rounded-3xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 relative overflow-hidden group/total shadow-2xl origin-bottom"
+              >
                 {/* Glow Overlay */}
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none group-hover:opacity-100 opacity-40 transition-opacity duration-1000" />
                 <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
-
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="space-y-2">
                     <p className="text-xs text-indigo-400 font-black uppercase tracking-[0.5em]">{t("total_cost")}</p>
-                    <h3 className="text-5xl sm:text-6xl font-black text-white tracking-tighter leading-none flex items-baseline">
+                    <h3 className="text-4xl sm:text-5xl font-black text-white tracking-tighter leading-none flex items-baseline">
                       <AnimatedPrice value={convertedTotal} language={language} />
                       <span className="text-indigo-500/40 ml-4">{getCurrencySymbol(currency)}</span>
                     </h3>
                   </div>
 
                   <div className="text-right">
-                    <p className="text-3xl font-black text-white leading-none mb-1">{localItems.length}</p>
+                    <p className="text-xl font-black text-white leading-none mb-1">{localItems.length}</p>
                     <p className="text-[10px] text-gray-600 font-black uppercase tracking-[0.2em]">{t("devices")}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Footer Minimal Actions */}
-            <div className="p-12 pt-6 flex items-center justify-between gap-8">
-              <button
-                disabled={isSaving}
+            <div className="px-8 py-6 border-t border-white/5 flex items-center justify-between relative">
+              <button 
                 onClick={() => onDelete(setup.id)}
-                className="group flex items-center gap-3 text-gray-700 hover:text-red-400 transition-all font-bold text-xs uppercase tracking-widest disabled:opacity-50"
+                className="flex items-center gap-3 text-gray-700 hover:text-red-500 transition-all group/del"
               >
-                <Trash2 className="w-5 h-5 transition-transform group-hover:scale-110" />
-                <span>{t("delete_build_long")}</span>
+                <div className="w-8 h-8 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center group-hover/del:bg-red-500/10 group-hover/del:border-red-500/20 transition-all">
+                  <Trash2 className="w-4 h-4 transition-transform group-hover/del:scale-110" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t("delete_build_long")}</span>
               </button>
 
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-lime/10 px-3 py-1 rounded-full border border-lime/20">
-                  <div className="w-1.5 h-1.5 rounded-full bg-lime animate-pulse" />
-                  <span className="text-[9px] text-lime font-black uppercase tracking-widest">{t("active_sync")}</span>
-                </div>
-              </div>
+              {/* Sticky Price Indicator (appears on scroll) */}
+              <motion.div 
+                style={{ 
+                  opacity: stickyOpacity,
+                  scale: stickyScale,
+                  y: stickyY
+                }}
+                className="flex items-center gap-3 px-4 py-2 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 backdrop-blur-md"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
+                <span className="text-sm font-black text-white tracking-tight flex items-baseline">
+                  <AnimatedPrice value={convertedTotal} language={language} />
+                  <span className="text-indigo-500/50 text-[10px] ml-1.5 uppercase font-black">{getCurrencySymbol(currency)}</span>
+                </span>
+              </motion.div>
             </div>
           </motion.div>
         </div>

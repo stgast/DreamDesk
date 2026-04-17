@@ -1,10 +1,13 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { Plus, Sparkles, Layout, Package, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useApp } from "@/context/AppContext";
+import { useTranslation } from "@/lib/i18n";
 
 export function EmptyState() {
+  const { language } = useApp();
+  const t = useTranslation(language);
+
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
@@ -43,9 +46,9 @@ export function EmptyState() {
       </div>
 
       <div className="max-w-md space-y-4 mb-12">
-        <h3 className="text-3xl font-black text-white tracking-tight">Ещё нет ни одной сборки</h3>
+        <h3 className="text-3xl font-black text-white tracking-tight">{t("empty_build_title")}</h3>
         <p className="text-gray-500 font-medium leading-relaxed">
-          Начните свой путь к идеальному сетапу. Используйте наш конфигуратор или получите персональные AI-рекомендации.
+          {t("empty_build_desc")}
         </p>
       </div>
 
@@ -54,7 +57,7 @@ export function EmptyState() {
         <Link href="/build">
           <button className="group relative px-10 py-5 rounded-3xl bg-white text-black font-black text-sm uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:shadow-white/20 transition-all hover:-translate-y-1 active:scale-95 flex items-center gap-3">
             <Plus className="w-5 h-5" />
-            <span>Создать первую сборку</span>
+            <span>{t("empty_build_create")}</span>
           </button>
         </Link>
       </div>
@@ -69,11 +72,11 @@ export function EmptyState() {
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-white font-bold mb-1">AI-рекомендация</h4>
-            <p className="text-xs text-gray-500 leading-relaxed">Доверьте подбор компонентов нашему искусственному интеллекту</p>
+            <h4 className="text-white font-bold mb-1">{t("empty_build_ai_hint_title")}</h4>
+            <p className="text-xs text-gray-500 leading-relaxed">{t("empty_build_ai_hint_desc")}</p>
           </div>
           <div className="flex items-center gap-2 text-[10px] text-indigo-400 font-black uppercase tracking-widest pt-2">
-            <span>Начать</span>
+            <span>{t("empty_build_ai_hint_start")}</span>
             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>

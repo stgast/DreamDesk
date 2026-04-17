@@ -1,14 +1,22 @@
+"use client";
+
+import { useApp } from "@/context/AppContext";
+import { useTranslation } from "@/lib/i18n";
+
 export default function PrivacyPage() {
+  const { language } = useApp();
+  const t = useTranslation(language);
+
   return (
     <div className="min-h-[calc(100vh-5rem)] bg-surface">
       {/* Header */}
       <div className="bg-gradient-to-b from-white/[0.05] to-transparent border-b border-white/[0.1] py-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-black font-headline text-white mb-4 uppercase tracking-tighter">
-            Политика конфиденциальности
+            {t("privacy_title_main")}
           </h1>
           <p className="text-lg text-on-surface-variant max-w-2xl mx-auto">
-            Ваша конфиденциальность — приоритет DreamDesk
+            {t("privacy_subtitle")}
           </p>
         </div>
       </div>
@@ -21,23 +29,23 @@ export default function PrivacyPage() {
           
           <div className="relative z-10 space-y-6 text-on-surface-variant leading-relaxed">
             <div>
-              <h2 className="text-2xl font-bold text-white mb-3">Введение</h2>
+              <h2 className="text-2xl font-bold text-white mb-3">{t("privacy_intro_title")}</h2>
               <p>
-                DreamDesk уважает вашу конфиденциальность и берет на себя ответственность за защиту ваших персональных данных.  Это значит, что мы объясним вам, как мы собираем, используем и защищаем ваши данные.
+                {t("privacy_intro_text")}
               </p>
             </div>
             
             <div>
-              <h2 className="text-2xl font-bold text-white mb-3">Сбор данных</h2>
+              <h2 className="text-2xl font-bold text-white mb-3">{t("privacy_data_title")}</h2>
               <p>
-                Мы собираем только необходимые данные для работы с нашим сервисом: имя, email, и ваши сохраненные конфигурации. Никакие данные не передаются третьим лицам без вашего согласия.
+                {t("privacy_data_text")}
               </p>
             </div>
             
             <div>
-              <h2 className="text-2xl font-bold text-white mb-3">Защита данных</h2>
+              <h2 className="text-2xl font-bold text-white mb-3">{t("privacy_security_title")}</h2>
               <p>
-                Все данные передаются и хранятся согласно современным стандартам безопасности. Мы используем SSL/TLS для защиты данных в пути.
+                {t("privacy_security_text")}
               </p>
             </div>
           </div>
