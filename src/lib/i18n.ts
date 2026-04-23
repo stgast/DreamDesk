@@ -309,7 +309,21 @@ export type TranslationKey =
   | "name_placeholder"
   | "xlr_mic_warning"
   | "monitor_arm_warning"
-  | "empty_setup_help";
+  | "empty_setup_help"
+  | "login_required_for_alerts"
+  | "unsubscribe_label"
+  | "alert_email_will_be_sent"
+  | "loading_offers"
+  | "ai_welcome_message"
+  | "ai_placeholder"
+  | "ai_listening"
+  | "ai_evaluate_setup"
+  | "ai_clear_history"
+  | "ai_clear_confirm_title"
+  | "ai_clear_confirm_desc"
+  | "ai_voice_error"
+  | "ai_online_assistant"
+  | "stat_3_min";
 
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
@@ -619,6 +633,20 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     xlr_mic_warning: "XLR-микрофон не будет работать без аудиоинтерфейса (звуковой карты). Добавьте устройство из категории «Звуковые карты».",
     monitor_arm_warning: "Монитор {name} весит {weight} кг — рекомендуем добавить надёжный кронштейн.",
     empty_setup_help: "Добавляйте товары из каталога слева",
+    login_required_for_alerts: "Войдите в аккаунт для подписки на уведомления",
+    unsubscribe_label: "Отписаться",
+    alert_email_will_be_sent: "Уведомление будет отправлено на {email}",
+    loading_offers: "Загрузка предложений...",
+    ai_welcome_message: "Привет! Я DreamDesk AI. Добавь товары в сборку и спроси меня «Оцени мою сборку» — я проверю совместимость и дам рекомендации.",
+    ai_placeholder: "Твой вопрос для DreamDesk AI...",
+    ai_listening: "Слушаю вас...",
+    ai_evaluate_setup: "Оцени мою сборку",
+    ai_clear_history: "Очистить",
+    ai_clear_confirm_title: "Очистить историю?",
+    ai_clear_confirm_desc: "Все ваши текущие сообщения будут удалены навсегда.",
+    ai_voice_error: "Голосовой ввод не поддерживается вашим браузером.",
+    ai_online_assistant: "Онлайн-помощник",
+    stat_3_min: "3 мин",
   },
   EN: {
     account: "Account",
@@ -926,6 +954,20 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     xlr_mic_warning: "An XLR microphone will not work without an audio interface (sound card). Add a device from the 'Audio Interfaces' category.",
     monitor_arm_warning: "Monitor {name} weighs {weight} kg — we recommend adding a reliable arm.",
     empty_setup_help: "Add products from the catalog on the left",
+    login_required_for_alerts: "Sign in to subscribe to price alerts",
+    unsubscribe_label: "Unsubscribe",
+    alert_email_will_be_sent: "Alert will be sent to {email}",
+    loading_offers: "Loading offers...",
+    ai_welcome_message: "Hello! I'm DreamDesk AI. Add products to your setup and ask me 'Evaluate my setup' — I'll check compatibility and give recommendations.",
+    ai_placeholder: "Your question for DreamDesk AI...",
+    ai_listening: "Listening...",
+    ai_evaluate_setup: "Evaluate my setup",
+    ai_clear_history: "Clear",
+    ai_clear_confirm_title: "Clear history?",
+    ai_clear_confirm_desc: "All your current messages will be permanently deleted.",
+    ai_voice_error: "Voice input is not supported by your browser.",
+    ai_online_assistant: "Online Assistant",
+    stat_3_min: "3 min",
   },
   UK: {
     account: "Обліковий запис",
@@ -1233,6 +1275,20 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     xlr_mic_warning: "XLR-мікрофон не працюватиме без аудіоінтерфейсу (звукової карти). Додайте пристрій з категорії «Звукові карти».",
     monitor_arm_warning: "Монітор {name} важить {weight} кг — рекомендуємо додати надійний кронштейн.",
     empty_setup_help: "Додавайте товари з каталогу ліворуч",
+    login_required_for_alerts: "Увійдіть в обліковий запис для підписки на сповіщення",
+    unsubscribe_label: "Відписатися",
+    alert_email_will_be_sent: "Сповіщення буде надіслано на {email}",
+    loading_offers: "Завантаження пропозицій...",
+    ai_welcome_message: "Привіт! Я DreamDesk AI. Додай товари до збірки і запитай мене «Оціни мою збірку» — я перевірю сумісність і дам рекомендації.",
+    ai_placeholder: "Твоє питання для DreamDesk AI...",
+    ai_listening: "Слухаю вас...",
+    ai_evaluate_setup: "Оціни мою збірку",
+    ai_clear_history: "Очистити",
+    ai_clear_confirm_title: "Очистити історію?",
+    ai_clear_confirm_desc: "Всі ваші поточні повідомлення будуть видалені назавжди.",
+    ai_voice_error: "Голосовий ввід не підтримується вашим браузером.",
+    ai_online_assistant: "Онлайн-помічник",
+    stat_3_min: "3 хв",
   },
   PL: {
     account: "Konto",
@@ -1540,6 +1596,20 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     xlr_mic_warning: "Mikrofon XLR nie będzie działać bez interfejsu audio (karty dźwiękowej). Dodaj urządzenie z kategorii „Karty dźwiękowe”.",
     monitor_arm_warning: "Monitor {name} waży {weight} kg — zalecamy dodanie solidnego uchwytu.",
     empty_setup_help: "Dodaj produkty z katalogu po lewej stronie",
+    login_required_for_alerts: "Zaloguj się, aby subskrybować powiadomienia o cenach",
+    unsubscribe_label: "Anuluj subskrypcję",
+    alert_email_will_be_sent: "Powiadomienie zostanie wysłane na {email}",
+    loading_offers: "Ładowanie ofert...",
+    ai_welcome_message: "Cześć! Jestem DreamDesk AI. Dodaj produkty do zestawu i poproś mnie 'Oceń mój zestaw' — sprawdzę kompatybilność i dam rekomendacje.",
+    ai_placeholder: "Twoje pytanie do DreamDesk AI...",
+    ai_listening: "Słucham...",
+    ai_evaluate_setup: "Oceń mój zestaw",
+    ai_clear_history: "Wyczyść",
+    ai_clear_confirm_title: "Wyczyścić historię?",
+    ai_clear_confirm_desc: "Wszystkie Twoje bieżące wiadomości zostaną trwale usunięte.",
+    ai_voice_error: "Wprowadzanie głosowe nie jest obsługiwane przez Twoją przeglądarkę.",
+    ai_online_assistant: "Asystent online",
+    stat_3_min: "3 min",
   },
 };
 

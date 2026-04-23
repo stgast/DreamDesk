@@ -11,6 +11,7 @@ import { Send, Bot, User, Loader2, Sparkles, Mic, MicOff, ThumbsUp, ThumbsDown, 
 import { useSetup } from "@/context/SetupContext";
 import { useApp } from "@/context/AppContext";
 import type { ChatMessage } from "@/types";
+import { useTranslation } from "@/lib/i18n";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
@@ -43,21 +44,25 @@ const TypewriterText = ({ text, onComplete }: { text: string; onComplete?: () =>
 
 export function AIChat() {
   const { items, addItem } = useSetup();
-  const { currency } = useApp();
+  const { currency, language } = useApp();
+  const t = useTranslation(language);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const soundsEnabled = true;
-  const [activeSetups, setActiveSetups] = useState<any[]>([]); // Для хранения полученных сборок
-  const [suggestionButtons, setSuggestionButtons] = useState<string[]>([]); // Кнопки-подсказки
+  const [activeSetups, setActiveSetups] = useState<any[]>([]);
+  const [suggestionButtons, setSuggestionButtons] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  const WELCOME_MESSAGE: ChatMessage = {
-    id: "welcome",
-    role: "assistant" as const,
-    content: "Привет! Я DreamDesk AI. Добавь товары в сборку и спроси меня «Оцени мою сборку» — я проверю совместимость и дам рекомендации.",
+  // Функция для получения приветственного сообщения на нужном языке
+  const getWelcomeMessage = (): ChatMessage => {
+    return {
+      id: "welcome",
+      role: "assistant" as const,
+      content: t("ai_welcome_message"),
+    };
   };
 
   // Звуковые уведомления
@@ -80,11 +85,17 @@ export function AIChat() {
   useEffect(() => {
     const saved = localStorage.getItem("dreamdesk_chat_history");
     if (saved) {
-      setMessages(JSON.parse(saved));
+      const parsedHistory = JSON.parse(saved);
+      // Если в истории только приветствие, обновляем его язык
+      if (parsedHistory.length === 1 && parsedHistory[0].id === "welcome") {
+        setMessages([getWelcomeMessage()]);
+      } else {
+        setMessages(parsedHistory);
+      }
     } else {
-      setMessages([WELCOME_MESSAGE]);
+      setMessages([getWelcomeMessage()]);
     }
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -95,14 +106,20 @@ export function AIChat() {
   // 3. Голосовой ввод (Web Speech API)
   const startVoiceInput = () => {
     if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
-      alert("Голосовой ввод не поддерживается вашим браузером.");
+      alert(t("ai_voice_error"));
       return;
     }
 
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
-    recognition.lang = "ru-RU";
+    const locales: Record<string, string> = {
+      RU: "ru-RU",
+      EN: "en-US",
+      UK: "uk-UA",
+      PL: "pl-PL",
+    };
+    recognition.lang = locales[language] || "ru-RU";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -120,7 +137,7 @@ export function AIChat() {
   };
 
   const confirmClear = () => {
-    setMessages([WELCOME_MESSAGE]);
+    setMessages([getWelcomeMessage()]);
     localStorage.removeItem("dreamdesk_chat_history");
     setSuggestionButtons([]); // Очищаем саджесты сборок
     setActiveSetups([]);
@@ -146,10 +163,10 @@ export function AIChat() {
         setSuggestionButtons(setups.slice(-5).map((s: any) => s.name));
       }
 
-      await sendMessage("Оцени мою сборку", { userSetups: setups });
+      await sendMessage(t("ai_evaluate_setup"), { userSetups: setups });
     } catch (err) {
       console.error("Failed to fetch setups", err);
-      await sendMessage("Оцени мою сборку");
+      await sendMessage(t("ai_evaluate_setup"));
     }
   };
 
@@ -162,7 +179,7 @@ export function AIChat() {
       // Парсим айтемы сборки (они в JSON строке в базе)
       const setupItems = typeof selected.items === 'string' ? JSON.parse(selected.items) : selected.items;
 
-      await sendMessage(`Оцени сборку "${setupName}"`, {
+      await sendMessage(`${t("ai_evaluate_setup")} "${setupName}"`, {
         targetSetup: {
           name: selected.name,
           items: setupItems,
@@ -170,7 +187,7 @@ export function AIChat() {
         }
       });
     } else {
-      await sendMessage(`Оцени сборку "${setupName}"`);
+      await sendMessage(`${t("ai_evaluate_setup")} "${setupName}"`);
     }
   };
 
@@ -195,7 +212,7 @@ export function AIChat() {
     try {
       const currentSetup = items.map((i) => ({
         name: i.product.name,
-        category: i.product.category?.name ?? "Неизвестно",
+        category: i.product.category?.name ?? "Unknown",
         price: i.product.price,
         connectionType: i.product.connectionType,
         features: i.product.features as string[],
@@ -216,6 +233,7 @@ export function AIChat() {
           messages: history,
           currentSetup,
           userCurrency: currency,
+          userLanguage: language,
           ...extraContext
         }),
       });
@@ -233,7 +251,7 @@ export function AIChat() {
           {
             id: `error-${Date.now()}`,
             role: "assistant" as const,
-            content: `Ошибка: ${data.error}`,
+            content: `${t("loading")}: ${data.error}`,
           },
         ]);
       } else {
@@ -254,13 +272,13 @@ export function AIChat() {
         {
           id: `error-${Date.now()}`,
           role: "assistant" as const,
-          content: "Не удалось связаться с AI. Проверьте сеть или API ключ.",
+          content: "Failed to connect to AI. Please check your network.",
         },
       ]);
     } finally {
       setLoading(false);
     }
-  }, [input, loading, items, messages]);
+  }, [input, loading, items, messages, language, t]);
 
   return (
     <div className="flex flex-col h-full overflow-hidden relative">
@@ -279,22 +297,22 @@ export function AIChat() {
               exit={{ scale: 0.9, y: 20 }}
               className="bg-[#1e1f24] border border-white/10 rounded-3xl p-6 shadow-2xl max-w-[280px] w-full text-center"
             >
-              <h4 className="text-white font-bold mb-2">Очистить историю?</h4>
+              <h4 className="text-white font-bold mb-2">{t("ai_clear_confirm_title")}</h4>
               <p className="text-xs text-gray-400 mb-6 leading-relaxed">
-                Все ваши текущие сообщения будут удалены навсегда.
+                {t("ai_clear_confirm_desc")}
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowConfirmClear(false)}
                   className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 text-white text-xs font-bold hover:bg-white/10 transition-colors"
                 >
-                  Отмена
+                  {t("cancel")}
                 </button>
                 <button
                   onClick={confirmClear}
                   className="flex-1 px-4 py-2.5 rounded-xl bg-red-500/80 text-white text-xs font-bold hover:bg-red-500 transition-colors shadow-lg shadow-red-500/20"
                 >
-                  Удалить
+                  {t("delete")}
                 </button>
               </div>
             </motion.div>
@@ -381,10 +399,34 @@ export function AIChat() {
                     animate={{ opacity: 1 }}
                     className="flex gap-2 ml-1"
                   >
-                    <button className="p-1.5 rounded-lg bg-white/5 border border-white/5 text-gray-500 hover:text-accent hover:border-accent/30 transition-all">
+                    <button 
+                      onClick={() => {
+                        const feedback = m.feedback === 'like' ? undefined : 'like';
+                        setMessages(prev => prev.map(msg => 
+                          msg.id === m.id ? { ...msg, feedback } : msg
+                        ));
+                      }}
+                      className={`p-1.5 rounded-lg border transition-all ${
+                        m.feedback === 'like' 
+                          ? 'bg-accent/20 border-accent/50 text-accent shadow-lg shadow-accent/20' 
+                          : 'bg-white/5 border-white/5 text-gray-500 hover:text-accent hover:border-accent/30'
+                      }`}
+                    >
                       <ThumbsUp className="w-3 h-3" />
                     </button>
-                    <button className="p-1.5 rounded-lg bg-white/5 border border-white/5 text-gray-500 hover:text-red-400 hover:border-red-400/30 transition-all">
+                    <button 
+                      onClick={() => {
+                        const feedback = m.feedback === 'dislike' ? undefined : 'dislike';
+                        setMessages(prev => prev.map(msg => 
+                          msg.id === m.id ? { ...msg, feedback } : msg
+                        ));
+                      }}
+                      className={`p-1.5 rounded-lg border transition-all ${
+                        m.feedback === 'dislike' 
+                          ? 'bg-red-500/20 border-red-500/50 text-red-400 shadow-lg shadow-red-500/20' 
+                          : 'bg-white/5 border-white/5 text-gray-500 hover:text-red-400 hover:border-red-400/30'
+                      }`}
+                    >
                       <ThumbsDown className="w-3 h-3" />
                     </button>
                   </motion.div>
@@ -463,7 +505,7 @@ export function AIChat() {
               className="text-[11px] font-bold text-accent bg-accent/10 border border-accent/20 rounded-full px-4 py-1.5 hover:bg-accent/20 transition-all shadow-sm flex items-center gap-2 font-headline"
               onClick={() => handleEvaluateSetup()}
             >
-              Оцени мою сборку
+              {t("ai_evaluate_setup")}
             </motion.button>
           </div>
 
@@ -472,7 +514,7 @@ export function AIChat() {
               onClick={() => setShowConfirmClear(true)}
               className="text-[10px] text-gray-500 hover:text-red-400 transition-colors uppercase tracking-widest font-bold"
             >
-              Очистить
+              {t("ai_clear_history")}
             </button>
           </div>
         </div>
@@ -484,7 +526,7 @@ export function AIChat() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             placeholder={
-              isListening ? "Слушаю вас..." : "Твой вопрос для DreamDesk AI..."
+              isListening ? t("ai_listening") : t("ai_placeholder")
             }
             className={`w-full rounded-2xl border border-white/10 bg-white/[0.03] pl-6 pr-24 py-4 text-[14px] text-white placeholder-gray-600 focus:border-accent/40 focus:bg-white/[0.05] focus:outline-none transition-all font-body ${isListening ? "ring-2 ring-accent/30 shadow-[0_0_15px_rgba(173,198,255,0.2)]" : ""}`}
             disabled={loading}

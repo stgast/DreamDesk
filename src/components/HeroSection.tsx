@@ -60,11 +60,6 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-[1920px] mx-auto w-full flex items-center justify-center">
         <div className="max-w-3xl text-center flex flex-col items-center">
-          {/* Badge */}
-          <div className="inline-block py-1.5 px-4 rounded-full bg-gradient-to-r from-primary/20 to-primary-container/20 border border-primary/30 text-primary font-label text-xs tracking-widest uppercase mb-6 backdrop-blur-sm">
-            {t("new_level")}
-          </div>
-
           {/* Main heading with gradient text */}
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-black font-headline tracking-tighter text-white mb-8 leading-none uppercase relative">
             <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-primary-container">

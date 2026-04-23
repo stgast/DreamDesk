@@ -11,6 +11,7 @@ import type { Product, Category } from "@/types";
 import { useSetup } from "@/context/SetupContext";
 import { useApp } from "@/context/AppContext";
 import { useTranslation } from "@/lib/i18n";
+import { formatPrice } from "@/lib/currency";
 import { ProductCard } from "./ProductCard";
 import { SetupPanel } from "./SetupPanel";
 import { CategoryTabs } from "./CategoryTabs";
@@ -21,7 +22,7 @@ interface ConfiguratorProps {
 }
 
 export function Configurator({ products, categories }: ConfiguratorProps) {
-  const { language } = useApp();
+  const { language, currency } = useApp();
   const t = useTranslation(language);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -164,7 +165,7 @@ export function Configurator({ products, categories }: ConfiguratorProps) {
           className="flex items-center gap-3 px-6 py-3 rounded-full bg-accent text-dark-bg font-bold shadow-xl shadow-accent/20 hover:scale-105 active:scale-95 transition-transform"
         >
           <ShoppingCart className="w-5 h-5" />
-          <span>{items.length} товара — {totalPrice.toLocaleString()} ₽</span>
+          <span>{items.length} товара — {formatPrice(totalPrice, currency)}</span>
         </button>
       </div>
     </div>

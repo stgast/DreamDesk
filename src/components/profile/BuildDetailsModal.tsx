@@ -195,11 +195,6 @@ export function BuildDetailsModal({ isOpen, onClose, setup, onDelete, onUpdate }
 
             {/* Header Content */}
             <div className="p-8 pb-4 space-y-4">
-              <div className="flex items-center gap-3 text-indigo-500 font-black uppercase tracking-[0.4em] text-[10px]">
-                <div className="w-2 h-2 rounded-full bg-indigo-500" />
-                <span>{t("build_intelligence")}</span>
-              </div>
-
               <div className="relative group/name">
                 <input
                   type="text"

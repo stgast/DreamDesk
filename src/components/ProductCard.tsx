@@ -12,6 +12,7 @@ import { useSetup } from "@/context/SetupContext";
 import { useApp } from "@/context/AppContext";
 import { formatPrice } from "@/lib/currency";
 import { useTranslation } from "@/lib/i18n";
+import { translateProductData } from "@/lib/productTranslations";
 
 // Цвета категорий (по slug)
 const CATEGORY_COLORS: Record<string, string> = {
@@ -148,7 +149,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
                    key={i}
                    className="px-2.5 py-1 text-[12px] sm:text-[13px] font-medium text-gray-300 bg-white/5 rounded-full whitespace-nowrap"
                  >
-                   {feat}
+                   {translateProductData(feat, language)}
                  </span>
                ))}
                {product.features.length > 4 && (
@@ -160,8 +161,8 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
            )}
 
            <p className="text-[12px] sm:text-[13px] text-gray-400 mt-2 line-clamp-1">
-             {product.connectionType} • {product.category ? getCategoryLabel(product.category.slug, product.category.name) : ""}
-             {product.description ? ` • ${product.description}` : ""}
+             {translateProductData(product.connectionType, language)} • {product.category ? getCategoryLabel(product.category.slug, product.category.name) : ""}
+             {product.description ? ` • ${translateProductData(product.description, language)}` : ""}
            </p>
 
            <div className="flex items-center justify-between pt-4 mt-auto">
@@ -267,7 +268,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
                         key={i}
                         className="px-3.5 py-1.5 text-[13px] sm:text-[14px] font-medium text-gray-200 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors cursor-default"
                       >
-                        {feat}
+                        {translateProductData(feat, language)}
                       </span>
                     ))}
                   </div>
@@ -277,7 +278,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
               {/* Второстепенные характеристики */}
               <div className="mb-6 text-[13px] sm:text-[14px] text-gray-500">
                 <p>
-                  {product.connectionType}
+                  {translateProductData(product.connectionType, language)}
                   {product.lengthMm ? ` • ${product.lengthMm}x${product.widthMm}x${product.heightMm}mm` : ""}
                   {product.weight != null ? ` • ${product.weight}g` : ""}
                 </p>
@@ -287,7 +288,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
               {product.description && (
                 <div className="mb-8">
                   <p className="text-[14px] text-gray-400 leading-relaxed line-clamp-3">
-                    {product.description}
+                    {translateProductData(product.description, language)}
                   </p>
                 </div>
               )}

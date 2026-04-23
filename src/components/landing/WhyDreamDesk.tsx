@@ -17,7 +17,7 @@ const testimonials = [
     author_key: "testimonial_1_author",
   },
   {
-    stat: "3 мин",
+    stat_key: "stat_3_min",
     label: "compatibility",
     quote_key: "testimonial_2_quote",
     author_key: "testimonial_2_author",
@@ -128,7 +128,7 @@ export function WhyDreamDesk() {
                  }`}
                >
                  <h3 className="text-7xl md:text-8xl font-black text-white mb-4 drop-shadow-lg tracking-tighter">
-                   {current.stat}
+                   {current.stat_key ? t(current.stat_key as any) : current.stat}
                  </h3>
                  <p className="text-xl md:text-2xl text-primary font-headline uppercase tracking-widest mb-8 font-bold">
                    {t(current.label as any)}

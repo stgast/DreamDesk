@@ -57,6 +57,11 @@ export function CategoryTabs({ categories, active, onChange }: CategoryTabsProps
           const isActive = active === cat.id;
           const IconComp = ICON_MAP[cat.slug] || LayoutGrid;
 
+          // Пытаемся найти перевод по слагу категории
+          // Напр. slug: "monitors" -> key: "category_monitors"
+          const translationKey = `category_${cat.slug.replace("-", "_")}` as any;
+          const translatedName = cat.slug === "all" ? t("all") : (t(translationKey) !== translationKey ? t(translationKey) : cat.name);
+
           return (
             <button
               key={cat.id}
@@ -81,7 +86,7 @@ export function CategoryTabs({ categories, active, onChange }: CategoryTabsProps
                 }`} 
               />
               <span className="relative z-10 text-[13px] font-bold tracking-tight whitespace-nowrap">
-                {cat.name}
+                {translatedName}
               </span>
               
               {!isActive && (

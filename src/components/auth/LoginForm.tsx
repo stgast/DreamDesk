@@ -1,18 +1,67 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 import { useApp } from "@/context/AppContext";
 
-export function LoginForm() {
+interface LoginFormProps {
+  onSwitchToRegister: () => void;
+  onGoogleSignIn: () => void;
+}
+
+export function LoginForm({
+  onSwitchToRegister,
+  onGoogleSignIn,
+}: LoginFormProps) {
+  const router = useRouter();
   const { language } = useApp();
   const t = useTranslation(language);
   const [showPassword, setShowPassword] = useState(false);
-  
-  // The user wanted "Welcome Back", "Log in to DreamDesk", "Google Button", etc.
   const [emailFocus, setEmailFocus] = useState(false);
   const [passFocus, setPassFocus] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    login: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      console.log("[LOGIN FORM] Attempting login with:", formData.login);
+      
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: formData.login,
+        password: formData.password,
+      });
+
+      console.log("[LOGIN FORM] Result:", res);
+
+      if (res?.error) {
+        setError("Неверные данные для входа");
+        return;
+      }
+      
+      if (res?.ok) {
+        router.push("/profile");
+        router.refresh();
+      }
+    } catch (err) {
+      console.error("[LOGIN FORM] Exception:", err);
+      setError("Произошла непредвиденная ошибка");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-md mx-auto p-10 rounded-[2.5rem] bg-white/[0.02] backdrop-blur-2xl border border-white/5 shadow-[0_0_100px_rgba(99,102,241,0.08)] relative overflow-hidden group/modal animate-[fadeIn_0.6s_ease-out_forwards,scaleUp_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards]">
@@ -26,7 +75,6 @@ export function LoginForm() {
         {/* Хедер */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/10 mb-4 shadow-lg shadow-black/50">
-            {/* Имитируем лого */}
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-500 shadow-[0_0_20px_rgba(99,102,241,0.4)]" />
           </div>
           <h1 className="text-3xl font-black text-white tracking-tight">Добро пожаловать обратно</h1>
@@ -34,7 +82,12 @@ export function LoginForm() {
         </div>
 
         {/* Social Login */}
-        <button className="relative w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group/google overflow-hidden">
+        <button 
+          onClick={onGoogleSignIn}
+          disabled={isLoading}
+          type="button"
+          className="relative w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group/google overflow-hidden disabled:opacity-50"
+        >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover/google:animate-[shimmer_1.5s_infinite]" />
           <svg className="w-5 h-5 text-white transition-transform group-hover/google:scale-110" viewBox="0 0 24 24" fill="currentColor">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -53,7 +106,7 @@ export function LoginForm() {
         </div>
 
         {/* Форма */}
-        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
           
           {/* Поле Email (Floating Label) */}
           <div className="relative group/input">
@@ -63,7 +116,10 @@ export function LoginForm() {
             <input 
               type="email" 
               id="email"
-              className="peer w-full bg-dark-bg/50 border border-white/10 rounded-xl px-4 py-4 pl-12 text-sm text-white focus:outline-none focus:border-indigo-500 focus:shadow-[0_0_15px_rgba(99,102,241,0.2)] focus:bg-indigo-500/5 transition-all duration-300 placeholder-transparent"
+              disabled={isLoading}
+              value={formData.login}
+              onChange={(e) => setFormData({ ...formData, login: e.target.value })}
+              className="peer w-full bg-dark-bg/50 border border-white/10 rounded-xl px-4 py-4 pl-12 text-sm text-white focus:outline-none focus:border-indigo-500 focus:shadow-[0_0_15px_rgba(99,102,241,0.2)] focus:bg-indigo-500/5 transition-all duration-300 placeholder-transparent disabled:opacity-50"
               placeholder="name@example.com"
               onFocus={() => setEmailFocus(true)}
               onBlur={(e) => setEmailFocus(e.target.value !== "")}
@@ -86,7 +142,10 @@ export function LoginForm() {
             <input 
               type={showPassword ? "text" : "password"} 
               id="password"
-              className="peer w-full bg-dark-bg/50 border border-white/10 rounded-xl px-4 py-4 pl-12 pr-12 text-sm text-white focus:outline-none focus:border-violet-500 focus:shadow-[0_0_15px_rgba(124,58,237,0.2)] focus:bg-violet-500/5 transition-all duration-300 placeholder-transparent"
+              disabled={isLoading}
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="peer w-full bg-dark-bg/50 border border-white/10 rounded-xl px-4 py-4 pl-12 pr-12 text-sm text-white focus:outline-none focus:border-violet-500 focus:shadow-[0_0_15px_rgba(124,58,237,0.2)] focus:bg-violet-500/5 transition-all duration-300 placeholder-transparent disabled:opacity-50"
               placeholder="••••••••"
               onFocus={() => setPassFocus(true)}
               onBlur={(e) => setPassFocus(e.target.value !== "")}
@@ -100,12 +159,20 @@ export function LoginForm() {
             </label>
             <button 
               type="button"
+              disabled={isLoading}
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-white transition-colors focus:outline-none"
+              className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-white transition-colors focus:outline-none disabled:opacity-50"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-sm font-medium">
+              {error}
+            </div>
+          )}
 
           <div className="flex justify-end pt-1">
             <a href="#" className="text-xs font-bold text-indigo-400 hover:text-indigo-300 hover:underline transition-all">
@@ -115,7 +182,9 @@ export function LoginForm() {
 
           {/* Кнопка войти */}
           <button 
-            className="group/btn relative w-full flex items-center justify-center py-4 rounded-xl font-black text-sm uppercase tracking-widest text-white overflow-hidden transition-transform hover:scale-[1.02] active:scale-[0.98] mt-4"
+            type="submit"
+            disabled={isLoading}
+            className="group/btn relative w-full flex items-center justify-center py-4 rounded-xl font-black text-sm uppercase tracking-widest text-white overflow-hidden transition-transform hover:scale-[1.02] active:scale-[0.98] mt-4 disabled:opacity-50"
           >
             {/* Animated Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600 bg-[length:200%_auto] animate-[gradient_3s_linear_infinite]" />
@@ -123,8 +192,8 @@ export function LoginForm() {
             <div className="absolute inset-0 border-[0.5px] border-white/30 rounded-xl shadow-[inset_0_2px_4px_rgba(255,255,255,0.2)]" />
             
             <div className="relative z-10 flex items-center gap-2">
-              <span>Войти</span>
-              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+              <span>{isLoading ? "Вход..." : "Войти"}</span>
+              {!isLoading && <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />}
             </div>
           </button>
         </form>
@@ -132,9 +201,14 @@ export function LoginForm() {
         {/* Footer */}
         <p className="text-center text-xs text-gray-500 font-medium pt-4">
           Нет аккаунта?{" "}
-          <a href="#" className="text-indigo-400 font-bold hover:text-indigo-300 hover:shadow-[0_2px_10px_rgba(99,102,241,0.5)] transition-all">
+          <button
+            type="button"
+            onClick={onSwitchToRegister}
+            className="text-indigo-400 font-bold hover:text-indigo-300 hover:shadow-[0_2px_10px_rgba(99,102,241,0.5)] transition-all disabled:opacity-50"
+            disabled={isLoading}
+          >
             Зарегистрироваться
-          </a>
+          </button>
         </p>
         
       </div>

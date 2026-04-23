@@ -89,7 +89,7 @@ function PriceSlider({
 
   return (
     <div className="px-3 mb-6">
-      <h4 className="mb-3 text-[11px] font-bold uppercase tracking-widest text-gray-500">Цена</h4>
+      <h4 className="mb-3 text-[11px] font-bold uppercase tracking-widest text-gray-500">{t("price")}</h4>
       <div className="flex gap-2 mb-4">
         <input
           type="number"

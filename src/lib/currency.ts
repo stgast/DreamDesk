@@ -4,12 +4,13 @@
 
 import { Currency } from "@/types";
 
-// Курсы валют относительно RUB (на 2024 год, приблизительные)
+// Курсы валют относительно RUB (на 2026 год, приблизительные)
+// TODO: Интегрировать live API для обновления курсов (OpenExchangeRates, Fixer.io)
 export const EXCHANGE_RATES = {
   RUB: 1,
-  EUR: 0.011, // 1 RUB = ~0.011 EUR
-  USD: 0.012, // 1 RUB = ~0.012 USD
-  PLN: 0.048, // 1 RUB = ~0.048 PLN
+  EUR: 0.0095, // 1 RUB = ~0.0095 EUR
+  USD: 0.011, // 1 RUB = ~0.011 USD
+  PLN: 0.044, // 1 RUB = ~0.044 PLN
 } as const;
 
 // Символы валют

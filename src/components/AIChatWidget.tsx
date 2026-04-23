@@ -5,11 +5,16 @@ import { usePathname } from "next/navigation";
 import { Sparkles, X, Bot } from "lucide-react";
 import { AIChat } from "./AIChat";
 import { useSetup } from "@/context/SetupContext";
+import { useApp } from "@/context/AppContext";
+import { useTranslation } from "@/lib/i18n";
 
 export function AIChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const { items } = useSetup();
   const pathname = usePathname();
+
+  const { language } = useApp();
+  const t = useTranslation(language);
 
   // Открытие по Cmd+K / Ctrl+K
   useEffect(() => {
@@ -66,10 +71,10 @@ export function AIChatWidget() {
             </div>
             <div>
               <h3 className="font-headline text-lg font-bold text-white tracking-tight leading-tight">
-                Dream Desk AI
+                DreamDesk AI
               </h3>
               <p className="text-[11px] text-accent/60 font-medium uppercase tracking-widest">
-                Online Assistant
+                {t("ai_online_assistant")}
               </p>
             </div>
           </div>

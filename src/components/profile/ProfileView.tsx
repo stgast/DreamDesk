@@ -444,12 +444,6 @@ export function ProfileView({
               <h1 className="text-4xl font-black text-white tracking-tighter">{t("your_builds")}</h1>
               <p className="text-gray-500 text-sm">{t("build_management_hint")}</p>
             </div>
-            <div className="hidden sm:block">
-              <div className="flex items-center gap-2 bg-indigo-500/5 border border-indigo-500/10 px-4 py-2 rounded-2xl">
-                <Filter className="w-4 h-4 text-indigo-400" />
-                <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">{t("active_filtering")}</span>
-              </div>
-            </div>
           </motion.div>
 
           <AnimatePresence mode="wait">
